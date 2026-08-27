@@ -54,8 +54,13 @@ Request como verificación de que el sitio compila sin errores.
 
 - Fotos y biografías reales de los 4 profesionales (se usan placeholders en
   `public/img/equipo/placeholder-*.svg` y biografías genéricas).
-- Logo vectorizado oficial (se usa un wordmark placeholder en `public/img/logo-lefinor*.svg`
-  y favicons generados con `generator/assets/make-favicons.js`).
+- Logo oficial: ya integrado el logo vectorizado real y aprobado
+  (`public/img/lefinor-isotipo.svg`, `lefinor-logo-principal.svg`, `lefinor-logo-blanco.svg`,
+  `lefinor-logo-sobre-navy.svg` y `lefinor-logo-horizontal.svg`). Header usa la versión
+  horizontal (dorado, fondo claro); footer y tarjeta digital usan la versión blanca
+  (ícono + texto, fondo oscuro).
+- Favicons: `public/favicon/` está vacía a la espera de que se suban manualmente los 3 PNG
+  (16×16, 32×32, 48×48) definitivos vía la interfaz web de GitHub.
 - Contenido detallado de Lefinor Academy (talleres, cursos, diplomados).
 - Confirmación del cliente sobre dónde debe aparecer el slogan oficial (por ahora aparece en
   el hero de Inicio y en los encabezados internos de cada página).
