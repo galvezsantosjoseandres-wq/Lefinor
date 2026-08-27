@@ -46,32 +46,13 @@ Esto produce en `dist/`:
   se ocultan automáticamente mientras estén vacías). Solo agregar testimonios y logos con
   autorización expresa del cliente/empresa.
 
-## Lenguaje visual / dirección de diseño
+## Colores de marca
 
-`public/css/tokens.css` es la fuente única de verdad del lenguaje visual del sitio: variables
-de color (`--azul`, `--azul-2`, `--dorado`, `--dorado-soft`, `--gris`, `--blanco`, `--neutro`) y
-los componentes reutilizables de la dirección de diseño aprobada (`.eyebrow`, `.display`,
-`.body-copy`, `.ledger-rule`, `.signature-mark`, `.btn-primary`, `.link-secondary`,
-`.card-pillar`, `.num`). Cualquier ajuste de color se hace editando ese archivo — el Tailwind
-config del `<head>` y los scripts de build en Node (QR, favicons, vía `generator/lib/tokens.js`)
-leen de ahí, no de valores sueltos repetidos en cada plantilla.
-
-El "trazo de firma" (el isotipo como marca de agua monolínea de fondo) se invoca como partial
-reutilizable, nunca copiado en cada plantilla:
-
-```
-{{> signature-mark opacity="0.14" size="62%"}}
-```
-
-`generator/build.js` extrae el `viewBox`/`transform`/`path` reales desde
-`public/img/lefinor-isotipo.svg` una sola vez en build time, así que solo existe una fuente
-para ese trazo vectorial.
-
-Este lenguaje visual (aplicado por ahora al hero y a "Tres áreas. Un propósito." de Inicio) es
-el estándar para el resto del sitio de aquí en adelante — al construir o ajustar Servicios,
-Academy, Propiedades, Publicaciones o Contacto, deben heredar los mismos tokens y componentes
-en vez de volver a patrones genéricos (dos botones de igual peso, tarjetas con sombra genérica,
-separadores planos).
+`public/css/tokens.css` es la fuente única de verdad de los colores de marca (`--azul`,
+`--azul-2`, `--dorado`, `--dorado-soft`, `--gris`, `--blanco`, `--neutro`). Cualquier ajuste de
+color se hace editando ese archivo — el Tailwind config del `<head>` y los scripts de build en
+Node (QR, favicons, vía `generator/lib/tokens.js`) leen de ahí, no de valores sueltos repetidos
+en cada plantilla.
 
 ## Despliegue
 

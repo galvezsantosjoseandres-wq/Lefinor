@@ -5,8 +5,8 @@
  * Soporta: {{ variable }}, {{{ variable_sin_escapar }}}, {{#each lista}}...{{/each}},
  * {{#if variable}}...{{else}}...{{/if}} y {{> nombreParcial}}.
  * Los partials aceptan parámetros literales opcionales, ej.:
- *   {{> signature-mark opacity="0.14" size="62%"}}
- * que quedan disponibles dentro del partial como variables normales ({{opacity}}).
+ *   {{> tarjeta color="dorado" tamano="grande"}}
+ * que quedan disponibles dentro del partial como variables normales ({{color}}).
  */
 
 const TAG_RE =
