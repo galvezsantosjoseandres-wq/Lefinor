@@ -5,7 +5,7 @@
     <div class="max-w-xl">
       <p class="eyebrow mb-4">{{site.slogan}}</p>
       <h1 class="display text-white text-4xl md:text-5xl mb-6">
-        Asesoría legal y financiera confiable en Fantino y todo el Cibao
+        Asesoría legal y financiera confiable en <span style="color: var(--dorado);">Fantino</span> y todo el Cibao
       </h1>
       <div class="ledger-rule mb-6" style="width: 220px;"></div>
       <p class="body-copy mb-9" style="color: rgba(255, 255, 255, 0.72); max-width: 460px;">
@@ -18,6 +18,16 @@
     </div>
   </div>
 </section>
+
+<div class="values-strip">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center">
+    <span>Confianza</span>
+    <span>Integridad</span>
+    <span>Excelencia</span>
+    <span>Innovación</span>
+    <span>Compromiso</span>
+  </div>
+</div>
 
 {{#if confianza}}
 <section class="py-12 border-b border-lefinor-gris/10">
@@ -202,6 +212,21 @@
           required
           class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
         ></textarea>
+      </div>
+      <div class="flex items-start gap-2">
+        <input
+          id="home-consentimiento"
+          name="consentimiento"
+          type="checkbox"
+          required
+          class="mt-1 h-4 w-4 rounded border-lefinor-gris/40 text-lefinor-dorado focus:ring-lefinor-dorado"
+        />
+        <label for="home-consentimiento" class="text-xs text-lefinor-gris">
+          He leído y acepto la
+          <a href="/politica-de-privacidad.html" class="text-lefinor-dorado underline hover:no-underline"
+            >Política de Privacidad</a
+          >.
+        </label>
       </div>
       <button
         type="submit"
