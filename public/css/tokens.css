@@ -124,3 +124,30 @@
   color: rgba(11, 29, 51, 0.08);
   line-height: 1;
 }
+
+/* Franja de valores de marca: fondo navy secundario, separadores dorados tenues */
+.values-strip {
+  background: var(--azul-2);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.85rem 0;
+}
+.values-strip span {
+  color: var(--dorado-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 1rem;
+  border-right: 1px solid rgba(233, 206, 126, 0.25);
+}
+.values-strip span:last-child {
+  border-right: none;
+}
+@media (max-width: 860px) {
+  .values-strip span {
+    width: 50%;
+    text-align: center;
+    border-right: none !important;
+    padding: 0.4rem 0;
+  }
+}
