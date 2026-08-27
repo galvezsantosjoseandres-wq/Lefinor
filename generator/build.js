@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { render } = require('./lib/render');
 const { generateQrSvg } = require('./lib/qr');
+const { loadColorTokens } = require('./lib/tokens');
 
 const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -66,6 +67,22 @@ function slugSort(list) {
   return list.slice().sort((a, b) => (a.orden || 0) - (b.orden || 0));
 }
 
+/**
+ * Extrae viewBox/transform/path de un SVG de un solo trazo (como el isotipo) para
+ * poder reutilizar exactamente los mismos datos vectoriales en el partial
+ * signature-mark, sin duplicar el path en más de un archivo del repo.
+ */
+function extractIsotipo(svgSource) {
+  const viewBoxMatch = svgSource.match(/viewBox="([^"]+)"/);
+  const transformMatch = svgSource.match(/<g transform="([^"]+)"/);
+  const pathMatch = svgSource.match(/<path d="([^"]+)"/);
+  return {
+    viewBox: viewBoxMatch ? viewBoxMatch[1] : '0 0 494 540',
+    transform: transformMatch ? transformMatch[1] : '',
+    pathD: pathMatch ? pathMatch[1] : '',
+  };
+}
+
 function buildVCard(prof, site) {
   const [nombre] = prof.nombre.split(' ');
   return [
@@ -100,6 +117,9 @@ function main() {
   const confianza = fs.existsSync(confianzaPath) ? readJson(confianzaPath) : [];
   const testimonios = fs.existsSync(testimoniosPath) ? readJson(testimoniosPath) : [];
 
+  const tokens = loadColorTokens();
+  const isotipo = extractIsotipo(fs.readFileSync(path.join(PUBLIC_DIR, 'img', 'lefinor-isotipo.svg'), 'utf8'));
+
   const partials = loadPartials();
   const layout = fs.readFileSync(path.join(TEMPLATES_DIR, 'layout.html'), 'utf8');
 
@@ -108,7 +128,7 @@ function main() {
   function renderPage(pageName, extraData, layoutData) {
     const pageTemplate = loadPage(pageName);
     const baseData = Object.assign(
-      { site, profesionales, propiedades, publicaciones, ciudades, confianza, testimonios },
+      { site, profesionales, propiedades, publicaciones, ciudades, confianza, testimonios, isotipo },
       extraData
     );
     const content = render(pageTemplate, baseData, partials);
@@ -271,7 +291,7 @@ function main() {
   // Tarjetas digitales + vCards
   for (const prof of profesionales) {
     const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
-    const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: site.colors.azul });
+    const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
     writeFile(
       `tarjetas/${prof.slug}.html`,
       renderPage(
