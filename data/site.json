@@ -14,12 +14,6 @@
   "developer": "Activosweb.com",
   "developerUrl": "https://activosweb.com",
   "year": 2026,
-  "colors": {
-    "azul": "#0B1D33",
-    "dorado": "#D4AF37",
-    "gris": "#606468",
-    "blanco": "#FFFFFF"
-  },
   "nav": [
     { "label": "Inicio", "href": "/index.html" },
     { "label": "Quiénes Somos", "href": "/quienes-somos.html" },

@@ -2,7 +2,7 @@
   <div class="w-full max-w-sm mx-auto px-4">
     <div class="bg-white rounded-2xl shadow-lg border border-lefinor-gris/10 overflow-hidden">
       <div class="bg-lefinor-azul py-6 flex justify-center">
-        <img src="/img/logo-lefinor-blanco.svg" alt="{{site.siteName}}" class="h-10 w-auto" />
+        <img src="/img/lefinor-logo-blanco.svg" alt="{{site.siteName}}" class="h-10 w-auto" />
       </div>
 
       <div class="p-6 text-center">
@@ -47,13 +47,13 @@
         </div>
 
         <div class="mt-8 flex flex-col items-center">
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={{site.domain}}/tarjetas/{{profesional.slug}}.html"
-            alt="Código QR de la tarjeta de {{profesional.nombre}}"
-            width="140"
-            height="140"
-            class="rounded-md border border-lefinor-gris/15"
-          />
+          <div
+            class="w-[140px] h-[140px] rounded-md border border-lefinor-gris/15 overflow-hidden [&>svg]:block [&>svg]:w-full [&>svg]:h-full"
+            role="img"
+            aria-label="Código QR de la tarjeta de {{profesional.nombre}}"
+          >
+            {{{qrSvg}}}
+          </div>
           <p class="text-xs text-lefinor-gris mt-2">Escanea para guardar este contacto</p>
         </div>
       </div>

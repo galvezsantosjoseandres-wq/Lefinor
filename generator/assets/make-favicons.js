@@ -1,18 +1,20 @@
 'use strict';
 
 /**
- * Genera el set de favicons (16x16, 32x32, 48x48 PNG) con un monograma "L" en los colores
- * de marca de Lefinor. Ejecutar con: node generator/assets/make-favicons.js
- * Es un placeholder temporal hasta que se procese el logo vectorizado oficial.
+ * Genera un set de favicons (16x16, 32x32, 48x48 PNG) de respaldo, con un monograma "L"
+ * en los colores de marca de Lefinor. Ejecutar con: node generator/assets/make-favicons.js
+ * Los favicons definitivos del sitio se suben manualmente a public/favicon/; este script
+ * solo sirve como referencia o para regenerar un set temporal si hiciera falta.
  */
 
 const fs = require('fs');
 const path = require('path');
 const { encodePNG, createCanvas, fillRect, hexToRgb } = require('../lib/png');
+const { loadColorTokens } = require('../lib/tokens');
 
-const site = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'data', 'site.json'), 'utf8'));
-const azul = hexToRgb(site.colors.azul);
-const dorado = hexToRgb(site.colors.dorado);
+const tokens = loadColorTokens();
+const azul = hexToRgb(tokens.azul);
+const dorado = hexToRgb(tokens.dorado);
 
 const OUT_DIR = path.join(__dirname, '..', '..', 'public', 'favicon');
 fs.mkdirSync(OUT_DIR, { recursive: true });

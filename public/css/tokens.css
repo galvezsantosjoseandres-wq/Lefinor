@@ -1,0 +1,21 @@
+/*
+ * Lefinor — tokens de diseño.
+ *
+ * Fuente única de verdad para los colores de marca. Cualquier ajuste de color
+ * se hace aquí — no repitiendo valores hexadecimales sueltos en cada plantilla.
+ *
+ * Los colores también se leen en build time (generator/build.js,
+ * generator/assets/make-favicons.js) para generar el QR y los favicons con
+ * los mismos tonos exactos, así que estas variables deben seguir siendo
+ * valores hexadecimales simples (no funciones ni referencias anidadas).
+ */
+
+:root {
+  --azul: #0B1D33;
+  --azul-2: #0F2540;
+  --dorado: #D4AF37;
+  --dorado-soft: #E9CE7E;
+  --gris: #606468;
+  --blanco: #FFFFFF;
+  --neutro: #F7F8FA;
+}

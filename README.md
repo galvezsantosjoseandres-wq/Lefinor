@@ -26,7 +26,9 @@ Esto produce en `dist/`:
   Publicaciones, Contacto, Legal).
 - Una página de detalle por propiedad (`dist/propiedades/{slug}.html`) y por publicación
   (`dist/publicaciones/{slug}.html`).
-- Una tarjeta digital y su vCard por profesional (`dist/tarjetas/{slug}.html` y `.vcf`).
+- Una tarjeta digital y su vCard por profesional (`dist/tarjetas/{slug}.html` y `.vcf`), con
+  su código QR generado como SVG estático en build time (`generator/lib/qr.js`, sin llamadas
+  a servicios externos en el navegador).
 - `dist/data/propiedades.json` y `dist/data/publicaciones.json` para el buscador/filtro del
   lado del cliente (`public/js/main.js`).
 - `dist/sitemap.xml` y `dist/robots.txt`.
@@ -44,6 +46,14 @@ Esto produce en `dist/`:
   se ocultan automáticamente mientras estén vacías). Solo agregar testimonios y logos con
   autorización expresa del cliente/empresa.
 
+## Colores de marca
+
+`public/css/tokens.css` es la fuente única de verdad de los colores de marca (`--azul`,
+`--azul-2`, `--dorado`, `--dorado-soft`, `--gris`, `--blanco`, `--neutro`). Cualquier ajuste de
+color se hace editando ese archivo — el Tailwind config del `<head>` y los scripts de build en
+Node (QR, favicons, vía `generator/lib/tokens.js`) leen de ahí, no de valores sueltos repetidos
+en cada plantilla.
+
 ## Despliegue
 
 Cloudflare Pages debe ejecutar `npm run build` como comando de build y publicar el directorio
@@ -54,8 +64,13 @@ Request como verificación de que el sitio compila sin errores.
 
 - Fotos y biografías reales de los 4 profesionales (se usan placeholders en
   `public/img/equipo/placeholder-*.svg` y biografías genéricas).
-- Logo vectorizado oficial (se usa un wordmark placeholder en `public/img/logo-lefinor*.svg`
-  y favicons generados con `generator/assets/make-favicons.js`).
+- Logo oficial: ya integrado el logo vectorizado real y aprobado
+  (`public/img/lefinor-isotipo.svg`, `lefinor-logo-principal.svg`, `lefinor-logo-blanco.svg`,
+  `lefinor-logo-sobre-navy.svg` y `lefinor-logo-horizontal.svg`). Header usa la versión
+  horizontal (dorado, fondo claro); footer y tarjeta digital usan la versión blanca
+  (ícono + texto, fondo oscuro).
+- Favicons: `public/favicon/` está vacía a la espera de que se suban manualmente los 3 PNG
+  (16×16, 32×32, 48×48) definitivos vía la interfaz web de GitHub.
 - Contenido detallado de Lefinor Academy (talleres, cursos, diplomados).
 - Confirmación del cliente sobre dónde debe aparecer el slogan oficial (por ahora aparece en
   el hero de Inicio y en los encabezados internos de cada página).
@@ -65,9 +80,6 @@ Request como verificación de que el sitio compila sin errores.
   ni base de datos), los formularios actualmente arman un `mailto:` prellenado hacia
   `info@lefinor.com` al enviarse. Si se prefiere entrega directa sin depender del cliente de
   correo del visitante, se puede conectar una Cloudflare Pages Function más adelante.
-- El código QR de las tarjetas digitales usa el servicio gratuito `api.qrserver.com`
-  (sin necesidad de licencia) — se puede reemplazar por una librería autoalojada si se
-  prefiere no depender de un servicio externo.
 - Decisión final del dominio canónico (`www` vs. apex) para configurar la redirección en
   Cloudflare.
 

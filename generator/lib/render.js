@@ -4,10 +4,24 @@
  * Motor de plantillas minimalista (sin dependencias) usado por el generador de Lefinor.
  * Soporta: {{ variable }}, {{{ variable_sin_escapar }}}, {{#each lista}}...{{/each}},
  * {{#if variable}}...{{else}}...{{/if}} y {{> nombreParcial}}.
+ * Los partials aceptan parámetros literales opcionales, ej.:
+ *   {{> tarjeta color="dorado" tamano="grande"}}
+ * que quedan disponibles dentro del partial como variables normales ({{color}}).
  */
 
 const TAG_RE =
-  /{{{\s*([\w.]+)\s*}}}|{{#each\s+([\w.]+)\s*}}|{{\/each}}|{{#if\s+([\w.]+)\s*}}|{{else}}|{{\/if}}|{{>\s*([\w.-]+)\s*}}|{{\s*([\w.]+)\s*}}/g;
+  /{{{\s*([\w.]+)\s*}}}|{{#each\s+([\w.]+)\s*}}|{{\/each}}|{{#if\s+([\w.]+)\s*}}|{{else}}|{{\/if}}|{{>\s*([\w.-]+)((?:\s+[\w-]+="[^"]*")*)\s*}}|{{\s*([\w.]+)\s*}}/g;
+
+function parsePartialParams(paramsStr) {
+  const params = {};
+  if (!paramsStr) return params;
+  const re = /([\w-]+)="([^"]*)"/g;
+  let match;
+  while ((match = re.exec(paramsStr)) !== null) {
+    params[match[1]] = match[2];
+  }
+  return params;
+}
 
 function escapeHtml(value) {
   if (value === null || value === undefined) return '';
@@ -39,7 +53,7 @@ function tokenize(template) {
     if (match.index > lastIndex) {
       tokens.push({ type: 'text', value: template.slice(lastIndex, match.index) });
     }
-    const [full, rawKey, eachKey, ifKey, partialName, varKey] = match;
+    const [full, rawKey, eachKey, ifKey, partialName, partialParams, varKey] = match;
     if (rawKey !== undefined) {
       tokens.push({ type: 'raw', key: rawKey });
     } else if (eachKey !== undefined) {
@@ -53,7 +67,7 @@ function tokenize(template) {
     } else if (full === '{{/if}}') {
       tokens.push({ type: 'if-close' });
     } else if (partialName !== undefined) {
-      tokens.push({ type: 'partial', name: partialName });
+      tokens.push({ type: 'partial', name: partialName, params: parsePartialParams(partialParams) });
     } else if (varKey !== undefined) {
       tokens.push({ type: 'var', key: varKey });
     }
@@ -84,7 +98,7 @@ function parse(tokens, stopTypes) {
         nodes.push({ type: 'raw', key: token.key });
         break;
       case 'partial':
-        nodes.push({ type: 'partial', name: token.name });
+        nodes.push({ type: 'partial', name: token.name, params: token.params });
         break;
       case 'each-open': {
         const body = parse(tokens, ['each-close']);
@@ -130,7 +144,9 @@ function renderNodes(nodes, data, partials) {
         if (!partialSrc) {
           throw new Error(`Parcial no encontrado: ${node.name}`);
         }
-        out += render(partialSrc, data, partials);
+        const childData =
+          node.params && Object.keys(node.params).length ? Object.assign({}, data, node.params) : data;
+        out += render(partialSrc, childData, partials);
         break;
       }
       case 'each': {

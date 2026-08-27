@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const { render } = require('./lib/render');
+const { generateQrSvg } = require('./lib/qr');
+const { loadColorTokens } = require('./lib/tokens');
 
 const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -98,6 +100,8 @@ function main() {
   const testimoniosPath = path.join(DATA_DIR, 'testimonios.json');
   const confianza = fs.existsSync(confianzaPath) ? readJson(confianzaPath) : [];
   const testimonios = fs.existsSync(testimoniosPath) ? readJson(testimoniosPath) : [];
+
+  const tokens = loadColorTokens();
 
   const partials = loadPartials();
   const layout = fs.readFileSync(path.join(TEMPLATES_DIR, 'layout.html'), 'utf8');
@@ -269,11 +273,13 @@ function main() {
 
   // Tarjetas digitales + vCards
   for (const prof of profesionales) {
+    const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
+    const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
     writeFile(
       `tarjetas/${prof.slug}.html`,
       renderPage(
         'tarjeta',
-        { profesional: prof },
+        { profesional: prof, qrSvg },
         {
           title: `${prof.nombre} — Tarjeta digital ${site.siteName}`,
           description: `Tarjeta de contacto digital de ${prof.nombre}, ${prof.cargo}.`,
