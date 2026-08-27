@@ -1,89 +1,22 @@
-<section id="hero-carousel" class="relative overflow-hidden bg-lefinor-azul h-[78vh] min-h-[460px] max-h-[720px]">
-  <div id="hero-track" class="flex h-full w-full transition-transform duration-700 ease-in-out">
-    <div
-      class="hero-slide relative w-full h-full shrink-0 bg-cover bg-center"
-      style="background-image: url('/img/hero/placeholder-hero-1.svg')"
-    >
-      <div class="absolute inset-0 bg-lefinor-azul/75"></div>
-      <div class="relative h-full max-w-7xl mx-auto px-6 sm:px-8 flex flex-col justify-center text-white">
-        <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">{{site.slogan}}</p>
-        <h1 class="text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
-          Asesoría legal y financiera confiable en Fantino y todo el Cibao
-        </h1>
-        <p class="mt-4 max-w-xl text-white/80">
-          Acompañamos a personas y empresas con soluciones legales y financieras claras, cercanas y profesionales.
-        </p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="/contacto.html" class="bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
-            >Contáctanos</a
-          >
-          <a href="/servicios.html" class="border border-white/40 text-white px-6 py-3 rounded-md hover:bg-white/10"
-            >Ver Servicios</a
-          >
-        </div>
-      </div>
-    </div>
+<section class="relative overflow-hidden" style="background: linear-gradient(160deg, var(--azul) 0%, var(--azul-2) 100%);">
+  {{> signature-mark opacity="0.14" size="62%"}}
 
-    <div
-      class="hero-slide relative w-full h-full shrink-0 bg-cover bg-center"
-      style="background-image: url('/img/hero/placeholder-hero-2.svg')"
-    >
-      <div class="absolute inset-0 bg-lefinor-azul/75"></div>
-      <div class="relative h-full max-w-7xl mx-auto px-6 sm:px-8 flex flex-col justify-center text-white">
-        <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Lefinor Financieros</p>
-        <h1 class="text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
-          Planificación financiera y gestión de capitales a tu medida
-        </h1>
-        <p class="mt-4 max-w-xl text-white/80">
-          Contabilidad integral, análisis financiero, facilidades crediticias y acompañamiento a emprendedores.
-        </p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="/servicios.html" class="bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
-            >Conocer más</a
-          >
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="hero-slide relative w-full h-full shrink-0 bg-cover bg-center"
-      style="background-image: url('/img/hero/placeholder-hero-3.svg')"
-    >
-      <div class="absolute inset-0 bg-lefinor-azul/75"></div>
-      <div class="relative h-full max-w-7xl mx-auto px-6 sm:px-8 flex flex-col justify-center text-white">
-        <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Lefinor Academy</p>
-        <h1 class="text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
-          Formación legal y financiera para crecer con confianza
-        </h1>
-        <p class="mt-4 max-w-xl text-white/80">Talleres, cursos y diplomados pensados para el Cibao.</p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="/academy.html" class="bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
-            >Ver Academy</a
-          >
-        </div>
+  <div class="relative z-[2] max-w-7xl mx-auto px-6 sm:px-8 pt-24 pb-20">
+    <div class="max-w-xl">
+      <p class="eyebrow mb-4">{{site.slogan}}</p>
+      <h1 class="display text-white text-4xl md:text-5xl mb-6">
+        Asesoría legal y financiera confiable en Fantino y todo el Cibao
+      </h1>
+      <div class="ledger-rule mb-6" style="width: 220px;"></div>
+      <p class="body-copy mb-9" style="color: rgba(255, 255, 255, 0.72); max-width: 460px;">
+        Acompañamos a personas y empresas con soluciones legales y financieras claras, cercanas y profesionales.
+      </p>
+      <div class="flex items-center gap-8 flex-wrap">
+        <a href="/contacto.html" class="btn-primary">Contáctanos</a>
+        <a href="/servicios.html" class="link-secondary">Ver servicios →</a>
       </div>
     </div>
   </div>
-
-  <button
-    id="hero-prev"
-    aria-label="Diapositiva anterior"
-    class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-    </svg>
-  </button>
-  <button
-    id="hero-next"
-    aria-label="Siguiente diapositiva"
-    class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </button>
-  <div id="hero-dots" class="absolute bottom-4 inset-x-0 flex justify-center gap-2"></div>
 </section>
 
 {{#if confianza}}
@@ -103,37 +36,49 @@
 </section>
 {{/if}}
 
-<section class="py-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="rounded-xl border border-lefinor-gris/15 p-6 flex flex-col hover:shadow-md transition-shadow">
-      <h2 class="text-xl font-bold text-lefinor-azul mb-2">Servicios</h2>
-      <p class="text-lefinor-gris text-sm flex-1">
-        Asesoría legal y financiera integral: derecho civil, inmobiliario, comercial, familia, migratorio y laboral,
-        junto a contabilidad, análisis financiero y gestión de capitales.
-      </p>
-      <a href="/servicios.html" class="mt-4 inline-flex items-center text-lefinor-dorado font-semibold text-sm hover:underline"
-        >Ver más →</a
-      >
+<section class="py-20 px-6" style="background: var(--neutro);">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center max-w-xl mx-auto mb-14">
+      <p class="eyebrow mb-3">Tres áreas. Un propósito.</p>
+      <h2 class="display text-2xl md:text-3xl" style="color: var(--azul);">
+        Soluciones integrales para tu crecimiento y tranquilidad
+      </h2>
     </div>
-    <div class="rounded-xl border border-lefinor-gris/15 p-6 flex flex-col hover:shadow-md transition-shadow">
-      <h2 class="text-xl font-bold text-lefinor-azul mb-2">Lefinor Academy</h2>
-      <p class="text-lefinor-gris text-sm flex-1">
-        Talleres, cursos y diplomados diseñados para fortalecer el conocimiento legal y financiero de nuestra
-        comunidad.
-      </p>
-      <a href="/academy.html" class="mt-4 inline-flex items-center text-lefinor-dorado font-semibold text-sm hover:underline"
-        >Ver más →</a
-      >
-    </div>
-    <div class="rounded-xl border border-lefinor-gris/15 p-6 flex flex-col hover:shadow-md transition-shadow">
-      <h2 class="text-xl font-bold text-lefinor-azul mb-2">Propiedades</h2>
-      <p class="text-lefinor-gris text-sm flex-1">
-        Propiedades en venta y alquiler en Fantino y otras ciudades, con acompañamiento legal en cada proceso de
-        compra o arrendamiento.
-      </p>
-      <a href="/propiedades.html" class="mt-4 inline-flex items-center text-lefinor-dorado font-semibold text-sm hover:underline"
-        >Ver más →</a
-      >
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+      <div class="card-pillar p-9 flex flex-col">
+        <div class="num">01</div>
+        <h3 class="font-bold text-lg mt-2 mb-2" style="color: var(--azul);">Lefinor Abogados</h3>
+        <p class="body-copy text-sm flex-1">Protegemos tus derechos, defendemos tu futuro.</p>
+        <a
+          href="/servicios.html#legal"
+          class="mt-4 inline-flex items-center text-sm font-semibold hover:underline"
+          style="color: var(--dorado);"
+          >Ver más →</a
+        >
+      </div>
+      <div class="card-pillar p-9 flex flex-col">
+        <div class="num">02</div>
+        <h3 class="font-bold text-lg mt-2 mb-2" style="color: var(--azul);">Lefinor Financieros</h3>
+        <p class="body-copy text-sm flex-1">Estrategia financiera, resultados que trascienden.</p>
+        <a
+          href="/servicios.html#financiero"
+          class="mt-4 inline-flex items-center text-sm font-semibold hover:underline"
+          style="color: var(--dorado);"
+          >Ver más →</a
+        >
+      </div>
+      <div class="card-pillar p-9 flex flex-col">
+        <div class="num">03</div>
+        <h3 class="font-bold text-lg mt-2 mb-2" style="color: var(--azul);">Lefinor Academy</h3>
+        <p class="body-copy text-sm flex-1">Formación que transforma, conocimiento que lidera.</p>
+        <a
+          href="/academy.html"
+          class="mt-4 inline-flex items-center text-sm font-semibold hover:underline"
+          style="color: var(--dorado);"
+          >Ver más →</a
+        >
+      </div>
     </div>
   </div>
 </section>
