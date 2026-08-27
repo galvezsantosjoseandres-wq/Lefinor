@@ -47,13 +47,13 @@
         </div>
 
         <div class="mt-8 flex flex-col items-center">
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={{site.domain}}/tarjetas/{{profesional.slug}}.html"
-            alt="Código QR de la tarjeta de {{profesional.nombre}}"
-            width="140"
-            height="140"
-            class="rounded-md border border-lefinor-gris/15"
-          />
+          <div
+            class="w-[140px] h-[140px] rounded-md border border-lefinor-gris/15 overflow-hidden [&>svg]:block [&>svg]:w-full [&>svg]:h-full"
+            role="img"
+            aria-label="Código QR de la tarjeta de {{profesional.nombre}}"
+          >
+            {{{qrSvg}}}
+          </div>
           <p class="text-xs text-lefinor-gris mt-2">Escanea para guardar este contacto</p>
         </div>
       </div>

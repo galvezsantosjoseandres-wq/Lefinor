@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { render } = require('./lib/render');
+const { generateQrSvg } = require('./lib/qr');
 
 const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -269,11 +270,13 @@ function main() {
 
   // Tarjetas digitales + vCards
   for (const prof of profesionales) {
+    const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
+    const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: site.colors.azul });
     writeFile(
       `tarjetas/${prof.slug}.html`,
       renderPage(
         'tarjeta',
-        { profesional: prof },
+        { profesional: prof, qrSvg },
         {
           title: `${prof.nombre} — Tarjeta digital ${site.siteName}`,
           description: `Tarjeta de contacto digital de ${prof.nombre}, ${prof.cargo}.`,
