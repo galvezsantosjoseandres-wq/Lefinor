@@ -1,0 +1,57 @@
+<footer class="bg-lefinor-azul text-white mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div>
+      <img src="/img/logo-lefinor-blanco.svg" alt="{{site.siteName}}" class="h-10 w-auto mb-4" />
+      <p class="text-sm text-white/70">{{site.slogan}}</p>
+      <a
+        href="{{site.instagramUrl}}"
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 mt-4 text-sm text-white/80 hover:text-lefinor-dorado"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
+          <path
+            d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.02-3.58.07-4.85c.15-3.23 1.67-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07zM12 0C8.74 0 8.33.01 7.05.07c-4.35.2-6.78 2.62-6.98 6.98C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"
+          />
+        </svg>
+        {{site.instagramHandle}}
+      </a>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-lefinor-dorado mb-3">Navegación</h3>
+      <ul class="space-y-2 text-sm">
+        {{#each site.nav}}
+        <li><a href="{{this.href}}" class="text-white/80 hover:text-lefinor-dorado">{{this.label}}</a></li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-lefinor-dorado mb-3">Contacto</h3>
+      <ul class="space-y-2 text-sm text-white/80">
+        <li>{{site.address}}</li>
+        <li><a href="tel:+{{site.whatsappNumber}}" class="hover:text-lefinor-dorado">{{site.phoneDisplay}}</a></li>
+        <li><a href="mailto:{{site.email}}" class="hover:text-lefinor-dorado">{{site.email}}</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-lefinor-dorado mb-3">Legal</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/terminos-de-uso.html" class="text-white/80 hover:text-lefinor-dorado">Términos de Uso</a></li>
+        <li>
+          <a href="/politica-de-privacidad.html" class="text-white/80 hover:text-lefinor-dorado"
+            >Política de Privacidad</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10 py-5 text-center text-xs text-white/60 px-4">
+    &copy; {{site.year}} {{site.siteName}}. Todos los derechos reservados. — Desarrollado por
+    <a href="{{site.developerUrl}}" target="_blank" rel="noopener" class="text-lefinor-dorado hover:underline"
+      >Activosweb.com</a
+    >
+  </div>
+</footer>

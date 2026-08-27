@@ -1,0 +1,161 @@
+<section class="py-10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="text-sm text-lefinor-gris mb-6">
+      <a href="/propiedades.html" class="hover:text-lefinor-dorado">Propiedades</a>
+      <span class="mx-1">/</span>
+      <span class="text-lefinor-azul">{{propiedad.titulo}}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div class="lg:col-span-2">
+        <div class="relative rounded-xl overflow-hidden bg-lefinor-azul/5" data-gallery>
+          <div class="flex transition-transform duration-500 ease-in-out" data-gallery-track>
+            {{#each propiedad.galeria}}
+            <div
+              class="w-full shrink-0 h-72 md:h-[420px] bg-cover bg-center"
+              style="background-image:url('{{this}}')"
+            ></div>
+            {{/each}}
+          </div>
+          <button
+            type="button"
+            data-gallery-prev
+            aria-label="Foto anterior"
+            class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-lefinor-azul rounded-full p-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            data-gallery-next
+            aria-label="Foto siguiente"
+            class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-lefinor-azul rounded-full p-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          <div class="absolute bottom-3 inset-x-0 flex justify-center gap-2" data-gallery-dots></div>
+        </div>
+
+        {{#if propiedad.video}}
+        <div class="mt-8">
+          <h2 class="text-lg font-bold text-lefinor-azul mb-3">Video de la propiedad</h2>
+          <video controls class="w-full rounded-xl" src="{{propiedad.video}}"></video>
+        </div>
+        {{/if}}
+
+        <div class="mt-8">
+          <h1 class="text-2xl md:text-3xl font-bold text-lefinor-azul">{{propiedad.titulo}}</h1>
+          <p class="text-lefinor-gris mt-1">{{propiedad.ciudad}}</p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+            {{#if propiedad.habitaciones}}
+            <div class="rounded-lg border border-lefinor-gris/15 p-4 text-center">
+              <p class="text-xl font-bold text-lefinor-azul">{{propiedad.habitaciones}}</p>
+              <p class="text-xs text-lefinor-gris">Habitaciones</p>
+            </div>
+            {{/if}}
+            {{#if propiedad.banos}}
+            <div class="rounded-lg border border-lefinor-gris/15 p-4 text-center">
+              <p class="text-xl font-bold text-lefinor-azul">{{propiedad.banos}}</p>
+              <p class="text-xs text-lefinor-gris">Baños</p>
+            </div>
+            {{/if}}
+            {{#if propiedad.metros}}
+            <div class="rounded-lg border border-lefinor-gris/15 p-4 text-center">
+              <p class="text-xl font-bold text-lefinor-azul">{{propiedad.metros}} m²</p>
+              <p class="text-xs text-lefinor-gris">Área</p>
+            </div>
+            {{/if}}
+            <div class="rounded-lg border border-lefinor-gris/15 p-4 text-center">
+              <p class="text-xl font-bold text-lefinor-dorado">{{propiedad.precio}}</p>
+              <p class="text-xs text-lefinor-gris">{{propiedad.tipo}}</p>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <h2 class="text-lg font-bold text-lefinor-azul mb-2">Descripción</h2>
+            <p class="text-lefinor-gris leading-relaxed">{{propiedad.descripcion}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-1">
+        <div class="rounded-xl border border-lefinor-gris/15 p-6 sticky top-28">
+          <h2 class="font-bold text-lefinor-azul mb-4">¿Interesado en esta propiedad?</h2>
+          <a
+            href="https://wa.me/{{site.whatsappNumber}}"
+            data-whatsapp-cta
+            data-whatsapp-mensaje="Hola, quiero más información sobre la propiedad: {{propiedad.titulo}}"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white font-semibold py-2.5 rounded-md hover:opacity-90 mb-4"
+          >
+            Escribir por WhatsApp
+          </a>
+          <form class="space-y-3" data-contact-form data-subject="Propiedad: {{propiedad.titulo}}">
+            <div>
+              <label class="block text-sm font-medium text-lefinor-azul mb-1" for="prop-nombre">Nombre</label>
+              <input
+                id="prop-nombre"
+                name="nombre"
+                type="text"
+                required
+                class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-lefinor-azul mb-1" for="prop-email">Correo electrónico</label>
+              <input
+                id="prop-email"
+                name="email"
+                type="email"
+                required
+                class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-lefinor-azul mb-1" for="prop-mensaje">Mensaje</label>
+              <textarea
+                id="prop-mensaje"
+                name="mensaje"
+                rows="3"
+                class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90 transition-colors"
+            >
+              Enviar consulta
+            </button>
+            <p class="text-xs text-lefinor-gris text-center" data-form-status></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {{#if relacionadas}}
+    <div class="mt-16">
+      <h2 class="text-xl font-bold text-lefinor-azul mb-6">Otras propiedades en {{propiedad.ciudad}}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {{#each relacionadas}}
+        <a
+          href="/propiedades/{{this.slug}}.html"
+          class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
+        >
+          <div class="h-40 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
+          <div class="p-4">
+            <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors">{{this.titulo}}</h3>
+            <p class="text-sm text-lefinor-gris mt-1">{{this.precio}}</p>
+          </div>
+        </a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</section>

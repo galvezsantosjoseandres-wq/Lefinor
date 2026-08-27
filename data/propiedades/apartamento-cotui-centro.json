@@ -1,0 +1,18 @@
+{
+  "slug": "apartamento-cotui-centro",
+  "titulo": "Apartamento amueblado en Cotuí",
+  "tipo": "alquiler",
+  "ciudad": "Cotuí",
+  "precio": "US$ 550 / mes",
+  "habitaciones": 2,
+  "banos": 1,
+  "metros": 85,
+  "portada": "/img/propiedades/placeholder-apto-cotui-1.svg",
+  "galeria": [
+    "/img/propiedades/placeholder-apto-cotui-1.svg",
+    "/img/propiedades/placeholder-apto-cotui-2.svg"
+  ],
+  "video": null,
+  "descripcion": "Apartamento amueblado de dos habitaciones en zona céntrica de Cotuí, ideal para profesionales o familias pequeñas. Propiedad de ejemplo (placeholder) — será reemplazada por el inventario real que suministre el cliente.",
+  "destacada": true
+}

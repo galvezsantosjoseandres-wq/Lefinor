@@ -1,0 +1,58 @@
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-lefinor-azul/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <a href="/index.html" class="flex items-center gap-2 shrink-0">
+        <img src="/img/logo-lefinor.svg" alt="{{site.siteName}}" class="h-9 md:h-11 w-auto" />
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6">
+        {{#each site.nav}}
+        <a
+          href="{{this.href}}"
+          class="text-sm font-medium text-lefinor-azul hover:text-lefinor-dorado transition-colors"
+          >{{this.label}}</a
+        >
+        {{/each}}
+      </nav>
+
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2 text-lefinor-azul"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg
+          id="menu-icon-open"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-7 w-7"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg
+          id="menu-icon-close"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-7 w-7 hidden"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <nav id="mobile-menu" class="md:hidden hidden pb-4 border-t border-lefinor-azul/10 pt-2">
+      {{#each site.nav}}
+      <a href="{{this.href}}" class="block py-2.5 text-base font-medium text-lefinor-azul hover:text-lefinor-dorado"
+        >{{this.label}}</a
+      >
+      {{/each}}
+    </nav>
+  </div>
+</header>

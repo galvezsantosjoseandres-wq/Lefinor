@@ -1,0 +1,14 @@
+{
+  "slug": "profesional-1",
+  "orden": 1,
+  "nombre": "Nombre Pendiente",
+  "cargo": "Socio Fundador — Abogado(a)",
+  "area": "Lefinor Abogados",
+  "foto": "/img/equipo/placeholder-1.svg",
+  "fotoAlt": "Foto de estudio temporal — pendiente de foto real del profesional",
+  "bioBreve": "Abogado(a) con práctica orientada al derecho civil, comercial e inmobiliario, acompañando a personas y empresas del Cibao en sus procesos legales.",
+  "bioCompleta": "Biografía en preparación. Este perfil usa una foto de estudio temporal y una descripción genérica del rol mientras el equipo de Lefinor Capital Group confirma la información definitiva de cada profesional (formación académica, trayectoria y áreas de especialización).",
+  "telefono": "849-258-5991",
+  "email": "info@lefinor.com",
+  "vcardArchivo": "/tarjetas/profesional-1.vcf"
+}

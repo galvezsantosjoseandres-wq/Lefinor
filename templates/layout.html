@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+{{> head}}
+<body class="bg-white text-lefinor-azul font-sans antialiased">
+{{> header}}
+<main>
+{{{content}}}
+</main>
+{{> footer}}
+{{> whatsapp-button}}
+{{> cookie-banner}}
+<script>
+  window.LEFINOR = {
+    whatsappNumber: '{{site.whatsappNumber}}',
+    contactEmail: '{{site.email}}',
+  };
+</script>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

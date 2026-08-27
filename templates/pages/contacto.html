@@ -1,0 +1,108 @@
+<section class="bg-lefinor-azul text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+    <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Contacto</p>
+    <h1 class="text-3xl md:text-4xl font-bold max-w-3xl mx-auto">Conversemos sobre tu caso</h1>
+    <p class="mt-4 max-w-2xl mx-auto text-white/80">
+      Estamos ubicados en {{site.address}}. Escríbenos por el medio que prefieras.
+    </p>
+  </div>
+</section>
+
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div>
+      <h2 class="text-xl font-bold text-lefinor-azul mb-6">Formulario de contacto</h2>
+      <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-contact-form data-subject="Contacto general">
+        <div>
+          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-nombre">Nombre</label>
+          <input
+            id="contacto-nombre"
+            name="nombre"
+            type="text"
+            required
+            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-email">Correo electrónico</label>
+          <input
+            id="contacto-email"
+            name="email"
+            type="email"
+            required
+            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-telefono">Teléfono</label>
+          <input
+            id="contacto-telefono"
+            name="telefono"
+            type="tel"
+            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-mensaje">Mensaje</label>
+          <textarea
+            id="contacto-mensaje"
+            name="mensaje"
+            rows="4"
+            required
+            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90 transition-colors"
+        >
+          Enviar mensaje
+        </button>
+        <p class="text-xs text-lefinor-gris text-center" data-form-status></p>
+      </form>
+    </div>
+
+    <div class="space-y-6">
+      <div class="rounded-xl border border-lefinor-gris/15 p-6">
+        <h2 class="text-xl font-bold text-lefinor-azul mb-4">Otras formas de contacto</h2>
+        <ul class="space-y-3 text-sm text-lefinor-gris">
+          <li class="flex items-center gap-3">
+            <span class="text-lefinor-dorado font-semibold">Dirección:</span> {{site.address}}
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-lefinor-dorado font-semibold">Teléfono / WhatsApp:</span>
+            <a href="tel:+{{site.whatsappNumber}}" class="hover:text-lefinor-azul">{{site.phoneDisplay}}</a>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-lefinor-dorado font-semibold">Correo:</span>
+            <a href="mailto:{{site.email}}" class="hover:text-lefinor-azul">{{site.email}}</a>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-lefinor-dorado font-semibold">Instagram:</span>
+            <a href="{{site.instagramUrl}}" target="_blank" rel="noopener" class="hover:text-lefinor-azul"
+              >{{site.instagramHandle}}</a
+            >
+          </li>
+        </ul>
+        <a
+          href="https://wa.me/{{site.whatsappNumber}}"
+          target="_blank"
+          rel="noopener"
+          class="mt-6 flex items-center justify-center gap-2 w-full bg-[#25D366] text-white font-semibold py-2.5 rounded-md hover:opacity-90"
+        >
+          Escribir por WhatsApp
+        </a>
+      </div>
+
+      <div class="rounded-xl overflow-hidden border border-lefinor-gris/15">
+        <iframe
+          src="{{site.mapsEmbedUrl}}"
+          class="w-full h-72 border-0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa de {{site.siteName}}"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#E9E7DE" />
+  <rect width="400" height="400" fill="#D4AF37" opacity="0.05" />
+  <circle cx="200" cy="160" r="70" fill="#606468" opacity="0.32" />
+  <path d="M70 400 C70 280 130 240 200 240 C270 240 330 280 330 400 Z" fill="#606468" opacity="0.32" />
+  <text x="200" y="380" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="14" fill="#0B1D33" opacity="0.55">
+    Foto temporal
+  </text>
+</svg>

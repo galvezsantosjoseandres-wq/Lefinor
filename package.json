@@ -1,0 +1,13 @@
+{
+  "name": "lefinor-capital-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio web de Lefinor Capital Group. Generador estático propio (Node.js, sin dependencias) que combina datos JSON con plantillas HTML.",
+  "scripts": {
+    "build": "node generator/build.js",
+    "watch": "node generator/watch.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

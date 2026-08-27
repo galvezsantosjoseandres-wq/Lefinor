@@ -1,0 +1,32 @@
+{
+  "siteName": "Lefinor Capital Group",
+  "slogan": "Asesores Legales & Financieros del Norte",
+  "domain": "https://lefinor.com",
+  "phone": "849-258-5991",
+  "phoneDisplay": "(849) 258-5991",
+  "whatsappNumber": "18492585991",
+  "email": "info@lefinor.com",
+  "instagramUrl": "https://www.instagram.com/lefi.nor/",
+  "instagramHandle": "@lefi.nor",
+  "address": "Plaza Jardines Suiza, Mod. A2, Fantino, República Dominicana",
+  "mapsEmbedUrl": "https://www.google.com/maps?q=Plaza+Jardines+Suiza,+Fantino,+Rep%C3%BAblica+Dominicana&output=embed",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Plaza+Jardines+Suiza+Mod+A2+Fantino+Republica+Dominicana",
+  "developer": "Activosweb.com",
+  "developerUrl": "https://activosweb.com",
+  "year": 2026,
+  "colors": {
+    "azul": "#0B1D33",
+    "dorado": "#D4AF37",
+    "gris": "#606468",
+    "blanco": "#FFFFFF"
+  },
+  "nav": [
+    { "label": "Inicio", "href": "/index.html" },
+    { "label": "Quiénes Somos", "href": "/quienes-somos.html" },
+    { "label": "Servicios", "href": "/servicios.html" },
+    { "label": "Academy", "href": "/academy.html" },
+    { "label": "Propiedades", "href": "/propiedades.html" },
+    { "label": "Publicaciones", "href": "/publicaciones.html" },
+    { "label": "Contacto", "href": "/contacto.html" }
+  ]
+}

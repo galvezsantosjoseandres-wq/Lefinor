@@ -1,0 +1,18 @@
+{
+  "slug": "local-comercial-santo-domingo",
+  "titulo": "Local comercial en zona céntrica de Santo Domingo",
+  "tipo": "venta",
+  "ciudad": "Santo Domingo",
+  "precio": "US$ 210,000",
+  "habitaciones": null,
+  "banos": 2,
+  "metros": 220,
+  "portada": "/img/propiedades/placeholder-local-sd-1.svg",
+  "galeria": [
+    "/img/propiedades/placeholder-local-sd-1.svg",
+    "/img/propiedades/placeholder-local-sd-2.svg"
+  ],
+  "video": null,
+  "descripcion": "Local comercial de dos niveles con excelente visibilidad, ideal para oficinas o comercio. Propiedad de ejemplo (placeholder) — será reemplazada por el inventario real que suministre el cliente.",
+  "destacada": false
+}

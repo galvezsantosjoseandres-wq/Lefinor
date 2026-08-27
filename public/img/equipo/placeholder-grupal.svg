@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500">
+  <rect width="1200" height="500" fill="#E7E9EA" />
+  <rect width="1200" height="500" fill="#0B1D33" opacity="0.03" />
+  <g fill="#606468" opacity="0.32">
+    <circle cx="330" cy="200" r="60" />
+    <path d="M220 460 C220 350 275 320 330 320 C385 320 440 350 440 460 Z" />
+    <circle cx="500" cy="180" r="65" />
+    <path d="M380 460 C380 340 440 300 500 300 C560 300 620 340 620 460 Z" />
+    <circle cx="680" cy="180" r="65" />
+    <path d="M560 460 C560 340 620 300 680 300 C740 300 800 340 800 460 Z" />
+    <circle cx="860" cy="200" r="60" />
+    <path d="M750 460 C750 350 805 320 860 320 C915 320 970 350 970 460 Z" />
+  </g>
+  <text x="600" y="470" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="16" fill="#0B1D33" opacity="0.55">
+    Foto grupal temporal — equipo de Lefinor Capital Group
+  </text>
+</svg>

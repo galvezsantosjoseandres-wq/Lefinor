@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#132A47" />
+  <circle cx="400" cy="250" r="160" fill="#D4AF37" opacity="0.1" />
+  <rect x="260" y="190" width="280" height="170" fill="#D4AF37" opacity="0.6" />
+  <text x="400" y="450" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="18" fill="#FFFFFF" opacity="0.8">
+    Segundo nivel — imagen de ejemplo
+  </text>
+</svg>

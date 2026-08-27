@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0B1D33" />
+  <rect x="260" y="120" width="280" height="360" rx="8" fill="#FFFFFF" opacity="0.95" />
+  <g fill="#606468" opacity="0.5">
+    <rect x="290" y="160" width="220" height="14" />
+    <rect x="290" y="190" width="220" height="10" />
+    <rect x="290" y="212" width="220" height="10" />
+    <rect x="290" y="234" width="160" height="10" />
+    <rect x="290" y="270" width="220" height="10" />
+    <rect x="290" y="292" width="220" height="10" />
+    <rect x="290" y="314" width="120" height="10" />
+  </g>
+  <rect x="290" y="350" width="90" height="90" fill="#D4AF37" opacity="0.85" />
+  <text x="400" y="470" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="16" fill="#FFFFFF" opacity="0.75">
+    Artículo — imagen de ejemplo
+  </text>
+</svg>

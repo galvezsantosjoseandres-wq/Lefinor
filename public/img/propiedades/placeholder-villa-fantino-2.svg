@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#132A47" />
+  <g fill="#D4AF37" opacity="0.7">
+    <rect x="150" y="180" width="500" height="220" />
+  </g>
+  <rect x="150" y="180" width="500" height="220" fill="#0B1D33" opacity="0.55" />
+  <g stroke="#D4AF37" stroke-width="4" opacity="0.7">
+    <line x1="150" y1="260" x2="650" y2="260" />
+    <line x1="300" y1="180" x2="300" y2="400" />
+    <line x1="500" y1="180" x2="500" y2="400" />
+  </g>
+  <text x="400" y="450" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="18" fill="#FFFFFF" opacity="0.8">
+    Interior — imagen de ejemplo
+  </text>
+</svg>

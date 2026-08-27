@@ -1,0 +1,19 @@
+{
+  "slug": "villa-fantino-centro",
+  "titulo": "Villa moderna en el centro de Fantino",
+  "tipo": "venta",
+  "ciudad": "Fantino",
+  "precio": "US$ 145,000",
+  "habitaciones": 3,
+  "banos": 2,
+  "metros": 180,
+  "portada": "/img/propiedades/placeholder-villa-fantino-1.svg",
+  "galeria": [
+    "/img/propiedades/placeholder-villa-fantino-1.svg",
+    "/img/propiedades/placeholder-villa-fantino-2.svg",
+    "/img/propiedades/placeholder-villa-fantino-3.svg"
+  ],
+  "video": null,
+  "descripcion": "Villa de una planta a pocos minutos del centro de Fantino, con acabados modernos, amplias áreas sociales y patio privado. Propiedad de ejemplo (placeholder) — será reemplazada por el inventario real que suministre el cliente.",
+  "destacada": true
+}

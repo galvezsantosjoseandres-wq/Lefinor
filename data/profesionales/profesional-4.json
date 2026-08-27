@@ -1,0 +1,14 @@
+{
+  "slug": "profesional-4",
+  "orden": 4,
+  "nombre": "Nombre Pendiente",
+  "cargo": "Asesor(a) Financiero(a) — Gestión de Capitales e Inversión",
+  "area": "Lefinor Financieros",
+  "foto": "/img/equipo/placeholder-4.svg",
+  "fotoAlt": "Foto de estudio temporal — pendiente de foto real del profesional",
+  "bioBreve": "Asesor(a) en gestión de capitales, inversión y facilidades crediticias, acompañando a clientes en la planificación financiera de mediano y largo plazo.",
+  "bioCompleta": "Biografía en preparación. Este perfil usa una foto de estudio temporal y una descripción genérica del rol mientras el equipo de Lefinor Capital Group confirma la información definitiva de cada profesional (formación académica, trayectoria y áreas de especialización).",
+  "telefono": "849-258-5991",
+  "email": "info@lefinor.com",
+  "vcardArchivo": "/tarjetas/profesional-4.vcf"
+}

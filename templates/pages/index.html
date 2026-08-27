@@ -1,0 +1,273 @@
+<section id="hero-carousel" class="relative overflow-hidden bg-lefinor-azul h-[78vh] min-h-[460px] max-h-[720px]">
+  <div id="hero-track" class="flex h-full w-full transition-transform duration-700 ease-in-out">
+    <div
+      class="hero-slide relative w-full h-full shrink-0 bg-cover bg-center"
+      style="background-image: url('/img/hero/placeholder-hero-1.svg')"
+    >
+      <div class="absolute inset-0 bg-lefinor-azul/75"></div>
+      <div class="relative h-full max-w-7xl mx-auto px-6 sm:px-8 flex flex-col justify-center text-white">
+        <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">{{site.slogan}}</p>
+        <h1 class="text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
+          Asesoría legal y financiera confiable en Fantino y todo el Cibao
+        </h1>
+        <p class="mt-4 max-w-xl text-white/80">
+          Acompañamos a personas y empresas con soluciones legales y financieras claras, cercanas y profesionales.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/contacto.html" class="bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
+            >Contáctanos</a
+          >
+          <a href="/servicios.html" class="border border-white/40 text-white px-6 py-3 rounded-md hover:bg-white/10"
+            >Ver Servicios</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="hero-slide relative w-full h-full shrink-0 bg-cover bg-center"
+      style="background-image: url('/img/hero/placeholder-hero-2.svg')"
+    >
+      <div class="absolute inset-0 bg-lefinor-azul/75"></div>
+      <div class="relative h-full max-w-7xl mx-auto px-6 sm:px-8 flex flex-col justify-center text-white">
+        <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Lefinor Financieros</p>
+        <h1 class="text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
+          Planificación financiera y gestión de capitales a tu medida
+        </h1>
+        <p class="mt-4 max-w-xl text-white/80">
+          Contabilidad integral, análisis financiero, facilidades crediticias y acompañamiento a emprendedores.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/servicios.html" class="bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
+            >Conocer más</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="hero-slide relative w-full h-full shrink-0 bg-cover bg-center"
+      style="background-image: url('/img/hero/placeholder-hero-3.svg')"
+    >
+      <div class="absolute inset-0 bg-lefinor-azul/75"></div>
+      <div class="relative h-full max-w-7xl mx-auto px-6 sm:px-8 flex flex-col justify-center text-white">
+        <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Lefinor Academy</p>
+        <h1 class="text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
+          Formación legal y financiera para crecer con confianza
+        </h1>
+        <p class="mt-4 max-w-xl text-white/80">Talleres, cursos y diplomados pensados para el Cibao.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/academy.html" class="bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
+            >Ver Academy</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    id="hero-prev"
+    aria-label="Diapositiva anterior"
+    class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  <button
+    id="hero-next"
+    aria-label="Siguiente diapositiva"
+    class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+  <div id="hero-dots" class="absolute bottom-4 inset-x-0 flex justify-center gap-2"></div>
+</section>
+
+{{#if confianza}}
+<section class="py-12 border-b border-lefinor-gris/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="text-sm uppercase tracking-wide text-lefinor-gris font-semibold mb-6">Empresas que confían en nosotros</p>
+    <div class="flex flex-wrap items-center justify-center gap-8">
+      {{#each confianza}}
+      <img
+        src="{{this.logo}}"
+        alt="{{this.nombre}}"
+        class="h-10 w-auto grayscale opacity-70 hover:opacity-100 hover:grayscale-0 transition"
+      />
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="rounded-xl border border-lefinor-gris/15 p-6 flex flex-col hover:shadow-md transition-shadow">
+      <h2 class="text-xl font-bold text-lefinor-azul mb-2">Servicios</h2>
+      <p class="text-lefinor-gris text-sm flex-1">
+        Asesoría legal y financiera integral: derecho civil, inmobiliario, comercial, familia, migratorio y laboral,
+        junto a contabilidad, análisis financiero y gestión de capitales.
+      </p>
+      <a href="/servicios.html" class="mt-4 inline-flex items-center text-lefinor-dorado font-semibold text-sm hover:underline"
+        >Ver más →</a
+      >
+    </div>
+    <div class="rounded-xl border border-lefinor-gris/15 p-6 flex flex-col hover:shadow-md transition-shadow">
+      <h2 class="text-xl font-bold text-lefinor-azul mb-2">Lefinor Academy</h2>
+      <p class="text-lefinor-gris text-sm flex-1">
+        Talleres, cursos y diplomados diseñados para fortalecer el conocimiento legal y financiero de nuestra
+        comunidad.
+      </p>
+      <a href="/academy.html" class="mt-4 inline-flex items-center text-lefinor-dorado font-semibold text-sm hover:underline"
+        >Ver más →</a
+      >
+    </div>
+    <div class="rounded-xl border border-lefinor-gris/15 p-6 flex flex-col hover:shadow-md transition-shadow">
+      <h2 class="text-xl font-bold text-lefinor-azul mb-2">Propiedades</h2>
+      <p class="text-lefinor-gris text-sm flex-1">
+        Propiedades en venta y alquiler en Fantino y otras ciudades, con acompañamiento legal en cada proceso de
+        compra o arrendamiento.
+      </p>
+      <a href="/propiedades.html" class="mt-4 inline-flex items-center text-lefinor-dorado font-semibold text-sm hover:underline"
+        >Ver más →</a
+      >
+    </div>
+  </div>
+</section>
+
+{{#if destacadas}}
+<section class="py-16 bg-lefinor-azul/[0.03]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-end justify-between mb-8">
+      <h2 class="text-2xl font-bold text-lefinor-azul">Propiedades destacadas</h2>
+      <a href="/propiedades.html" class="text-sm font-semibold text-lefinor-dorado hover:underline">Ver todas →</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{#each destacadas}}
+      <a
+        href="/propiedades/{{this.slug}}.html"
+        class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
+      >
+        <div class="h-44 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
+        <div class="p-4">
+          <span class="inline-block text-xs font-semibold uppercase tracking-wide text-lefinor-dorado mb-1"
+            >{{#if this.tipo}}{{this.tipo}}{{/if}} · {{this.ciudad}}</span
+          >
+          <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors">{{this.titulo}}</h3>
+          <p class="text-sm text-lefinor-gris mt-1">{{this.precio}}</p>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+{{#if testimonios}}
+<section class="py-16">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-center text-lefinor-azul mb-10">Lo que dicen nuestros clientes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {{#each testimonios}}
+      <blockquote class="bg-white rounded-xl p-6 shadow-sm border border-lefinor-gris/10">
+        <p class="text-lefinor-azul/90 italic">"{{this.texto}}"</p>
+        <footer class="mt-4 flex items-center gap-3">
+          {{#if this.logo}}
+          <img src="{{this.logo}}" alt="{{this.empresa}}" class="h-6 w-auto" />
+          {{/if}}
+          <span class="text-sm font-semibold text-lefinor-gris">{{this.nombre}}</span>
+        </footer>
+      </blockquote>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+{{#if ultimasPublicaciones}}
+<section class="py-16 bg-lefinor-azul/[0.03]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-end justify-between mb-8">
+      <h2 class="text-2xl font-bold text-lefinor-azul">Últimas publicaciones</h2>
+      <a href="/publicaciones.html" class="text-sm font-semibold text-lefinor-dorado hover:underline">Ver todas →</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{#each ultimasPublicaciones}}
+      <a
+        href="/publicaciones/{{this.slug}}.html"
+        class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
+      >
+        <div class="h-40 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
+        <div class="p-4">
+          <span class="text-xs font-semibold uppercase tracking-wide text-lefinor-dorado">{{this.categoria}}</span>
+          <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors mt-1">
+            {{this.titulo}}
+          </h3>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+    <div>
+      <h2 class="text-2xl font-bold text-lefinor-azul mb-4">Visítanos o escríbenos</h2>
+      <p class="text-lefinor-gris mb-6">{{site.address}}</p>
+      <iframe
+        src="{{site.mapsEmbedUrl}}"
+        class="w-full h-64 rounded-xl border-0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa de {{site.siteName}}"
+      ></iframe>
+    </div>
+    <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-contact-form>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="home-nombre">Nombre</label>
+        <input
+          id="home-nombre"
+          name="nombre"
+          type="text"
+          required
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="home-email">Correo electrónico</label>
+        <input
+          id="home-email"
+          name="email"
+          type="email"
+          required
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="home-mensaje">Mensaje</label>
+        <textarea
+          id="home-mensaje"
+          name="mensaje"
+          rows="3"
+          required
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90 transition-colors"
+      >
+        Enviar mensaje
+      </button>
+      <p class="text-xs text-lefinor-gris text-center" data-form-status></p>
+      <a href="/contacto.html" class="block text-center text-sm text-lefinor-dorado hover:underline"
+        >Ver página de contacto completa →</a
+      >
+    </form>
+  </div>
+</section>

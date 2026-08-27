@@ -1,0 +1,92 @@
+<section class="bg-lefinor-azul text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+    <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Quiénes Somos</p>
+    <h1 class="text-3xl md:text-4xl font-bold max-w-3xl mx-auto">
+      Un equipo de asesores legales y financieros al servicio del Cibao
+    </h1>
+    <p class="mt-4 max-w-2xl mx-auto text-white/80">{{site.slogan}}</p>
+  </div>
+</section>
+
+<section class="py-16">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <img
+      src="/img/equipo/placeholder-grupal.svg"
+      alt="Equipo de {{site.siteName}}"
+      class="w-full rounded-xl border border-lefinor-gris/15"
+    />
+    <p class="text-xs text-lefinor-gris mt-3">
+      Foto grupal temporal — será reemplazada por la fotografía oficial del equipo.
+    </p>
+  </div>
+</section>
+
+<section class="pb-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-lefinor-azul text-center mb-2">Nuestro equipo</h2>
+    <p class="text-center text-lefinor-gris mb-10">Haz clic en cada profesional para conocer más</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {{#each profesionales}}
+      <button
+        type="button"
+        class="team-card text-left rounded-xl border border-lefinor-gris/15 bg-white overflow-hidden hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        data-nombre="{{this.nombre}}"
+        data-cargo="{{this.cargo}}"
+        data-area="{{this.area}}"
+        data-foto="{{this.foto}}"
+        data-bio="{{this.bioCompleta}}"
+        data-vcard="{{this.vcardArchivo}}"
+        data-tarjeta="/tarjetas/{{this.slug}}.html"
+      >
+        <img src="{{this.foto}}" alt="{{this.fotoAlt}}" class="w-full h-56 object-cover" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lefinor-azul">{{this.nombre}}</h3>
+          <p class="text-sm text-lefinor-dorado font-medium">{{this.cargo}}</p>
+          <p class="text-xs text-lefinor-gris mt-1">{{this.area}}</p>
+        </div>
+      </button>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<div
+  id="team-modal"
+  class="hidden fixed inset-0 z-50 items-center justify-center bg-lefinor-azul/60 backdrop-blur-sm p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="team-modal-nombre"
+>
+  <div class="bg-white rounded-xl max-w-lg w-full p-6 relative">
+    <button
+      id="team-modal-close"
+      type="button"
+      aria-label="Cerrar"
+      class="absolute top-3 right-3 text-lefinor-gris hover:text-lefinor-azul"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <img id="team-modal-foto" src="" alt="" class="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
+    <h3 id="team-modal-nombre" class="text-xl font-bold text-lefinor-azul text-center"></h3>
+    <p id="team-modal-cargo" class="text-lefinor-dorado font-medium text-center"></p>
+    <p id="team-modal-area" class="text-xs text-lefinor-gris text-center mb-4"></p>
+    <p id="team-modal-bio" class="text-sm text-lefinor-gris"></p>
+    <div class="mt-6 flex flex-col sm:flex-row gap-3">
+      <a
+        id="team-modal-tarjeta"
+        href="#"
+        class="flex-1 text-center bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90"
+        >Ver tarjeta digital</a
+      >
+      <a
+        id="team-modal-vcard"
+        href="#"
+        download
+        class="flex-1 text-center border border-lefinor-azul/30 text-lefinor-azul font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/5"
+        >Guardar contacto</a
+      >
+    </div>
+  </div>
+</div>

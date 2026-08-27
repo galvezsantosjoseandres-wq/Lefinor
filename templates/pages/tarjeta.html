@@ -1,0 +1,62 @@
+<section class="min-h-[80vh] flex items-center justify-center py-12 bg-lefinor-azul/[0.03]">
+  <div class="w-full max-w-sm mx-auto px-4">
+    <div class="bg-white rounded-2xl shadow-lg border border-lefinor-gris/10 overflow-hidden">
+      <div class="bg-lefinor-azul py-6 flex justify-center">
+        <img src="/img/logo-lefinor-blanco.svg" alt="{{site.siteName}}" class="h-10 w-auto" />
+      </div>
+
+      <div class="p-6 text-center">
+        <img
+          src="{{profesional.foto}}"
+          alt="{{profesional.fotoAlt}}"
+          class="w-28 h-28 rounded-full object-cover mx-auto -mt-16 border-4 border-white shadow-md"
+        />
+        <h1 class="text-xl font-bold text-lefinor-azul mt-4">{{profesional.nombre}}</h1>
+        <p class="text-lefinor-dorado font-semibold text-sm">{{profesional.cargo}}</p>
+        <p class="text-xs text-lefinor-gris mt-1">{{profesional.area}} · {{site.siteName}}</p>
+
+        <div class="mt-6 grid grid-cols-1 gap-3">
+          <a
+            href="https://wa.me/{{site.whatsappNumber}}"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center justify-center gap-2 bg-[#25D366] text-white font-semibold py-2.5 rounded-md hover:opacity-90"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
+              <path
+                d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"
+              />
+            </svg>
+            WhatsApp
+          </a>
+          <a
+            href="{{site.mapsUrl}}"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center justify-center gap-2 border border-lefinor-azul/20 text-lefinor-azul font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/5"
+          >
+            Cómo llegar
+          </a>
+          <a
+            href="{{profesional.vcardArchivo}}"
+            download
+            class="flex items-center justify-center gap-2 bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90"
+          >
+            Guardar contacto
+          </a>
+        </div>
+
+        <div class="mt-8 flex flex-col items-center">
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={{site.domain}}/tarjetas/{{profesional.slug}}.html"
+            alt="Código QR de la tarjeta de {{profesional.nombre}}"
+            width="140"
+            height="140"
+            class="rounded-md border border-lefinor-gris/15"
+          />
+          <p class="text-xs text-lefinor-gris mt-2">Escanea para guardar este contacto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
