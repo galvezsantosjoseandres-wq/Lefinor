@@ -1,0 +1,126 @@
+/*
+ * Lefinor — tokens de diseño y lenguaje visual.
+ *
+ * Fuente única de verdad para los colores de marca y para los componentes de
+ * la "dirección de diseño" (hero asimétrico, ledger rule, trazo de firma,
+ * tarjetas pilar, CTA). Cualquier ajuste de color o de estos componentes se
+ * hace aquí — no repitiendo valores hexadecimales sueltos en cada plantilla.
+ *
+ * Los colores también se leen en build time (generator/build.js,
+ * generator/assets/make-favicons.js) para generar el QR y los favicons con
+ * los mismos tonos exactos, así que estas variables deben seguir siendo
+ * valores hexadecimales simples (no funciones ni referencias anidadas).
+ */
+
+:root {
+  --azul: #0B1D33;
+  --azul-2: #0F2540;
+  --dorado: #D4AF37;
+  --dorado-soft: #E9CE7E;
+  --gris: #606468;
+  --blanco: #FFFFFF;
+  --neutro: #F7F8FA;
+}
+
+/* Etiqueta pequeña en mayúsculas (kicker), siempre en dorado */
+.eyebrow {
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--dorado);
+}
+
+/* Titulares principales del lenguaje visual */
+.display {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* Texto de apoyo */
+.body-copy {
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--gris);
+}
+
+/* Regla dorada con "punto de ledger" — separador de firma bajo un titular */
+.ledger-rule {
+  position: relative;
+  height: 2px;
+  background: linear-gradient(90deg, var(--dorado) 0%, var(--dorado) 40px, rgba(212, 175, 55, 0.15) 40px);
+}
+.ledger-rule::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dorado);
+}
+
+/* Trazo de firma: el isotipo como marca de agua monolínea de fondo.
+   Usar siempre a través del partial templates/partials/signature-mark.html,
+   que pasa opacity/size como parámetros. */
+.signature-mark {
+  position: absolute;
+  right: -8%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 620px;
+  pointer-events: none;
+}
+.signature-mark svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (max-width: 860px) {
+  .signature-mark {
+    width: 90% !important;
+    opacity: 0.08 !important;
+  }
+}
+
+/* CTA único dorado */
+.btn-primary {
+  background: var(--dorado);
+  color: var(--azul);
+  font-weight: 700;
+  padding: 0.95rem 2rem;
+  border-radius: 2px;
+  display: inline-block;
+  letter-spacing: 0.01em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.25);
+}
+
+/* Link secundario de texto, para usar junto al CTA sobre fondo oscuro */
+.link-secondary {
+  color: #fff;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+  text-decoration: none;
+}
+
+/* Tarjeta "pilar": borde superior dorado, sombra sutil */
+.card-pillar {
+  background: var(--blanco);
+  border-top: 3px solid var(--dorado);
+  box-shadow: 0 1px 3px rgba(11, 29, 51, 0.06);
+}
+
+/* Numeral grande y tenue de fondo (01, 02, 03...) */
+.num {
+  font-weight: 800;
+  font-size: 2.4rem;
+  color: rgba(11, 29, 51, 0.08);
+  line-height: 1;
+}

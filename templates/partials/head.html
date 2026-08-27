@@ -16,6 +16,7 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="/css/tokens.css" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -24,9 +25,12 @@
       theme: {
         extend: {
           colors: {
-            'lefinor-azul': '{{site.colors.azul}}',
-            'lefinor-dorado': '{{site.colors.dorado}}',
-            'lefinor-gris': '{{site.colors.gris}}',
+            'lefinor-azul': 'var(--azul)',
+            'lefinor-azul-2': 'var(--azul-2)',
+            'lefinor-dorado': 'var(--dorado)',
+            'lefinor-dorado-soft': 'var(--dorado-soft)',
+            'lefinor-gris': 'var(--gris)',
+            'lefinor-neutro': 'var(--neutro)',
           },
           fontFamily: {
             sans: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
