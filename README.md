@@ -26,7 +26,9 @@ Esto produce en `dist/`:
   Publicaciones, Contacto, Legal).
 - Una página de detalle por propiedad (`dist/propiedades/{slug}.html`) y por publicación
   (`dist/publicaciones/{slug}.html`).
-- Una tarjeta digital y su vCard por profesional (`dist/tarjetas/{slug}.html` y `.vcf`).
+- Una tarjeta digital y su vCard por profesional (`dist/tarjetas/{slug}.html` y `.vcf`), con
+  su código QR generado como SVG estático en build time (`generator/lib/qr.js`, sin llamadas
+  a servicios externos en el navegador).
 - `dist/data/propiedades.json` y `dist/data/publicaciones.json` para el buscador/filtro del
   lado del cliente (`public/js/main.js`).
 - `dist/sitemap.xml` y `dist/robots.txt`.
@@ -70,9 +72,6 @@ Request como verificación de que el sitio compila sin errores.
   ni base de datos), los formularios actualmente arman un `mailto:` prellenado hacia
   `info@lefinor.com` al enviarse. Si se prefiere entrega directa sin depender del cliente de
   correo del visitante, se puede conectar una Cloudflare Pages Function más adelante.
-- El código QR de las tarjetas digitales usa el servicio gratuito `api.qrserver.com`
-  (sin necesidad de licencia) — se puede reemplazar por una librería autoalojada si se
-  prefiere no depender de un servicio externo.
 - Decisión final del dominio canónico (`www` vs. apex) para configurar la redirección en
   Cloudflare.
 
