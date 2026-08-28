@@ -68,12 +68,12 @@ function slugSort(list) {
 }
 
 function buildVCard(prof, site) {
-  const [nombre] = prof.nombre.split(' ');
+  const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
   return [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    `N:${prof.nombre};;;;`,
-    `FN:${prof.nombre}`,
+    `N:${prof.nombre};;;${prof.honorifico || ''};`,
+    `FN:${nombreCompleto}`,
     `TITLE:${prof.cargo}`,
     `ORG:${site.siteName}`,
     `TEL;TYPE=CELL:${prof.telefono}`,
@@ -271,8 +271,23 @@ function main() {
     );
   }
 
-  // Tarjetas digitales + vCards
+  // Biografías del equipo + tarjetas digitales + vCards
   for (const prof of profesionales) {
+    const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
+
+    writeFile(
+      `equipo/${prof.slug}.html`,
+      renderPage(
+        'profesional-detail',
+        { profesional: prof },
+        {
+          title: `${nombreCompleto} — ${site.siteName}`,
+          description: `${nombreCompleto}, ${prof.cargo} en ${prof.area}.`,
+          canonicalPath: `/equipo/${prof.slug}.html`,
+        }
+      )
+    );
+
     const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
     const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
     writeFile(
@@ -281,8 +296,8 @@ function main() {
         'tarjeta',
         { profesional: prof, qrSvg },
         {
-          title: `${prof.nombre} — Tarjeta digital ${site.siteName}`,
-          description: `Tarjeta de contacto digital de ${prof.nombre}, ${prof.cargo}.`,
+          title: `${nombreCompleto} — Tarjeta digital ${site.siteName}`,
+          description: `Tarjeta de contacto digital de ${nombreCompleto}, ${prof.cargo}.`,
           canonicalPath: `/tarjetas/${prof.slug}.html`,
           bodyClass: 'tarjeta-page',
         }
@@ -310,6 +325,7 @@ function main() {
   const dynamicPaths = [
     ...propiedades.map((p) => `/propiedades/${p.slug}.html`),
     ...publicaciones.map((p) => `/publicaciones/${p.slug}.html`),
+    ...profesionales.map((p) => `/equipo/${p.slug}.html`),
   ];
   const allPaths = [...staticPaths, ...dynamicPaths];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${allPaths

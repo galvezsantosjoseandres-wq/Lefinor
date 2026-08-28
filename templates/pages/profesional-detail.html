@@ -1,0 +1,88 @@
+<section class="py-12">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="text-sm text-lefinor-gris mb-8">
+      <a href="/quienes-somos.html" class="hover:text-lefinor-dorado">Quiénes Somos</a>
+      <span class="mx-1">/</span>
+      <span class="text-lefinor-azul">{{profesional.honorifico}} {{profesional.nombre}}</span>
+    </nav>
+
+    <div class="flex flex-col sm:flex-row items-start gap-6 mb-10">
+      <img
+        src="{{profesional.foto}}"
+        alt="{{profesional.fotoAlt}}"
+        class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md shrink-0"
+      />
+      <div>
+        <span class="inline-block text-xs font-semibold uppercase tracking-wide text-lefinor-dorado mb-2"
+          >{{profesional.area}}</span
+        >
+        <h1 class="text-2xl md:text-3xl font-bold text-lefinor-azul">{{profesional.honorifico}} {{profesional.nombre}}</h1>
+        <p class="text-lefinor-gris font-medium mt-1">{{profesional.cargo}}</p>
+        {{#if profesional.fraseDistintiva}}
+        <p class="text-lefinor-azul italic mt-3 border-l-2 border-lefinor-dorado pl-3">
+          "{{profesional.fraseDistintiva}}"
+        </p>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="prose prose-lefinor max-w-none text-lefinor-azul/90 leading-relaxed mb-10">
+      <p>{{profesional.bioCompleta}}</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
+      {{#if profesional.formacion}}
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wide text-lefinor-azul mb-3">Formación académica</h2>
+        <ul class="space-y-2 text-sm text-lefinor-gris">
+          {{#each profesional.formacion}}
+          <li class="flex gap-2">
+            <span class="text-lefinor-dorado">•</span>
+            <span>{{this}}</span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{#if profesional.experiencia}}
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wide text-lefinor-azul mb-3">Experiencia</h2>
+        <ul class="space-y-2 text-sm text-lefinor-gris">
+          {{#each profesional.experiencia}}
+          <li class="flex gap-2">
+            <span class="text-lefinor-dorado">•</span>
+            <span>{{this}}</span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+
+    {{#if profesional.idiomas}}
+    <div class="mb-10">
+      <h2 class="text-sm font-bold uppercase tracking-wide text-lefinor-azul mb-3">Idiomas</h2>
+      <div class="flex flex-wrap gap-2">
+        {{#each profesional.idiomas}}
+        <span class="text-xs font-medium bg-lefinor-azul/5 text-lefinor-azul px-3 py-1 rounded-full">{{this}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-lefinor-gris/15">
+      <a
+        href="/tarjetas/{{profesional.slug}}.html"
+        class="flex-1 text-center bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90"
+        >Ver tarjeta digital</a
+      >
+      <a
+        href="{{profesional.vcardArchivo}}"
+        download
+        class="flex-1 text-center border border-lefinor-azul/30 text-lefinor-azul font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/5"
+        >Guardar contacto</a
+      >
+    </div>
+  </div>
+</section>

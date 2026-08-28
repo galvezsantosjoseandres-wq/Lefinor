@@ -5,7 +5,6 @@
     initMobileMenu();
     initCookieBanner();
     initHeroCarousel();
-    initTeamModal();
     initGallery();
     initWhatsappMensajes();
     initContactForms();
@@ -115,54 +114,6 @@
 
     goTo(0);
     resetAutoplay();
-  }
-
-  function initTeamModal() {
-    var cards = document.querySelectorAll('.team-card');
-    var modal = document.getElementById('team-modal');
-    if (cards.length === 0 || !modal) return;
-
-    var closeBtn = document.getElementById('team-modal-close');
-    var foto = document.getElementById('team-modal-foto');
-    var nombre = document.getElementById('team-modal-nombre');
-    var cargo = document.getElementById('team-modal-cargo');
-    var area = document.getElementById('team-modal-area');
-    var bio = document.getElementById('team-modal-bio');
-    var tarjetaLink = document.getElementById('team-modal-tarjeta');
-    var vcardLink = document.getElementById('team-modal-vcard');
-
-    function openModal(card) {
-      foto.src = card.dataset.foto || '';
-      foto.alt = card.dataset.nombre || '';
-      nombre.textContent = card.dataset.nombre || '';
-      cargo.textContent = card.dataset.cargo || '';
-      area.textContent = card.dataset.area || '';
-      bio.textContent = card.dataset.bio || '';
-      if (tarjetaLink) tarjetaLink.href = card.dataset.tarjeta || '#';
-      if (vcardLink) vcardLink.href = card.dataset.vcard || '#';
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.classList.add('overflow-hidden');
-    }
-
-    function closeModal() {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      document.body.classList.remove('overflow-hidden');
-    }
-
-    cards.forEach(function (card) {
-      card.addEventListener('click', function () {
-        openModal(card);
-      });
-    });
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function (event) {
-      if (event.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') closeModal();
-    });
   }
 
   function initGallery() {

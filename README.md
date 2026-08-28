@@ -62,8 +62,6 @@ Request como verificación de que el sitio compila sin errores.
 
 ## Pendientes conocidos (ver instrucciones del proyecto)
 
-- Fotos y biografías reales de los 4 profesionales (se usan placeholders en
-  `public/img/equipo/placeholder-*.svg` y biografías genéricas).
 - Logo oficial: ya integrado el logo vectorizado real y aprobado
   (`public/img/lefinor-isotipo.svg`, `lefinor-logo-principal.svg`, `lefinor-logo-blanco.svg`,
   `lefinor-logo-sobre-navy.svg` y `lefinor-logo-horizontal.svg`). Header usa la versión
