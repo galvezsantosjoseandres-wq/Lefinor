@@ -1,18 +1,24 @@
 {
   "slug": "apartamento-cotui-centro",
   "titulo": "Apartamento amueblado en Cotuí",
-  "tipo": "alquiler",
+  "tipo_operacion": "alquiler",
   "ciudad": "Cotuí",
-  "precio": "US$ 550 / mes",
-  "habitaciones": 2,
-  "banos": 1,
-  "metros": 85,
+  "precio": "US$ 550",
+  "precio_periodo": "/mes",
+  "quickspecs": ["2 habitaciones", "1 baño", "85 m²"],
   "portada": "/img/propiedades/placeholder-apto-cotui-1.svg",
   "galeria": [
-    "/img/propiedades/placeholder-apto-cotui-1.svg",
-    "/img/propiedades/placeholder-apto-cotui-2.svg"
+    { "tipo": "foto", "src": "/img/propiedades/placeholder-apto-cotui-1.svg" },
+    { "tipo": "foto", "src": "/img/propiedades/placeholder-apto-cotui-2.svg" }
   ],
-  "video": null,
-  "descripcion": "Apartamento amueblado de dos habitaciones en zona céntrica de Cotuí, ideal para profesionales o familias pequeñas. Propiedad de ejemplo (placeholder) — será reemplazada por el inventario real que suministre el cliente.",
+  "caracteristicas": [
+    { "label": "Localización", "valor": "Cotuí" },
+    { "label": "Condición", "valor": "Amueblado" },
+    { "label": "Uso actual", "valor": "Residencial" },
+    { "label": "Construcción", "valor": "85 m²" }
+  ],
+  "detalle_intro": "Apartamento amueblado de dos habitaciones en zona céntrica de Cotuí, ideal para profesionales o familias pequeñas.",
+  "detalle_bullets": ["85 m²", "2 habitaciones · 1 baño", "Sala · Comedor · Cocina", "Amueblado"],
+  "detalle_cierre": "Propiedad de ejemplo (placeholder) — será reemplazada por el inventario real que suministre el cliente.",
   "destacada": true
 }

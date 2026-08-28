@@ -37,8 +37,14 @@ Esto produce en `dist/`:
 
 - **Nuevo profesional:** crear `data/profesionales/{slug}.json` (usar uno existente como
   plantilla) y su foto en `public/img/equipo/`.
-- **Nueva propiedad:** crear `data/propiedades/{slug}.json` y sus imágenes en
-  `public/img/propiedades/`. Aparece automáticamente en el listado, el filtro y el buscador.
+- **Nueva propiedad:** crear `data/propiedades/{slug}.json` (usar uno existente como plantilla)
+  y sus imágenes en `public/img/propiedades/`. Aparece automáticamente en el listado, el filtro
+  y el buscador. `galeria` acepta cualquier cantidad de fotos/video (`{"tipo":"foto"|"video",
+  "src":"...", "duracion":"mm:ss"}` — `duracion` solo aplica a video); la página de detalle
+  muestra hasta 5 en la grilla (con overlay "+N ver más fotos" si hay más) y todas en el
+  lightbox. `caracteristicas` acepta cualquier cantidad de pares `{"label":"...","valor":"..."}`.
+  Si una foto de `galeria` o el `portada` vienen vacíos, se muestra un patrón de rayas
+  diagonales en su lugar en vez de un espacio roto.
 - **Nueva publicación:** crear `data/publicaciones/{slug}.json` y sus imágenes en
   `public/img/publicaciones/`.
 - **Testimonios / empresas que confían:** agregar entradas a `data/testimonios.json` y
@@ -80,8 +86,9 @@ Request como verificación de que el sitio compila sin errores.
 - Contenido detallado de Lefinor Academy (talleres, cursos, diplomados).
 - Confirmación del cliente sobre dónde debe aparecer el slogan oficial (por ahora aparece en
   el hero de Inicio y en los encabezados internos de cada página).
-- Activación de Cloudflare R2 para alojar video de propiedades (`propiedad.video` en el JSON
-  ya soporta una URL de video cuando esté disponible).
+- Activación de Cloudflare R2 para alojar video de propiedades (cada elemento de
+  `propiedad.galeria` con `"tipo": "video"` ya soporta una URL de video en `src` cuando esté
+  disponible).
 - **Envío real de los formularios de contacto:** por ser un sitio 100% estático (sin backend
   ni base de datos), los formularios actualmente arman un `mailto:` prellenado hacia
   `info@lefinor.com` al enviarse. Si se prefiere entrega directa sin depender del cliente de

@@ -76,6 +76,73 @@ function slugSort(list) {
   return list.slice().sort((a, b) => (a.orden || 0) - (b.orden || 0));
 }
 
+const GALERIA_PREVIEW_MAX = 5;
+
+// Clases de grilla para la galería según cuántos tiles de previsualización hay (1 a 5).
+// CSS Grid coloca automáticamente los tiles secundarios en las celdas libres una vez que
+// el tile principal reserva su columna/filas con row-span, así que nunca queda una celda
+// vacía sin importar cuántas fotos tenga la propiedad.
+function claseGaleria(previewCount) {
+  switch (previewCount) {
+    case 1:
+      return { container: '', main: 'h-64 md:h-[420px] w-full rounded-xl overflow-hidden' };
+    case 2:
+      return {
+        container: 'md:grid md:grid-cols-2 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto',
+      };
+    case 3:
+      return {
+        container: 'md:grid md:grid-cols-[1.6fr_1fr] md:grid-rows-2 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto md:row-span-2',
+      };
+    case 4:
+      return {
+        container: 'md:grid md:grid-cols-[1.6fr_1fr] md:grid-rows-3 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto md:row-span-3',
+      };
+    default:
+      return {
+        container: 'md:grid md:grid-cols-[1.6fr_1fr_1fr] md:grid-rows-2 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto md:row-span-2',
+      };
+  }
+}
+
+function tipoOperacionLabel(tipoOperacion) {
+  if (tipoOperacion === 'venta') return 'Venta';
+  if (tipoOperacion === 'alquiler') return 'Alquiler';
+  return tipoOperacion || '';
+}
+
+function prepararGaleria(propiedad) {
+  const galeria = (propiedad.galeria || []).map((item) => Object.assign({}, item, { mostrarFoto: item.tipo === 'foto' && Boolean(item.src) }));
+  const galeriaMain = galeria[0]
+    ? Object.assign({}, galeria[0], { previewIndex: 0 })
+    : undefined;
+  const galeriaSecundarias = galeria.slice(1, 4).map((item, i) => Object.assign({}, item, { previewIndex: i + 1 }));
+  const galeriaQuintaTile = galeria[4] ? Object.assign({}, galeria[4], { previewIndex: 4 }) : undefined;
+  const tieneMasFotos = galeria.length > GALERIA_PREVIEW_MAX;
+  const fotosRestantes = tieneMasFotos ? galeria.length - GALERIA_PREVIEW_MAX : 0;
+  const tieneMultiplesFotos = galeria.length > 1;
+  const galeriaJson = JSON.stringify(galeria).replace(/</g, '\\u003c');
+  const layout = claseGaleria(Math.min(galeria.length, GALERIA_PREVIEW_MAX));
+
+  return Object.assign({}, propiedad, {
+    galeria,
+    galeriaMain,
+    galeriaSecundarias,
+    galeriaQuintaTile,
+    tieneMasFotos,
+    fotosRestantes,
+    tieneMultiplesFotos,
+    galeriaJson,
+    galeriaContainerClass: layout.container,
+    galeriaMainClass: layout.main,
+    tipoOperacionLabel: tipoOperacionLabel(propiedad.tipo_operacion),
+  });
+}
+
 function buildVCard(prof, site) {
   const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
   return [
@@ -253,10 +320,10 @@ function main() {
       `propiedades/${propiedad.slug}.html`,
       renderPage(
         'propiedad-detail',
-        { propiedad, relacionadas },
+        { propiedad: prepararGaleria(propiedad), relacionadas },
         {
           title: `${propiedad.titulo} — ${site.siteName}`,
-          description: propiedad.descripcion.slice(0, 160),
+          description: propiedad.detalle_intro.slice(0, 160),
           canonicalPath: `/propiedades/${propiedad.slug}.html`,
         }
       )
