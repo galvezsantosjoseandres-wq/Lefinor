@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { render } = require('./lib/render');
 const { generateQrSvg } = require('./lib/qr');
 const { loadColorTokens } = require('./lib/tokens');
@@ -46,6 +47,14 @@ function copyDir(src, dest) {
       fs.copyFileSync(srcPath, destPath);
     }
   }
+}
+
+function buildTailwindCss() {
+  const bin = path.join(ROOT, 'node_modules', '.bin', process.platform === 'win32' ? 'tailwindcss.cmd' : 'tailwindcss');
+  const input = path.join(__dirname, 'tailwind-input.css');
+  const output = path.join(DIST_DIR, 'css', 'tailwind.css');
+  ensureDir(path.dirname(output));
+  execFileSync(bin, ['-i', input, '-o', output, '--minify'], { cwd: ROOT, stdio: 'inherit' });
 }
 
 function loadPartials() {
@@ -338,6 +347,9 @@ function main() {
 
   // Assets estáticos
   copyDir(PUBLIC_DIR, DIST_DIR);
+
+  // CSS de Tailwind compilado en build time (reemplaza el script runtime de cdn.tailwindcss.com)
+  buildTailwindCss();
 
   console.log(`Sitio generado en ${DIST_DIR}`);
   console.log(`Páginas: ${allPaths.length + profesionales.length} | Propiedades: ${propiedades.length} | Publicaciones: ${publicaciones.length} | Profesionales: ${profesionales.length}`);

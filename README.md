@@ -50,9 +50,18 @@ Esto produce en `dist/`:
 
 `public/css/tokens.css` es la fuente única de verdad de los colores de marca (`--azul`,
 `--azul-2`, `--dorado`, `--dorado-soft`, `--gris`, `--blanco`, `--neutro`). Cualquier ajuste de
-color se hace editando ese archivo — el Tailwind config del `<head>` y los scripts de build en
-Node (QR, favicons, vía `generator/lib/tokens.js`) leen de ahí, no de valores sueltos repetidos
-en cada plantilla.
+color se hace editando ese archivo — `tailwind.config.js` (colores del tema) y los scripts de
+build en Node (QR, favicons, vía `generator/lib/tokens.js`) leen de ahí, no de valores sueltos
+repetidos en cada plantilla.
+
+## CSS de Tailwind
+
+Tailwind se compila en build time (`tailwindcss.config.js` + `generator/tailwind-input.css` →
+`dist/css/tailwind.css`, invocado desde `generator/build.js`). No se usa el script de
+`cdn.tailwindcss.com`: ese script compila las clases en el navegador de cada visitante después
+de cargar la página, lo que puede producir una ventana breve de contenido sin estilo mientras
+carga — más notoria en páginas con bloques grandes arriba del pliegue (el carrusel de Inicio, la
+foto grupal de Quiénes Somos). Compilar el CSS en build time elimina esa ventana por completo.
 
 ## Despliegue
 
@@ -65,8 +74,7 @@ Request como verificación de que el sitio compila sin errores.
 - Logo oficial: ya integrado el logo vectorizado real y aprobado
   (`public/img/lefinor-isotipo.svg`, `lefinor-logo-principal.svg`, `lefinor-logo-blanco.svg`,
   `lefinor-logo-sobre-navy.svg` y `lefinor-logo-horizontal.svg`). Header usa la versión
-  horizontal (dorado, fondo claro); footer y tarjeta digital usan la versión blanca
-  (ícono + texto, fondo oscuro).
+  horizontal (dorado, fondo claro); footer usa la versión principal (dorado, fondo oscuro).
 - Favicons: `public/favicon/` está vacía a la espera de que se suban manualmente los 3 PNG
   (16×16, 32×32, 48×48) definitivos vía la interfaz web de GitHub.
 - Contenido detallado de Lefinor Academy (talleres, cursos, diplomados).
