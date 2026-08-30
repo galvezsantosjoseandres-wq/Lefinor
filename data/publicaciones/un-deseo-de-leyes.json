@@ -1,14 +1,16 @@
 {
   "slug": "un-deseo-de-leyes",
   "categoria": "derecho-civil",
-  "titulo": "Un deseo de leyes",
+  "titulo": "Segunda Publicación",
   "fecha": "28 de agosto, 2026",
-  "extracto": "Una reflexión sobre por qué República Dominicana tiene una de las proporciones más altas de abogados per cápita del mundo, y su vínculo con la historia académica y literaria del país.",
+  "extracto": "Artículo de ejemplo con contenido de prueba — pendiente de redacción final por parte del equipo de Lefinor.",
   "cuerpo": [
-    "República Dominicana tiene una de las proporciones más altas de abogados per cápita del mundo, superando a países como Estados Unidos, Brasil o Francia. Esta particularidad tiene raíces históricas: desde la fundación de la Universidad Primada de América, el derecho fue una de las disciplinas centrales de estudio, junto a la teología, la medicina y las artes liberales.",
-    "Esa tradición se refleja también en la literatura dominicana: muchos de los escritores más importantes del siglo XX —como Pedro Mir, Joaquín Balaguer y Héctor Incháustegui Cabral— fueron también abogados, mostrando un vínculo estrecho entre el ejercicio del derecho y el pensamiento organizado del país."
+    "Este es un texto de prueba. Este espacio está reservado para el análisis o comentario que un profesional de Lefinor escribirá sobre este tema. Mientras tanto, se utiliza este contenido de ejemplo para probar el diseño y la disposición del artículo, incluyendo el título, la categoría, la fecha de publicación y el crédito del autor al final del texto.",
+    "Este es un segundo párrafo de prueba. Aquí normalmente iría el desarrollo central del tema — por ejemplo, un análisis sobre las implicaciones prácticas de una nueva ley o resolución para los clientes de Lefinor, explicado en un lenguaje claro y accesible, tal como lo haría uno de nuestros profesionales al compartir su perspectiva.",
+    "Este es un tercer párrafo de prueba. En un artículo real, esta sección podría profundizar en ejemplos concretos, citar la normativa aplicable, o explicar qué deben tener en cuenta las personas o empresas afectadas por el cambio descrito en el título.",
+    "Este es un cuarto párrafo de prueba, y el último de este texto de ejemplo. Sirve para confirmar que el diseño se ve bien con un artículo de longitud similar a un análisis real, y que el crédito del autor aparece correctamente al final, dentro de esta misma página."
   ],
   "imagen_portada": null,
-  "fuente": "Listín Diario",
-  "autor_id": null
+  "fuente": null,
+  "autor_id": "hugo-taveras"
 }
