@@ -506,6 +506,22 @@ function main() {
   // robots.txt
   writeFile('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.domain}/sitemap.xml\n`);
 
+  // Página 404: pantalla de error autónoma (sin header/footer del layout principal),
+  // servida automáticamente por Cloudflare Pages para cualquier ruta no encontrada.
+  writeFile(
+    '404.html',
+    render(
+      loadPage('404'),
+      {
+        site,
+        title: `Página no encontrada — ${site.siteName}`,
+        description: 'La página que buscas no existe o fue movida. Vuelve al inicio o explora las publicaciones de Lefinor Capital Group.',
+        canonicalPath: '/404.html',
+      },
+      partials
+    )
+  );
+
   // Assets estáticos
   copyDir(PUBLIC_DIR, DIST_DIR);
 
