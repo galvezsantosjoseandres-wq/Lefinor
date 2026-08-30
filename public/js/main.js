@@ -411,9 +411,9 @@
     var node = template.content.firstElementChild.cloneNode(true);
     node.href = '/publicaciones/' + publicacion.slug + '.html';
     node.querySelector('.publicacion-card-portada').style.backgroundImage = "url('" + publicacion.portada + "')";
-    node.querySelector('.publicacion-card-categoria').textContent = publicacion.categoria || '';
+    node.querySelector('.publicacion-card-categoria').textContent = publicacion.categoriaLabel || '';
     node.querySelector('.publicacion-card-titulo').textContent = publicacion.titulo;
-    node.querySelector('.publicacion-card-resumen').textContent = publicacion.resumen || '';
+    node.querySelector('.publicacion-card-resumen').textContent = publicacion.extracto || '';
     node.querySelector('.publicacion-card-fecha').textContent = publicacion.fecha || '';
     return node;
   }
@@ -424,8 +424,23 @@
     var url = window.__LEFINOR_PUBLICACIONES_URL;
     if (!grid || !template || !url) return;
 
+    var filtroWrap = document.getElementById('publicaciones-filtro-categoria');
     var buscador = document.getElementById('publicaciones-buscador');
     var vacio = document.getElementById('publicaciones-resultado-vacio');
+    var categoriaActiva = 'todas';
+    // Deep-link desde el botón "Sus publicaciones" de la tarjeta de autor: /publicaciones.html?autor=slug
+    var autorActivo = new URLSearchParams(window.location.search).get('autor');
+
+    function actualizarBotonesFiltro() {
+      if (!filtroWrap) return;
+      var botones = filtroWrap.querySelectorAll('.filtro-btn');
+      botones.forEach(function (btn) {
+        var activo = btn.dataset.categoria === categoriaActiva;
+        btn.classList.toggle('bg-lefinor-azul', activo);
+        btn.classList.toggle('text-white', activo);
+        btn.classList.toggle('text-lefinor-azul', !activo);
+      });
+    }
 
     fetch(url)
       .then(function (res) { return res.json(); })
@@ -433,11 +448,13 @@
         function render() {
           var texto = (buscador.value || '').toLowerCase().trim();
           var filtradas = publicaciones.filter(function (p) {
-            return (
+            var coincideCategoria = categoriaActiva === 'todas' || p.categoria === categoriaActiva;
+            var coincideAutor = !autorActivo || p.autor_id === autorActivo;
+            var coincideTexto =
               !texto ||
               p.titulo.toLowerCase().indexOf(texto) !== -1 ||
-              (p.categoria && p.categoria.toLowerCase().indexOf(texto) !== -1)
-            );
+              (p.categoriaLabel && p.categoriaLabel.toLowerCase().indexOf(texto) !== -1);
+            return coincideCategoria && coincideAutor && coincideTexto;
           });
 
           grid.innerHTML = '';
@@ -451,6 +468,16 @@
           });
         }
 
+        if (filtroWrap) {
+          filtroWrap.querySelectorAll('.filtro-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              categoriaActiva = btn.dataset.categoria;
+              actualizarBotonesFiltro();
+              render();
+            });
+          });
+          actualizarBotonesFiltro();
+        }
         if (buscador) buscador.addEventListener('input', render);
         render();
       })
