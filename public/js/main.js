@@ -184,6 +184,7 @@
 
     var stage = modal.querySelector('[data-lightbox-stage]');
     var counter = modal.querySelector('[data-lightbox-counter]');
+    var galeriaGrid = document.getElementById('propiedad-galeria');
     var current = 0;
     var STRIPE_BG = 'repeating-linear-gradient(135deg, var(--azul-2) 0, var(--azul-2) 2px, var(--azul) 2px, var(--azul) 40px)';
 
@@ -205,12 +206,18 @@
         video.className = 'max-h-full max-w-full rounded';
         stage.appendChild(video);
       } else {
+        // Sin archivo real todavía (placeholder): ocupa igualmente la mayor parte del
+        // escenario, no un ícono pequeño, para que siga leyéndose como una vista de un
+        // solo elemento ampliado.
         var ph = document.createElement('div');
-        ph.className = 'w-full max-w-2xl aspect-video rounded flex items-center justify-center';
+        ph.className = 'w-full h-full rounded flex flex-col items-center justify-center gap-3';
         ph.style.backgroundImage = STRIPE_BG;
         if (item.tipo === 'video') {
           ph.innerHTML =
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-16 h-16 text-white/70" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-20 h-20 text-white/80" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+            '<span class="text-white/70 text-sm font-medium">Video no disponible todavía</span>';
+        } else {
+          ph.innerHTML = '<span class="text-white/70 text-sm font-medium">Foto no disponible todavía</span>';
         }
         stage.appendChild(ph);
       }
@@ -227,6 +234,7 @@
       modal.classList.remove('hidden');
       modal.classList.add('flex');
       document.body.classList.add('overflow-hidden');
+      if (galeriaGrid) galeriaGrid.classList.add('hidden');
     }
 
     function close() {
@@ -234,6 +242,7 @@
       modal.classList.remove('flex');
       document.body.classList.remove('overflow-hidden');
       stage.innerHTML = '';
+      if (galeriaGrid) galeriaGrid.classList.remove('hidden');
     }
 
     document.querySelectorAll('[data-lightbox-open]').forEach(function (trigger) {
