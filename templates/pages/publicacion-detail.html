@@ -51,35 +51,5 @@
       </div>
     </div>
     {{/if}}
-
-    <div class="mt-12 rounded-xl bg-lefinor-azul/[0.04] p-6 text-center">
-      <p class="text-lefinor-azul font-semibold mb-3">¿Tienes dudas sobre este tema?</p>
-      <a
-        href="https://wa.me/{{site.whatsappNumber}}"
-        target="_blank"
-        rel="noopener"
-        class="inline-flex bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
-        >Escribir por WhatsApp</a
-      >
-    </div>
-
-    {{#if relacionadas}}
-    <div class="mt-16">
-      <h2 class="text-xl font-bold text-lefinor-azul mb-6">Más publicaciones</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {{#each relacionadas}}
-        <a
-          href="/publicaciones/{{this.slug}}.html"
-          class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
-        >
-          <div class="h-36 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
-          <div class="p-4">
-            <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors">{{this.titulo}}</h3>
-          </div>
-        </a>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
   </div>
 </article>
