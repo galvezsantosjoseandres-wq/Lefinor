@@ -317,8 +317,7 @@
     }
     node.querySelector('.propiedad-card-tipo').textContent = formatTipo(propiedad.tipo_operacion) + ' · ' + propiedad.ciudad;
     node.querySelector('.propiedad-card-titulo').textContent = propiedad.titulo;
-    node.querySelector('.propiedad-card-precio').textContent =
-      propiedad.precio + (propiedad.precio_periodo ? ' ' + propiedad.precio_periodo : '');
+    node.querySelector('.propiedad-card-precio').textContent = 'Precio a consultar';
     node.querySelector('.propiedad-card-datos').textContent = (propiedad.quickspecs || []).join(' · ');
     return node;
   }
