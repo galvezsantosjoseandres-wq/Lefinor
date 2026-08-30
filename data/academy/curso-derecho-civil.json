@@ -1,0 +1,15 @@
+{
+  "id": "curso-derecho-civil",
+  "titulo": "Curso de Derecho Civil",
+  "instructor_id": "franklin-morillo",
+  "estado": "impartido",
+  "fecha": "15 de diciembre, 2023",
+  "lugar": "Salón Multiuso, Santo Domingo",
+  "modalidad": "Presencial",
+  "imagen_portada": "/img/academy/cursos/curso-derecho-civil/portada.jpg",
+  "descripcion": [
+    "Este taller ofrece una introducción práctica al derecho civil dominicano, dirigido a profesionales, estudiantes avanzados de derecho y público general interesado en comprender mejor sus derechos y obligaciones en la vida cotidiana.",
+    "Durante la sesión se abordan los fundamentos de los contratos y las obligaciones civiles, los principios básicos del derecho de familia (matrimonio, divorcio, patria potestad), y los aspectos esenciales del derecho de propiedad — con especial énfasis en casos y ejemplos aplicables a la realidad dominicana.",
+    "El curso combina exposición teórica con casos prácticos y espacio para preguntas, buscando que cada participante salga con herramientas claras para identificar cuándo y cómo buscar asesoría legal formal."
+  ]
+}

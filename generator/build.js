@@ -185,6 +185,28 @@ function truncar(texto, maxLength) {
   return texto.slice(0, maxLength).trim().replace(/[.,;:]?\s*\S*$/, '') + '…';
 }
 
+function prepararCurso(curso, profesionales) {
+  const instructorBase = profesionales.find((p) => p.slug === curso.instructor_id);
+  const instructor = instructorBase
+    ? {
+        slug: instructorBase.slug,
+        honorifico: instructorBase.honorifico,
+        nombre: instructorBase.nombre,
+        cargo: instructorBase.cargo,
+        foto: instructorBase.foto,
+        fotoAlt: instructorBase.fotoAlt,
+        bioExtracto: truncar(instructorBase.bioCompleta, 160),
+      }
+    : null;
+  const disponible = curso.estado === 'disponible';
+
+  return Object.assign({}, curso, {
+    instructor,
+    estadoLabel: disponible ? 'Disponible' : 'Impartido',
+    estadoBadgeClass: disponible ? 'bg-lefinor-dorado text-lefinor-azul' : 'bg-lefinor-gris text-white',
+  });
+}
+
 function prepararPublicacion(publicacion, profesionales) {
   const info = categoriaInfo(publicacion.categoria);
   const portada = publicacion.imagen_portada || info.imagenDefault;
@@ -219,6 +241,9 @@ function main() {
   const publicaciones = readJsonDir(path.join(DATA_DIR, 'publicaciones'))
     .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
     .map((p) => prepararPublicacion(p, profesionales));
+  const academyCursos = readJsonDir(path.join(DATA_DIR, 'academy'))
+    .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
+    .map((c) => prepararCurso(c, profesionales));
   const confianzaPath = path.join(DATA_DIR, 'confianza.json');
   const testimoniosPath = path.join(DATA_DIR, 'testimonios.json');
   const confianza = fs.existsSync(confianzaPath) ? readJson(confianzaPath) : [];
@@ -238,7 +263,7 @@ function main() {
   function renderPage(pageName, extraData, layoutData) {
     const pageTemplate = loadPage(pageName);
     const baseData = Object.assign(
-      { site, profesionales, propiedades, publicaciones, ciudades, confianza, testimonios },
+      { site, profesionales, propiedades, publicaciones, academyCursos, ciudades, confianza, testimonios },
       extraData
     );
     const content = render(pageTemplate, baseData, partials);
@@ -398,6 +423,22 @@ function main() {
     );
   }
 
+  // Detalle de cursos de Academy
+  for (const curso of academyCursos) {
+    writeFile(
+      `academy/${curso.id}.html`,
+      renderPage(
+        'academy-curso-detail',
+        { curso },
+        {
+          title: `${curso.titulo} — ${site.siteName}`,
+          description: (curso.descripcion[0] || '').slice(0, 160),
+          canonicalPath: `/academy/${curso.id}.html`,
+        }
+      )
+    );
+  }
+
   // Biografías del equipo + tarjetas digitales + vCards
   for (const prof of profesionales) {
     const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
@@ -436,6 +477,7 @@ function main() {
   // JSON de apoyo para filtros/buscador del lado del cliente
   writeFile('data/propiedades.json', JSON.stringify(propiedades, null, 2));
   writeFile('data/publicaciones.json', JSON.stringify(publicaciones, null, 2));
+  writeFile('data/academy.json', JSON.stringify(academyCursos, null, 2));
 
   // sitemap.xml
   const staticPaths = [
@@ -452,6 +494,7 @@ function main() {
   const dynamicPaths = [
     ...propiedades.map((p) => `/propiedades/${p.slug}.html`),
     ...publicaciones.map((p) => `/publicaciones/${p.slug}.html`),
+    ...academyCursos.map((c) => `/academy/${c.id}.html`),
     ...profesionales.map((p) => `/equipo/${p.slug}.html`),
   ];
   const allPaths = [...staticPaths, ...dynamicPaths];
@@ -470,7 +513,7 @@ function main() {
   buildTailwindCss();
 
   console.log(`Sitio generado en ${DIST_DIR}`);
-  console.log(`Páginas: ${allPaths.length + profesionales.length} | Propiedades: ${propiedades.length} | Publicaciones: ${publicaciones.length} | Profesionales: ${profesionales.length}`);
+  console.log(`Páginas: ${allPaths.length + profesionales.length} | Propiedades: ${propiedades.length} | Publicaciones: ${publicaciones.length} | Cursos Academy: ${academyCursos.length} | Profesionales: ${profesionales.length}`);
 }
 
 main();

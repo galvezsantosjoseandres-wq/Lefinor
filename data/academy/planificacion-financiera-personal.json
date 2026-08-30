@@ -1,0 +1,15 @@
+{
+  "id": "planificacion-financiera-personal",
+  "titulo": "Planificación Financiera Personal",
+  "instructor_id": "francheska-rodriguez",
+  "estado": "disponible",
+  "fecha": "15 de noviembre, 2026",
+  "lugar": "Salón Multiuso de Fantino",
+  "modalidad": "Presencial",
+  "imagen_portada": null,
+  "descripcion": [
+    "Un taller práctico pensado para quienes quieren tomar control de sus finanzas personales, sin necesidad de conocimientos previos en contabilidad o finanzas.",
+    "Se cubren temas como la elaboración de un presupuesto realista, estrategias de ahorro, el uso responsable del crédito, y una introducción a los conceptos básicos de inversión — todo explicado en un lenguaje claro y aplicado a la realidad económica dominicana.",
+    "Ideal para profesionales jóvenes, emprendedores, y cualquier persona que quiera empezar a planificar su futuro financiero con bases sólidas."
+  ]
+}

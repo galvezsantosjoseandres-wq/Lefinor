@@ -11,6 +11,7 @@
     initContactForms();
     initPropiedades();
     initPublicaciones();
+    initAcademy();
   });
 
   function initMobileMenu() {
@@ -483,6 +484,95 @@
       })
       .catch(function () {
         grid.innerHTML = '<p class="text-center text-lefinor-gris py-16 col-span-full">No se pudo cargar el listado de publicaciones.</p>';
+      });
+  }
+
+  var ACADEMY_ICON_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 h-12 text-lefinor-dorado" fill="currentColor">' +
+    '<path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zm0 10.5L4.4 9 12 4.9 19.6 9 12 13.5zM5 13.18v3.64L12 21l7-4.18v-3.64l-7 3.82-7-3.82z"/></svg>';
+
+  function estadoBadgeClasses(estado) {
+    return estado === 'disponible' ? 'bg-lefinor-dorado text-lefinor-azul' : 'bg-lefinor-gris text-white';
+  }
+
+  function buildAcademyCard(template, curso) {
+    var node = template.content.firstElementChild.cloneNode(true);
+    node.href = '/academy/' + curso.id + '.html';
+    var portadaEl = node.querySelector('.academy-card-portada');
+    if (curso.imagen_portada) {
+      portadaEl.style.backgroundImage = "url('" + curso.imagen_portada + "')";
+    } else {
+      portadaEl.classList.add('bg-lefinor-azul', 'flex', 'items-center', 'justify-center');
+      portadaEl.innerHTML = ACADEMY_ICON_SVG;
+    }
+    var badgeEl = node.querySelector('.academy-card-badge');
+    badgeEl.textContent = curso.estadoLabel;
+    badgeEl.className = 'absolute top-3 right-3 text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded academy-card-badge ' + estadoBadgeClasses(curso.estado);
+    node.querySelector('.academy-card-titulo').textContent = curso.titulo;
+    node.querySelector('.academy-card-lugar').textContent = curso.lugar || '';
+    node.querySelector('.academy-card-fecha').textContent = curso.fecha || '';
+    return node;
+  }
+
+  function initAcademy() {
+    var grid = document.getElementById('academy-grid');
+    var template = document.getElementById('academy-card-template');
+    var url = window.__LEFINOR_ACADEMY_URL;
+    if (!grid || !template || !url) return;
+
+    var filtroWrap = document.getElementById('academy-filtro-estado');
+    var buscador = document.getElementById('academy-buscador');
+    var vacio = document.getElementById('academy-resultado-vacio');
+    var estadoActivo = 'todos';
+
+    function actualizarBotonesFiltro() {
+      if (!filtroWrap) return;
+      var botones = filtroWrap.querySelectorAll('.filtro-btn');
+      botones.forEach(function (btn) {
+        var activo = btn.dataset.estado === estadoActivo;
+        btn.classList.toggle('bg-lefinor-azul', activo);
+        btn.classList.toggle('text-white', activo);
+        btn.classList.toggle('text-lefinor-azul', !activo);
+      });
+    }
+
+    fetch(url)
+      .then(function (res) { return res.json(); })
+      .then(function (cursos) {
+        function render() {
+          var texto = (buscador.value || '').toLowerCase().trim();
+          var filtrados = cursos.filter(function (c) {
+            var coincideEstado = estadoActivo === 'todos' || c.estado === estadoActivo;
+            var coincideTexto = !texto || c.titulo.toLowerCase().indexOf(texto) !== -1;
+            return coincideEstado && coincideTexto;
+          });
+
+          grid.innerHTML = '';
+          if (filtrados.length === 0) {
+            vacio.classList.remove('hidden');
+            return;
+          }
+          vacio.classList.add('hidden');
+          filtrados.forEach(function (c) {
+            grid.appendChild(buildAcademyCard(template, c));
+          });
+        }
+
+        if (filtroWrap) {
+          filtroWrap.querySelectorAll('.filtro-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              estadoActivo = btn.dataset.estado;
+              actualizarBotonesFiltro();
+              render();
+            });
+          });
+          actualizarBotonesFiltro();
+        }
+        if (buscador) buscador.addEventListener('input', render);
+        render();
+      })
+      .catch(function () {
+        grid.innerHTML = '<p class="text-center text-lefinor-gris py-16 col-span-full">No se pudo cargar el listado de Academy.</p>';
       });
   }
 })();
