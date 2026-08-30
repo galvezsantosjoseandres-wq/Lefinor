@@ -4,11 +4,11 @@
   "tipo_operacion": "alquiler",
   "ciudad": "La Vega",
   "quickspecs": ["3 habitaciones", "2.5 baños", "Piscina privada"],
-  "portada": "/img/propiedades/villa-la-vega-alquiler/1.jpg",
+  "portada": "/img/propiedades/villa-la-vega-alquiler/1.png",
   "galeria": [
-    { "tipo": "foto", "src": "/img/propiedades/villa-la-vega-alquiler/1.jpg" },
-    { "tipo": "foto", "src": "/img/propiedades/villa-la-vega-alquiler/2.jpg" },
-    { "tipo": "foto", "src": "/img/propiedades/villa-la-vega-alquiler/3.jpg" }
+    { "tipo": "foto", "src": "/img/propiedades/villa-la-vega-alquiler/1.png" },
+    { "tipo": "foto", "src": "/img/propiedades/villa-la-vega-alquiler/2.png" },
+    { "tipo": "foto", "src": "/img/propiedades/villa-la-vega-alquiler/3.png" }
   ],
   "caracteristicas": [
     { "label": "Localización", "valor": "La Vega" },

@@ -4,10 +4,10 @@
   "tipo_operacion": "venta",
   "ciudad": "Moca",
   "quickspecs": ["3 habitaciones", "2 baños", "1 nivel"],
-  "portada": "/img/propiedades/apartamento-moca/1.jpg",
+  "portada": "/img/propiedades/apartamento-moca/1.png",
   "galeria": [
-    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/1.jpg" },
-    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/2.jpg" }
+    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/1.png" },
+    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/2.png" }
   ],
   "caracteristicas": [
     { "label": "Localización", "valor": "Moca" },

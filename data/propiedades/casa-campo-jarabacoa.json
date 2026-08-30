@@ -4,12 +4,12 @@
   "tipo_operacion": "venta",
   "ciudad": "Jarabacoa",
   "quickspecs": ["4 habitaciones", "3 baños", "2 niveles"],
-  "portada": "/img/propiedades/casa-campo-jarabacoa/1.jpg",
+  "portada": "/img/propiedades/casa-campo-jarabacoa/1.png",
   "galeria": [
-    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/1.jpg" },
-    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/2.jpg" },
-    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/3.jpg" },
-    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/4.jpg" }
+    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/1.png" },
+    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/2.png" },
+    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/3.png" },
+    { "tipo": "foto", "src": "/img/propiedades/casa-campo-jarabacoa/4.png" }
   ],
   "caracteristicas": [
     { "label": "Localización", "valor": "Jarabacoa" },
