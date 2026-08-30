@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Instalar dependencias
+        run: npm ci
+
       - name: Generar el sitio
         run: node generator/build.js
 
@@ -28,3 +31,4 @@ jobs:
           test -f dist/robots.txt
           test -f dist/data/propiedades.json
           test -f dist/data/publicaciones.json
+          test -f dist/css/tailwind.css

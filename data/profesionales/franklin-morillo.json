@@ -1,0 +1,28 @@
+{
+  "slug": "franklin-morillo",
+  "orden": 1,
+  "honorifico": "Lic.",
+  "nombre": "Franklin Rafael Morillo Brito",
+  "cargo": "Socio Fundador & CEO",
+  "unidad": "abogados",
+  "area": "Lefinor Abogados",
+  "foto": "/img/equipo/franklin-morillo.png",
+  "fotoAlt": "Foto de Franklin Rafael Morillo Brito",
+  "formacion": [
+    "Universidad Nacional Pedro Henríquez Ureña (UNPHU)",
+    "Maestría en Derecho Privado",
+    "Maestría Internacional en Derecho Bancario y Financiero",
+    "Especialización en Derecho Inmobiliario y Supervisión Bancaria"
+  ],
+  "experiencia": [
+    "Más de 10 años en el sector bancario y el ejercicio profesional",
+    "Más de 100 clientes asesorados",
+    "Litigios y procesos ante altas cortes y entidades gubernamentales"
+  ],
+  "idiomas": ["Español", "Inglés", "Francés"],
+  "fraseDistintiva": "Comprometido con la excelencia, la integridad y los resultados.",
+  "bioCompleta": "Lic. Franklin Rafael Morillo Brito es Socio Fundador y CEO de Lefinor Capital Group. Abogado, catedrático universitario y asesor de empresas, es egresado de la Universidad Nacional Pedro Henríquez Ureña (UNPHU), donde cursó una Maestría en Derecho Privado y una Maestría Internacional en Derecho Bancario y Financiero, además de especializarse en Derecho Inmobiliario y Supervisión Bancaria. Con más de 10 años de experiencia en el sector bancario y el ejercicio profesional, ha asesorado a más de 100 clientes y ha representado casos ante altas cortes y entidades gubernamentales con resultados favorables. Habla español, inglés y francés. Al frente de Lefinor, lidera la estrategia jurídica y empresarial de la firma bajo un enfoque de excelencia, innovación y confianza.",
+  "telefono": "849-258-5991",
+  "email": "info@lefinor.com",
+  "vcardArchivo": "/tarjetas/franklin-morillo.vcf"
+}

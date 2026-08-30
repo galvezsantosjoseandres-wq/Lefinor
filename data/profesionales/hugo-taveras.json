@@ -1,0 +1,22 @@
+{
+  "slug": "hugo-taveras",
+  "orden": 5,
+  "honorifico": "Lic.",
+  "nombre": "Hugo Leonel Taveras Fernández",
+  "cargo": "Miembro",
+  "unidad": "abogados",
+  "area": "Lefinor Abogados",
+  "foto": "/img/equipo/hugo-taveras.jpg",
+  "fotoAlt": "Foto de Hugo Leonel Taveras Fernández",
+  "formacion": [
+    "Escuela de Derecho, Facultad de Ciencias Jurídicas y Políticas, Universidad Nacional Pedro Henríquez Ureña (UNPHU)",
+    "Especialización en Derecho Inmobiliario"
+  ],
+  "experiencia": ["Más de 5 años en litigios y resoluciones inmobiliarias"],
+  "idiomas": ["Inglés", "Alemán"],
+  "fraseDistintiva": "",
+  "bioCompleta": "Lic. Hugo Leonel Taveras Fernández es Miembro del equipo de Lefinor Abogados. Egresado de la Escuela de Derecho de la Facultad de Ciencias Jurídicas y Políticas de la Universidad Nacional Pedro Henríquez Ureña (UNPHU), se especializó en Derecho Inmobiliario y cuenta con más de 5 años de experiencia en litigios y resoluciones relacionadas con bienes raíces. Domina los idiomas inglés y alemán, lo que le permite asesorar también a clientes internacionales interesados en propiedades e inversiones inmobiliarias en la región.",
+  "telefono": "849-258-5991",
+  "email": "info@lefinor.com",
+  "vcardArchivo": "/tarjetas/hugo-taveras.vcf"
+}

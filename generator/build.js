@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { render } = require('./lib/render');
 const { generateQrSvg } = require('./lib/qr');
 const { loadColorTokens } = require('./lib/tokens');
@@ -48,6 +49,14 @@ function copyDir(src, dest) {
   }
 }
 
+function buildTailwindCss() {
+  const bin = path.join(ROOT, 'node_modules', '.bin', process.platform === 'win32' ? 'tailwindcss.cmd' : 'tailwindcss');
+  const input = path.join(__dirname, 'tailwind-input.css');
+  const output = path.join(DIST_DIR, 'css', 'tailwind.css');
+  ensureDir(path.dirname(output));
+  execFileSync(bin, ['-i', input, '-o', output, '--minify'], { cwd: ROOT, stdio: 'inherit' });
+}
+
 function loadPartials() {
   const dir = path.join(TEMPLATES_DIR, 'partials');
   const partials = {};
@@ -67,13 +76,80 @@ function slugSort(list) {
   return list.slice().sort((a, b) => (a.orden || 0) - (b.orden || 0));
 }
 
+const GALERIA_PREVIEW_MAX = 5;
+
+// Clases de grilla para la galería según cuántos tiles de previsualización hay (1 a 5).
+// CSS Grid coloca automáticamente los tiles secundarios en las celdas libres una vez que
+// el tile principal reserva su columna/filas con row-span, así que nunca queda una celda
+// vacía sin importar cuántas fotos tenga la propiedad.
+function claseGaleria(previewCount) {
+  switch (previewCount) {
+    case 1:
+      return { container: '', main: 'h-64 md:h-[420px] w-full rounded-xl overflow-hidden' };
+    case 2:
+      return {
+        container: 'md:grid md:grid-cols-2 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto',
+      };
+    case 3:
+      return {
+        container: 'md:grid md:grid-cols-[1.6fr_1fr] md:grid-rows-2 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto md:row-span-2',
+      };
+    case 4:
+      return {
+        container: 'md:grid md:grid-cols-[1.6fr_1fr] md:grid-rows-3 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto md:row-span-3',
+      };
+    default:
+      return {
+        container: 'md:grid md:grid-cols-[1.6fr_1fr_1fr] md:grid-rows-2 md:gap-1.5 md:h-[420px] rounded-xl overflow-hidden',
+        main: 'h-64 md:h-auto md:row-span-2',
+      };
+  }
+}
+
+function tipoOperacionLabel(tipoOperacion) {
+  if (tipoOperacion === 'venta') return 'Venta';
+  if (tipoOperacion === 'alquiler') return 'Alquiler';
+  return tipoOperacion || '';
+}
+
+function prepararGaleria(propiedad) {
+  const galeria = (propiedad.galeria || []).map((item) => Object.assign({}, item, { mostrarFoto: item.tipo === 'foto' && Boolean(item.src) }));
+  const galeriaMain = galeria[0]
+    ? Object.assign({}, galeria[0], { previewIndex: 0 })
+    : undefined;
+  const galeriaSecundarias = galeria.slice(1, 4).map((item, i) => Object.assign({}, item, { previewIndex: i + 1 }));
+  const galeriaQuintaTile = galeria[4] ? Object.assign({}, galeria[4], { previewIndex: 4 }) : undefined;
+  const tieneMasFotos = galeria.length > GALERIA_PREVIEW_MAX;
+  const fotosRestantes = tieneMasFotos ? galeria.length - GALERIA_PREVIEW_MAX : 0;
+  const tieneMultiplesFotos = galeria.length > 1;
+  const galeriaJson = JSON.stringify(galeria).replace(/</g, '\\u003c');
+  const layout = claseGaleria(Math.min(galeria.length, GALERIA_PREVIEW_MAX));
+
+  return Object.assign({}, propiedad, {
+    galeria,
+    galeriaMain,
+    galeriaSecundarias,
+    galeriaQuintaTile,
+    tieneMasFotos,
+    fotosRestantes,
+    tieneMultiplesFotos,
+    galeriaJson,
+    galeriaContainerClass: layout.container,
+    galeriaMainClass: layout.main,
+    tipoOperacionLabel: tipoOperacionLabel(propiedad.tipo_operacion),
+  });
+}
+
 function buildVCard(prof, site) {
-  const [nombre] = prof.nombre.split(' ');
+  const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
   return [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    `N:${prof.nombre};;;;`,
-    `FN:${prof.nombre}`,
+    `N:${prof.nombre};;;${prof.honorifico || ''};`,
+    `FN:${nombreCompleto}`,
     `TITLE:${prof.cargo}`,
     `ORG:${site.siteName}`,
     `TEL;TYPE=CELL:${prof.telefono}`,
@@ -244,10 +320,10 @@ function main() {
       `propiedades/${propiedad.slug}.html`,
       renderPage(
         'propiedad-detail',
-        { propiedad, relacionadas },
+        { propiedad: prepararGaleria(propiedad), relacionadas },
         {
           title: `${propiedad.titulo} — ${site.siteName}`,
-          description: propiedad.descripcion.slice(0, 160),
+          description: propiedad.detalle_intro.slice(0, 160),
           canonicalPath: `/propiedades/${propiedad.slug}.html`,
         }
       )
@@ -271,8 +347,23 @@ function main() {
     );
   }
 
-  // Tarjetas digitales + vCards
+  // Biografías del equipo + tarjetas digitales + vCards
   for (const prof of profesionales) {
+    const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
+
+    writeFile(
+      `equipo/${prof.slug}.html`,
+      renderPage(
+        'profesional-detail',
+        { profesional: prof },
+        {
+          title: `${nombreCompleto} — ${site.siteName}`,
+          description: `${nombreCompleto}, ${prof.cargo} en ${prof.area}.`,
+          canonicalPath: `/equipo/${prof.slug}.html`,
+        }
+      )
+    );
+
     const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
     const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
     writeFile(
@@ -281,8 +372,8 @@ function main() {
         'tarjeta',
         { profesional: prof, qrSvg },
         {
-          title: `${prof.nombre} — Tarjeta digital ${site.siteName}`,
-          description: `Tarjeta de contacto digital de ${prof.nombre}, ${prof.cargo}.`,
+          title: `${nombreCompleto} — Tarjeta digital ${site.siteName}`,
+          description: `Tarjeta de contacto digital de ${nombreCompleto}, ${prof.cargo}.`,
           canonicalPath: `/tarjetas/${prof.slug}.html`,
           bodyClass: 'tarjeta-page',
         }
@@ -310,6 +401,7 @@ function main() {
   const dynamicPaths = [
     ...propiedades.map((p) => `/propiedades/${p.slug}.html`),
     ...publicaciones.map((p) => `/publicaciones/${p.slug}.html`),
+    ...profesionales.map((p) => `/equipo/${p.slug}.html`),
   ];
   const allPaths = [...staticPaths, ...dynamicPaths];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${allPaths
@@ -322,6 +414,9 @@ function main() {
 
   // Assets estáticos
   copyDir(PUBLIC_DIR, DIST_DIR);
+
+  // CSS de Tailwind compilado en build time (reemplaza el script runtime de cdn.tailwindcss.com)
+  buildTailwindCss();
 
   console.log(`Sitio generado en ${DIST_DIR}`);
   console.log(`Páginas: ${allPaths.length + profesionales.length} | Propiedades: ${propiedades.length} | Publicaciones: ${publicaciones.length} | Profesionales: ${profesionales.length}`);

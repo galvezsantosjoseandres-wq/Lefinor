@@ -1,0 +1,44 @@
+{
+  "slug": "apartamento-la-vega",
+  "titulo": "Apartamento en Alquiler, La Vega",
+  "tipo_operacion": "alquiler",
+  "ciudad": "La Vega",
+  "precio": "US$ 1,900",
+  "precio_periodo": "/mes",
+  "quickspecs": ["3 habitaciones", "3.5 baños", "2 parqueos"],
+  "portada": "",
+  "galeria": [
+    { "tipo": "video", "src": "", "duracion": "00:41" },
+    { "tipo": "foto", "src": "" },
+    { "tipo": "foto", "src": "" },
+    { "tipo": "foto", "src": "" },
+    { "tipo": "foto", "src": "" },
+    { "tipo": "foto", "src": "" },
+    { "tipo": "foto", "src": "" }
+  ],
+  "caracteristicas": [
+    { "label": "Localización", "valor": "La Vega" },
+    { "label": "Condición", "valor": "Primer uso" },
+    { "label": "Uso actual", "valor": "Residencial" },
+    { "label": "Construcción", "valor": "250 m²" },
+    { "label": "Terreno", "valor": "0 m²" },
+    { "label": "Nivel / Piso", "valor": "2" },
+    { "label": "Ascensores", "valor": "1" },
+    { "label": "Edificable", "valor": "No" },
+    { "label": "Año construcción", "valor": "2019" },
+    { "label": "Comodidades", "valor": "Estudio, Family Room, Parqueos" }
+  ],
+  "detalle_intro": "Lindo apartamento en La Vega, a unos 800 metros del centro de la ciudad.",
+  "detalle_bullets": [
+    "250 m²",
+    "3 habitaciones · 3.5 baños",
+    "Sala · Estudio · Comedor · Terraza cerrada",
+    "Cocina",
+    "Área de lavado · habitación para empleada",
+    "Pisos porcelanato · Madera preciosa",
+    "Aires acondicionados y lavadora/secadora",
+    "2 parqueos paralelos y techados"
+  ],
+  "detalle_cierre": "US$ 1,900 alquiler con mantenimiento incluido.",
+  "destacada": false
+}

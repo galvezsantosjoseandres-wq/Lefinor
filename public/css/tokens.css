@@ -18,4 +18,19 @@
   --gris: #606468;
   --blanco: #FFFFFF;
   --neutro: #F7F8FA;
+
+  /*
+   * Mismos colores, como tripletes RGB (sin comas) en vez de hex — es el formato que
+   * necesita tailwind.config.js para poder generar las variantes de opacidad (bg-lefinor-azul/50,
+   * border-lefinor-gris/15, etc.) vía rgb(var(--x-rgb) / <alpha-value>). Tailwind no puede aplicar
+   * un modificador de opacidad sobre una variable que ya es un color hex completo como var(--azul).
+   * generator/lib/tokens.js sigue leyendo las variables hex de arriba (QR, favicons); estas son
+   * solo para Tailwind.
+   */
+  --azul-rgb: 11 29 51;
+  --azul-2-rgb: 15 37 64;
+  --dorado-rgb: 212 175 55;
+  --dorado-soft-rgb: 233 206 126;
+  --gris-rgb: 96 100 104;
+  --neutro-rgb: 247 248 250;
 }

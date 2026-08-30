@@ -2,7 +2,7 @@
   "name": "lefinor-capital-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Sitio web de Lefinor Capital Group. Generador estático propio (Node.js) que combina datos JSON con plantillas HTML. Sin frameworks ni CMS; una única dependencia de build (qrcode-generator) para los códigos QR de las tarjetas digitales.",
+  "description": "Sitio web de Lefinor Capital Group. Generador estático propio (Node.js) que combina datos JSON con plantillas HTML. Sin frameworks ni CMS; dependencias de build: qrcode-generator (códigos QR de las tarjetas digitales) y tailwindcss (CSS compilado en build time).",
   "scripts": {
     "build": "node generator/build.js",
     "watch": "node generator/watch.js"
@@ -12,5 +12,8 @@
   },
   "dependencies": {
     "qrcode-generator": "^2.0.4"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
   }
 }
