@@ -1,0 +1,28 @@
+{
+  "slug": "apartamento-moca",
+  "titulo": "Apartamento Amueblado en Venta, Moca",
+  "tipo_operacion": "venta",
+  "ciudad": "Moca",
+  "quickspecs": ["3 habitaciones", "2 baños", "1 nivel"],
+  "portada": "/img/propiedades/apartamento-moca/1.jpg",
+  "galeria": [
+    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/1.jpg" },
+    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/2.jpg" }
+  ],
+  "caracteristicas": [
+    { "label": "Localización", "valor": "Moca" },
+    { "label": "Condición", "valor": "Segundo uso, muy buen estado" },
+    { "label": "Uso actual", "valor": "Residencial" },
+    { "label": "Comodidades", "valor": "Sala/comedor integrado, cocina equipada, área social techada" }
+  ],
+  "detalle_intro": "Apartamento amueblado y decorado, listo para habitar, con sala y comedor en concepto integrado, cocina equipada y acabados en porcelanato pulido. Ideal para quien busca mudarse sin trámites adicionales de amueblado.",
+  "detalle_bullets": [
+    "Sala y comedor en concepto abierto",
+    "Cocina equipada con isla",
+    "Pisos de porcelanato pulido",
+    "Aire acondicionado tipo split",
+    "Área social techada"
+  ],
+  "detalle_cierre": "",
+  "destacada": true
+}
