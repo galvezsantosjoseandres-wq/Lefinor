@@ -12,6 +12,7 @@
     initPropiedades();
     initPublicaciones();
     initAcademy();
+    initWhatsappFloat();
   });
 
   function initMobileMenu() {
@@ -27,6 +28,27 @@
       if (iconOpen) iconOpen.classList.toggle('hidden');
       if (iconClose) iconClose.classList.toggle('hidden');
     });
+  }
+
+  // El botón flotante de WhatsApp permanece oculto hasta que el usuario baja un poco la
+  // página: en pantallas angostas, el encabezado/hero de algunas páginas ya ocupa casi
+  // todo el viewport inicial, y el botón (fijo en la esquina) puede tapar texto en la
+  // primera pantalla si aparece desde la carga. Mostrarlo recién tras el scroll evita el
+  // solapamiento en cualquier página, sin depender de cuánto contenido tenga cada una.
+  function initWhatsappFloat() {
+    var boton = document.getElementById('whatsapp-float');
+    if (!boton) return;
+    var UMBRAL_SCROLL = 200;
+
+    function actualizarVisibilidad() {
+      var visible = window.scrollY > UMBRAL_SCROLL;
+      boton.classList.toggle('opacity-0', !visible);
+      boton.classList.toggle('opacity-100', visible);
+      boton.classList.toggle('pointer-events-none', !visible);
+    }
+
+    window.addEventListener('scroll', actualizarVisibilidad, { passive: true });
+    actualizarVisibilidad();
   }
 
   function initCookieBanner() {
