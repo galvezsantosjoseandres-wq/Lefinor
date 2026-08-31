@@ -478,22 +478,23 @@ function main() {
     const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
     const mensajeWhatsappTarjeta = `Hola, me gustaría contactar a ${nombreCompleto} de ${site.siteName}.`;
     const whatsappNumeroTarjeta = whatsappNumeroDesde(prof.telefono_personal || prof.telefono);
+    // La tarjeta digital es una página autónoma (sin header/navegación del sitio, mismo
+    // criterio que 404.html): se renderiza directo, sin pasar por layout.html.
     writeFile(
       `tarjetas/${prof.slug}.html`,
-      renderPage(
-        'tarjeta',
+      render(
+        loadPage('tarjeta'),
         {
+          site,
           profesional: prof,
           qrSvg,
           whatsappNumeroTarjeta,
           mensajeWhatsappTarjetaCodificado: encodeURIComponent(mensajeWhatsappTarjeta),
-        },
-        {
           title: `${nombreCompleto} — Tarjeta digital ${site.siteName}`,
           description: `Tarjeta de contacto digital de ${nombreCompleto}, ${prof.cargo}.`,
           canonicalPath: `/tarjetas/${prof.slug}.html`,
-          bodyClass: 'tarjeta-page',
-        }
+        },
+        partials
       )
     );
     writeFile(`tarjetas/${prof.slug}.vcf`, buildVCard(prof, site));
