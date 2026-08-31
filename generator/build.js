@@ -159,7 +159,7 @@ function buildVCard(prof, site) {
   card.formattedName = nombreCompleto;
   card.organization = site.siteName;
   card.title = prof.cargo;
-  card.cellPhone = prof.telefono;
+  card.cellPhone = prof.telefono_personal || prof.telefono;
   card.workEmail = prof.email;
   card.url = site.domain;
   card.workAddress.street = site.address;
@@ -188,6 +188,13 @@ function fechaEspanolAOrden(fecha) {
   const anio = Number(match[3]);
   if (mes === -1) return 0;
   return anio * 10000 + (mes + 1) * 100 + dia;
+}
+
+// Convierte un teléfono local dominicano ("849-258-5991") al formato que espera wa.me
+// (código de país + solo dígitos, ej. "18492585991") — mismo criterio ya usado para
+// site.whatsappNumber a partir de site.phone en site.json.
+function whatsappNumeroDesde(telefonoLocal) {
+  return '1' + String(telefonoLocal).replace(/\D/g, '');
 }
 
 function truncar(texto, maxLength) {
@@ -470,11 +477,17 @@ function main() {
     const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
     const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
     const mensajeWhatsappTarjeta = `Hola, me gustaría contactar a ${nombreCompleto} de ${site.siteName}.`;
+    const whatsappNumeroTarjeta = whatsappNumeroDesde(prof.telefono_personal || prof.telefono);
     writeFile(
       `tarjetas/${prof.slug}.html`,
       renderPage(
         'tarjeta',
-        { profesional: prof, qrSvg, mensajeWhatsappTarjetaCodificado: encodeURIComponent(mensajeWhatsappTarjeta) },
+        {
+          profesional: prof,
+          qrSvg,
+          whatsappNumeroTarjeta,
+          mensajeWhatsappTarjetaCodificado: encodeURIComponent(mensajeWhatsappTarjeta),
+        },
         {
           title: `${nombreCompleto} — Tarjeta digital ${site.siteName}`,
           description: `Tarjeta de contacto digital de ${nombreCompleto}, ${prof.cargo}.`,
