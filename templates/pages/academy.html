@@ -57,7 +57,7 @@
 <section class="py-16 bg-lefinor-azul/[0.03]">
   <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-2xl font-bold text-lefinor-azul text-center mb-8">Recibe información de Lefinor Academy</h2>
-    <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-contact-form data-subject="Lefinor Academy">
+    <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-google-form data-curso="Formulario general">
       <div>
         <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-nombre">Nombre</label>
         <input
@@ -69,24 +69,52 @@
         />
       </div>
       <div>
-        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-email">Correo electrónico</label>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-telefono">Teléfono</label>
         <input
-          id="academy-email"
-          name="email"
+          id="academy-telefono"
+          name="telefono"
+          type="tel"
+          required
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-correo">Correo electrónico</label>
+        <input
+          id="academy-correo"
+          name="correo"
           type="email"
           required
           class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
         />
       </div>
       <div>
-        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-interes">¿Qué te interesa?</label>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-ciudad">Ciudad</label>
         <input
-          id="academy-interes"
-          name="interes"
+          id="academy-ciudad"
+          name="ciudad"
           type="text"
-          placeholder="Talleres, cursos, diplomados..."
           class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
         />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-area">Área de estudio</label>
+        <input
+          id="academy-area"
+          name="area"
+          type="text"
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-interes">¿Qué te interesa?</label>
+        <textarea
+          id="academy-interes"
+          name="mensaje"
+          rows="3"
+          placeholder="Talleres, cursos, diplomados..."
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        ></textarea>
       </div>
       <button
         type="submit"

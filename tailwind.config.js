@@ -24,6 +24,10 @@ module.exports = {
     // nunca aparece como texto literal en una plantilla .html, así que el escaneo de
     // contenido de Tailwind nunca la detecta sin este safelist.
     'bg-lefinor-gris',
+    // Estado de error de los formularios conectados a Google Apps Script (Academy): la
+    // clase se arma como string en public/js/main.js al mostrar el mensaje de fallo de
+    // envío, nunca aparece como texto literal en una plantilla .html.
+    'text-red-600',
   ],
   theme: {
     extend: {

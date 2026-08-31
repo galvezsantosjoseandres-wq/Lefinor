@@ -13,6 +13,7 @@
     initPublicaciones();
     initAcademy();
     initWhatsappFloat();
+    initGoogleForms();
   });
 
   function initMobileMenu() {
@@ -319,6 +320,68 @@
         if (status) {
           status.textContent = 'Se abrirá tu aplicación de correo para enviar el mensaje.';
         }
+      });
+    });
+  }
+
+  // URL del Web App de Google Apps Script que recibe los formularios de Lefinor Academy
+  // (formulario general + inscripción por curso) y los agrega a una hoja de Google Sheets.
+  var GOOGLE_FORM_URL =
+    'https://script.google.com/macros/s/AKfycbw4UIBRM1WXirfJ7aHAkLv8mD4Ol5K2FxXmcvlDzQmd8nBiMpcxIQoPpUtNjmHLZF98/exec';
+
+  // Apps Script no permite leer la respuesta por CORS desde un dominio distinto, así que
+  // se envía en modo "no-cors" (con Content-Type: text/plain para evitar el preflight
+  // OPTIONS que Apps Script no maneja) y se asume éxito si el fetch no lanzó una excepción.
+  function enviarFormularioGoogle(datos) {
+    return fetch(GOOGLE_FORM_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(datos),
+    });
+  }
+
+  function initGoogleForms() {
+    var forms = document.querySelectorAll('[data-google-form]');
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var status = form.querySelector('[data-form-status]');
+        var submitBtn = form.querySelector('button[type="submit"]');
+        var formData = new FormData(form);
+        var datos = {
+          curso: form.dataset.curso || 'Formulario general',
+          nombre: (formData.get('nombre') || '').toString().trim(),
+          telefono: (formData.get('telefono') || '').toString().trim(),
+          correo: (formData.get('correo') || '').toString().trim(),
+          ciudad: (formData.get('ciudad') || '').toString().trim(),
+          area: (formData.get('area') || '').toString().trim(),
+          mensaje: (formData.get('mensaje') || '').toString().trim(),
+        };
+
+        if (submitBtn) submitBtn.disabled = true;
+        if (status) {
+          status.textContent = 'Enviando...';
+          status.className = 'text-xs text-center text-lefinor-gris';
+        }
+
+        enviarFormularioGoogle(datos)
+          .then(function () {
+            form.reset();
+            if (status) {
+              status.textContent = '¡Gracias! Hemos recibido tu solicitud, te contactaremos pronto.';
+              status.className = 'text-xs text-center text-lefinor-dorado font-semibold';
+            }
+          })
+          .catch(function () {
+            if (status) {
+              status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.';
+              status.className = 'text-xs text-center text-red-600 font-semibold';
+            }
+          })
+          .finally(function () {
+            if (submitBtn) submitBtn.disabled = false;
+          });
       });
     });
   }
