@@ -459,11 +459,12 @@ function main() {
 
     const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
     const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
+    const mensajeWhatsappTarjeta = `Hola, me gustaría contactar a ${nombreCompleto} de ${site.siteName}.`;
     writeFile(
       `tarjetas/${prof.slug}.html`,
       renderPage(
         'tarjeta',
-        { profesional: prof, qrSvg },
+        { profesional: prof, qrSvg, mensajeWhatsappTarjetaCodificado: encodeURIComponent(mensajeWhatsappTarjeta) },
         {
           title: `${nombreCompleto} — Tarjeta digital ${site.siteName}`,
           description: `Tarjeta de contacto digital de ${nombreCompleto}, ${prof.cargo}.`,
