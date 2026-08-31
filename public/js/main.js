@@ -14,7 +14,7 @@
     initAcademy();
     initWhatsappFloat();
     initGoogleForms();
-    initInscripcionToggle();
+    initInscripcionModal();
   });
 
   function initMobileMenu() {
@@ -373,6 +373,9 @@
               status.textContent = '¡Gracias! Hemos recibido tu solicitud, te contactaremos pronto.';
               status.className = 'text-xs text-center text-lefinor-dorado font-semibold';
             }
+            // Evento genérico que UI externa (ej. el modal de inscripción) puede escuchar
+            // sin que este handler necesite saber nada sobre modales.
+            form.dispatchEvent(new CustomEvent('lefinor:formulario-exito', { bubbles: true }));
           })
           .catch(function () {
             if (status) {
@@ -387,20 +390,52 @@
     });
   }
 
-  // Botón "Solicitar inscripción" de cada curso disponible: despliega/oculta el formulario
-  // de inscripción en la misma página, en vez de abrir un modal aparte.
-  function initInscripcionToggle() {
-    document.querySelectorAll('[data-inscripcion-toggle]').forEach(function (boton) {
-      boton.addEventListener('click', function () {
-        var wrap = document.getElementById(boton.getAttribute('aria-controls') || 'inscripcion-form-wrap');
-        if (!wrap) return;
-        var abierto = wrap.classList.toggle('hidden') === false;
-        boton.setAttribute('aria-expanded', String(abierto));
-        if (abierto) {
-          wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      });
+  // Modal "Solicitar inscripción" de cada curso disponible: overlay oscuro + ventana
+  // centrada (mismo patrón que el lightbox de galería de propiedades), en vez de una
+  // sección que empuja el resto del contenido de la página.
+  function initInscripcionModal() {
+    var modal = document.getElementById('inscripcion-modal');
+    var boton = document.querySelector('[data-inscripcion-abrir]');
+    if (!modal || !boton) return;
+
+    var form = modal.querySelector('form[data-google-form]');
+    var status = modal.querySelector('[data-form-status]');
+    var autoCierreId;
+
+    function open() {
+      clearTimeout(autoCierreId);
+      if (status) {
+        status.textContent = '';
+        status.className = 'text-xs text-center';
+      }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function close() {
+      clearTimeout(autoCierreId);
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    boton.addEventListener('click', open);
+    modal.querySelectorAll('[data-inscripcion-cerrar]').forEach(function (el) {
+      el.addEventListener('click', close);
     });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+
+    // Tras un envío exitoso, el mensaje de gracias queda visible unos segundos dentro
+    // del propio modal antes de cerrarlo solo — el usuario también puede cerrarlo antes
+    // con la X, el fondo o Escape.
+    if (form) {
+      form.addEventListener('lefinor:formulario-exito', function () {
+        autoCierreId = setTimeout(close, 2500);
+      });
+    }
   }
 
   function formatTipo(tipo) {
