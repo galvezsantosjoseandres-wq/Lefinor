@@ -34,6 +34,96 @@
       </div>
     </div>
 
+    <div class="mt-6">
+      {{#if curso.disponible}}
+      <button
+        type="button"
+        data-inscripcion-toggle
+        aria-expanded="false"
+        aria-controls="inscripcion-form-wrap"
+        class="w-full sm:w-auto inline-flex justify-center items-center bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
+      >
+        Solicitar inscripción
+      </button>
+      {{else}}
+      <p class="inline-flex items-center gap-2 text-sm font-semibold text-lefinor-gris border border-lefinor-gris/25 rounded-md px-4 py-3">
+        Este curso ya fue impartido
+      </p>
+      {{/if}}
+    </div>
+
+    {{#if curso.disponible}}
+    <div id="inscripcion-form-wrap" class="hidden mt-6 rounded-xl border border-lefinor-gris/15 bg-lefinor-neutro p-6">
+      <h2 class="font-bold text-lefinor-azul mb-4">Solicitar inscripción</h2>
+      <form class="space-y-3" data-google-form data-curso="{{curso.titulo}}">
+        <div>
+          <label class="block text-xs font-semibold text-lefinor-gris uppercase tracking-wide mb-1" for="inscripcion-nombre">Nombre</label>
+          <input
+            id="inscripcion-nombre"
+            name="nombre"
+            type="text"
+            required
+            class="w-full rounded-md border border-lefinor-azul/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-lefinor-gris uppercase tracking-wide mb-1" for="inscripcion-telefono">Teléfono</label>
+          <input
+            id="inscripcion-telefono"
+            name="telefono"
+            type="tel"
+            required
+            class="w-full rounded-md border border-lefinor-azul/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-lefinor-gris uppercase tracking-wide mb-1" for="inscripcion-correo">Correo electrónico</label>
+          <input
+            id="inscripcion-correo"
+            name="correo"
+            type="email"
+            required
+            class="w-full rounded-md border border-lefinor-azul/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-lefinor-gris uppercase tracking-wide mb-1" for="inscripcion-ciudad">Ciudad</label>
+          <input
+            id="inscripcion-ciudad"
+            name="ciudad"
+            type="text"
+            class="w-full rounded-md border border-lefinor-azul/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-lefinor-gris uppercase tracking-wide mb-1" for="inscripcion-area">Área de estudio</label>
+          <input
+            id="inscripcion-area"
+            name="area"
+            type="text"
+            class="w-full rounded-md border border-lefinor-azul/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-lefinor-gris uppercase tracking-wide mb-1" for="inscripcion-mensaje">Mensaje</label>
+          <textarea
+            id="inscripcion-mensaje"
+            name="mensaje"
+            rows="3"
+            class="w-full rounded-md border border-lefinor-azul/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90 transition-colors"
+        >
+          Enviar solicitud
+        </button>
+        <p class="text-xs text-center" data-form-status></p>
+      </form>
+    </div>
+    {{/if}}
+
     <div class="prose prose-lefinor max-w-none text-lefinor-azul/90 leading-relaxed space-y-4 mt-8">
       {{#each curso.descripcion}}
       <p>{{this}}</p>

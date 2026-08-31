@@ -14,6 +14,7 @@
     initAcademy();
     initWhatsappFloat();
     initGoogleForms();
+    initInscripcionToggle();
   });
 
   function initMobileMenu() {
@@ -382,6 +383,22 @@
           .finally(function () {
             if (submitBtn) submitBtn.disabled = false;
           });
+      });
+    });
+  }
+
+  // Botón "Solicitar inscripción" de cada curso disponible: despliega/oculta el formulario
+  // de inscripción en la misma página, en vez de abrir un modal aparte.
+  function initInscripcionToggle() {
+    document.querySelectorAll('[data-inscripcion-toggle]').forEach(function (boton) {
+      boton.addEventListener('click', function () {
+        var wrap = document.getElementById(boton.getAttribute('aria-controls') || 'inscripcion-form-wrap');
+        if (!wrap) return;
+        var abierto = wrap.classList.toggle('hidden') === false;
+        boton.setAttribute('aria-expanded', String(abierto));
+        if (abierto) {
+          wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       });
     });
   }

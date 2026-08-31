@@ -202,6 +202,7 @@ function prepararCurso(curso, profesionales) {
 
   return Object.assign({}, curso, {
     instructor,
+    disponible,
     estadoLabel: disponible ? 'Disponible' : 'Impartido',
     estadoBadgeClass: disponible ? 'bg-lefinor-dorado text-lefinor-azul' : 'bg-lefinor-gris text-white',
   });
