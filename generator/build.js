@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const vCardsJS = require('vcards-js');
 const { render } = require('./lib/render');
 const { generateQrSvg } = require('./lib/qr');
 const { loadColorTokens } = require('./lib/tokens');
@@ -144,22 +145,31 @@ function prepararGaleria(propiedad) {
   });
 }
 
+// Genera el vCard con la librería vcards-js en vez de armar el string a mano: se encarga del
+// plegado de línea (máx. 75 caracteres por línea, como exige el estándar) y de la codificación
+// base64 correcta del campo PHOTO — un vCard mal formado hace que algunos teléfonos rechacen la
+// importación por completo.
 function buildVCard(prof, site) {
   const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
-  return [
-    'BEGIN:VCARD',
-    'VERSION:3.0',
-    `N:${prof.nombre};;;${prof.honorifico || ''};`,
-    `FN:${nombreCompleto}`,
-    `TITLE:${prof.cargo}`,
-    `ORG:${site.siteName}`,
-    `TEL;TYPE=CELL:${prof.telefono}`,
-    `EMAIL:${prof.email}`,
-    `URL:${site.domain}`,
-    `ADR;TYPE=WORK:;;${site.address};;;;`,
-    'END:VCARD',
-    '',
-  ].join('\r\n');
+  const [primerNombre, ...resto] = prof.nombre.trim().split(/\s+/);
+  const card = vCardsJS();
+  card.firstName = primerNombre || '';
+  card.lastName = resto.join(' ');
+  card.namePrefix = prof.honorifico || '';
+  card.formattedName = nombreCompleto;
+  card.organization = site.siteName;
+  card.title = prof.cargo;
+  card.cellPhone = prof.telefono;
+  card.workEmail = prof.email;
+  card.url = site.domain;
+  card.workAddress.street = site.address;
+
+  const fotoPath = path.join(PUBLIC_DIR, prof.foto);
+  if (fs.existsSync(fotoPath)) {
+    card.photo.embedFromFile(fotoPath);
+  }
+
+  return card.getFormattedString();
 }
 
 const MESES_ES = [
