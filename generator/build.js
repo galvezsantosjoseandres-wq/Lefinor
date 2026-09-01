@@ -388,7 +388,7 @@ function main() {
       {},
       {
         title: `Contacto — ${site.siteName}`,
-        description: `Contacta a ${site.siteName} en ${site.address}.`,
+        description: `Contacta a ${site.siteName} en nuestras sedes de ${oficinas.map((o) => o.nombre.replace(/^Sede /, '')).join(' y ')}.`,
         canonicalPath: '/contacto.html',
       }
     )
