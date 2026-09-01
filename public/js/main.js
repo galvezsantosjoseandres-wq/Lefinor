@@ -15,6 +15,7 @@
     initWhatsappFloat();
     initGoogleForms();
     initInscripcionModal();
+    initSedesModal();
   });
 
   function initMobileMenu() {
@@ -436,6 +437,35 @@
         autoCierreId = setTimeout(close, 2500);
       });
     }
+  }
+
+  // Modal "¿A cuál sede quieres ir?" del botón "Cómo llegar" de la tarjeta digital: mismo
+  // patrón de overlay + ventana centrada que el modal de inscripción de Academy, pero sin
+  // formulario — solo la lista de sedes con su propio botón "Abrir en Google Maps".
+  function initSedesModal() {
+    var modal = document.getElementById('sedes-modal');
+    var boton = document.querySelector('[data-sedes-abrir]');
+    if (!modal || !boton) return;
+
+    function open() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function close() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    boton.addEventListener('click', open);
+    modal.querySelectorAll('[data-sedes-cerrar]').forEach(function (el) {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
   }
 
   function formatTipo(tipo) {

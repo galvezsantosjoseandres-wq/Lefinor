@@ -500,6 +500,7 @@ function main() {
         {
           site,
           profesional: prof,
+          oficinas,
           qrSvg,
           whatsappNumeroTarjeta,
           mensajeWhatsappTarjetaCodificado: encodeURIComponent(mensajeWhatsappTarjeta),
