@@ -1,0 +1,12 @@
+[
+  {
+    "id": "fantino",
+    "nombre": "Sede Fantino",
+    "direccion": "Plaza Jardines Suiza, Modulo 2A, Fantino, República Dominicana"
+  },
+  {
+    "id": "la-vega",
+    "nombre": "Sede La Vega",
+    "direccion": "Calle Manuel Ubaldo Gómez, Esquina Núñez de Cáceres, Plaza Polonia, Segundo Nivel, Módulo 200, La Vega, República Dominicana"
+  }
+]

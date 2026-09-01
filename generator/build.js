@@ -197,6 +197,17 @@ function whatsappNumeroDesde(telefonoLocal) {
   return '1' + String(telefonoLocal).replace(/\D/g, '');
 }
 
+// Las URLs de mapa de cada oficina se calculan a partir de su dirección (única fuente de
+// verdad) en vez de guardarse como campos aparte en el JSON — así nunca pueden desincronizarse
+// si alguien actualiza la dirección pero olvida actualizar la URL codificada.
+function prepararOficina(oficina) {
+  const direccionCodificada = encodeURIComponent(oficina.direccion);
+  return Object.assign({}, oficina, {
+    mapsEmbedUrl: `https://www.google.com/maps?q=${direccionCodificada}&output=embed`,
+    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${direccionCodificada}`,
+  });
+}
+
 function truncar(texto, maxLength) {
   if (!texto || texto.length <= maxLength) return texto || '';
   return texto.slice(0, maxLength).trim().replace(/[.,;:]?\s*\S*$/, '') + '…';
@@ -264,8 +275,10 @@ function main() {
     .map((c) => prepararCurso(c, profesionales));
   const confianzaPath = path.join(DATA_DIR, 'confianza.json');
   const testimoniosPath = path.join(DATA_DIR, 'testimonios.json');
+  const oficinasPath = path.join(DATA_DIR, 'oficinas.json');
   const confianza = fs.existsSync(confianzaPath) ? readJson(confianzaPath) : [];
   const testimonios = fs.existsSync(testimoniosPath) ? readJson(testimoniosPath) : [];
+  const oficinas = (fs.existsSync(oficinasPath) ? readJson(oficinasPath) : []).map(prepararOficina);
 
   const tokens = loadColorTokens();
 
@@ -281,7 +294,7 @@ function main() {
   function renderPage(pageName, extraData, layoutData) {
     const pageTemplate = loadPage(pageName);
     const baseData = Object.assign(
-      { site, profesionales, propiedades, publicaciones, academyCursos, ciudades, confianza, testimonios },
+      { site, profesionales, propiedades, publicaciones, academyCursos, ciudades, confianza, testimonios, oficinas },
       extraData
     );
     const content = render(pageTemplate, baseData, partials);
