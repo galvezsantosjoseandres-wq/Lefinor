@@ -3,9 +3,11 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const vCardsJS = require('vcards-js');
 const { render } = require('./lib/render');
 const { generateQrSvg } = require('./lib/qr');
 const { loadColorTokens } = require('./lib/tokens');
+const { categoriaInfo } = require('./lib/categorias-publicaciones');
 
 const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -143,22 +145,118 @@ function prepararGaleria(propiedad) {
   });
 }
 
+// Genera el vCard con la librería vcards-js en vez de armar el string a mano: se encarga del
+// plegado de línea (máx. 75 caracteres por línea, como exige el estándar) y de la codificación
+// base64 correcta del campo PHOTO — un vCard mal formado hace que algunos teléfonos rechacen la
+// importación por completo.
 function buildVCard(prof, site) {
   const nombreCompleto = prof.honorifico ? `${prof.honorifico} ${prof.nombre}` : prof.nombre;
-  return [
-    'BEGIN:VCARD',
-    'VERSION:3.0',
-    `N:${prof.nombre};;;${prof.honorifico || ''};`,
-    `FN:${nombreCompleto}`,
-    `TITLE:${prof.cargo}`,
-    `ORG:${site.siteName}`,
-    `TEL;TYPE=CELL:${prof.telefono}`,
-    `EMAIL:${prof.email}`,
-    `URL:${site.domain}`,
-    `ADR;TYPE=WORK:;;${site.address};;;;`,
-    'END:VCARD',
-    '',
-  ].join('\r\n');
+  const [primerNombre, ...resto] = prof.nombre.trim().split(/\s+/);
+  const card = vCardsJS();
+  card.firstName = primerNombre || '';
+  card.lastName = resto.join(' ');
+  card.namePrefix = prof.honorifico || '';
+  card.formattedName = nombreCompleto;
+  card.organization = site.siteName;
+  card.title = prof.cargo;
+  card.cellPhone = prof.telefono_personal || prof.telefono;
+  card.workEmail = prof.email;
+  card.url = site.domain;
+  card.workAddress.street = site.address;
+
+  const fotoPath = path.join(PUBLIC_DIR, prof.foto);
+  if (fs.existsSync(fotoPath)) {
+    card.photo.embedFromFile(fotoPath);
+  }
+
+  return card.getFormattedString();
+}
+
+const MESES_ES = [
+  'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+  'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre',
+];
+
+// Convierte "26 de agosto, 2026" a un número ordenable (20260826). Si no matchea el
+// formato esperado, devuelve 0 para que quede al final en vez de romper el sort.
+function fechaEspanolAOrden(fecha) {
+  if (!fecha) return 0;
+  const match = /(\d{1,2}) de (\w+),?\s*(\d{4})/i.exec(fecha);
+  if (!match) return 0;
+  const dia = Number(match[1]);
+  const mes = MESES_ES.indexOf(match[2].toLowerCase());
+  const anio = Number(match[3]);
+  if (mes === -1) return 0;
+  return anio * 10000 + (mes + 1) * 100 + dia;
+}
+
+// Convierte un teléfono local dominicano ("849-258-5991") al formato que espera wa.me
+// (código de país + solo dígitos, ej. "18492585991") — mismo criterio ya usado para
+// site.whatsappNumber a partir de site.phone en site.json.
+function whatsappNumeroDesde(telefonoLocal) {
+  return '1' + String(telefonoLocal).replace(/\D/g, '');
+}
+
+// Las URLs de mapa de cada oficina se calculan a partir de su dirección (única fuente de
+// verdad) en vez de guardarse como campos aparte en el JSON — así nunca pueden desincronizarse
+// si alguien actualiza la dirección pero olvida actualizar la URL codificada.
+function prepararOficina(oficina) {
+  const direccionCodificada = encodeURIComponent(oficina.direccion);
+  return Object.assign({}, oficina, {
+    mapsEmbedUrl: `https://www.google.com/maps?q=${direccionCodificada}&output=embed`,
+    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${direccionCodificada}`,
+  });
+}
+
+function truncar(texto, maxLength) {
+  if (!texto || texto.length <= maxLength) return texto || '';
+  return texto.slice(0, maxLength).trim().replace(/[.,;:]?\s*\S*$/, '') + '…';
+}
+
+function prepararCurso(curso, profesionales) {
+  const instructorBase = profesionales.find((p) => p.slug === curso.instructor_id);
+  const instructor = instructorBase
+    ? {
+        slug: instructorBase.slug,
+        honorifico: instructorBase.honorifico,
+        nombre: instructorBase.nombre,
+        cargo: instructorBase.cargo,
+        foto: instructorBase.foto,
+        fotoAlt: instructorBase.fotoAlt,
+        bioExtracto: truncar(instructorBase.bioCompleta, 160),
+      }
+    : null;
+  const disponible = curso.estado === 'disponible';
+
+  return Object.assign({}, curso, {
+    instructor,
+    disponible,
+    estadoLabel: disponible ? 'Disponible' : 'Impartido',
+    estadoBadgeClass: disponible ? 'bg-lefinor-dorado text-lefinor-azul' : 'bg-lefinor-gris text-white',
+  });
+}
+
+function prepararPublicacion(publicacion, profesionales) {
+  const info = categoriaInfo(publicacion.categoria);
+  const portada = publicacion.imagen_portada || info.imagenDefault;
+  const autorBase = publicacion.autor_id ? profesionales.find((p) => p.slug === publicacion.autor_id) : null;
+  const autor = autorBase
+    ? {
+        slug: autorBase.slug,
+        honorifico: autorBase.honorifico,
+        nombre: autorBase.nombre,
+        cargo: autorBase.cargo,
+        foto: autorBase.foto,
+        fotoAlt: autorBase.fotoAlt,
+        bioExtracto: truncar(autorBase.bioCompleta, 160),
+      }
+    : null;
+
+  return Object.assign({}, publicacion, {
+    portada,
+    categoriaLabel: info.label,
+    autor,
+  });
 }
 
 function main() {
@@ -169,13 +267,18 @@ function main() {
   const site = readJson(path.join(DATA_DIR, 'site.json'));
   const profesionales = slugSort(readJsonDir(path.join(DATA_DIR, 'profesionales')));
   const propiedades = readJsonDir(path.join(DATA_DIR, 'propiedades'));
-  const publicaciones = readJsonDir(path.join(DATA_DIR, 'publicaciones')).sort(
-    (a, b) => new Date(b.fecha) - new Date(a.fecha)
-  );
+  const publicaciones = readJsonDir(path.join(DATA_DIR, 'publicaciones'))
+    .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
+    .map((p) => prepararPublicacion(p, profesionales));
+  const academyCursos = readJsonDir(path.join(DATA_DIR, 'academy'))
+    .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
+    .map((c) => prepararCurso(c, profesionales));
   const confianzaPath = path.join(DATA_DIR, 'confianza.json');
   const testimoniosPath = path.join(DATA_DIR, 'testimonios.json');
+  const oficinasPath = path.join(DATA_DIR, 'oficinas.json');
   const confianza = fs.existsSync(confianzaPath) ? readJson(confianzaPath) : [];
   const testimonios = fs.existsSync(testimoniosPath) ? readJson(testimoniosPath) : [];
+  const oficinas = (fs.existsSync(oficinasPath) ? readJson(oficinasPath) : []).map(prepararOficina);
 
   const tokens = loadColorTokens();
 
@@ -183,11 +286,15 @@ function main() {
   const layout = fs.readFileSync(path.join(TEMPLATES_DIR, 'layout.html'), 'utf8');
 
   const ciudades = [...new Set(propiedades.map((p) => p.ciudad))].sort();
+  const categoriasDisponibles = [...new Set(publicaciones.map((p) => p.categoria))].map((slug) => ({
+    slug,
+    label: categoriaInfo(slug).label,
+  }));
 
   function renderPage(pageName, extraData, layoutData) {
     const pageTemplate = loadPage(pageName);
     const baseData = Object.assign(
-      { site, profesionales, propiedades, publicaciones, ciudades, confianza, testimonios },
+      { site, profesionales, propiedades, publicaciones, academyCursos, ciudades, confianza, testimonios, oficinas },
       extraData
     );
     const content = render(pageTemplate, baseData, partials);
@@ -265,7 +372,7 @@ function main() {
     'publicaciones.html',
     renderPage(
       'publicaciones-list',
-      {},
+      { categoriasDisponibles },
       {
         title: `Publicaciones — ${site.siteName}`,
         description: 'Artículos y publicaciones de Lefinor Capital Group sobre derecho y finanzas.',
@@ -281,7 +388,7 @@ function main() {
       {},
       {
         title: `Contacto — ${site.siteName}`,
-        description: `Contacta a ${site.siteName} en ${site.address}.`,
+        description: `Contacta a ${site.siteName} en nuestras sedes de ${oficinas.map((o) => o.nombre.replace(/^Sede /, '')).join(' y ')}.`,
         canonicalPath: '/contacto.html',
       }
     )
@@ -340,8 +447,24 @@ function main() {
         { publicacion, relacionadas },
         {
           title: `${publicacion.titulo} — ${site.siteName}`,
-          description: publicacion.resumen,
+          description: publicacion.extracto,
           canonicalPath: `/publicaciones/${publicacion.slug}.html`,
+        }
+      )
+    );
+  }
+
+  // Detalle de cursos de Academy
+  for (const curso of academyCursos) {
+    writeFile(
+      `academy/${curso.id}.html`,
+      renderPage(
+        'academy-curso-detail',
+        { curso },
+        {
+          title: `${curso.titulo} — ${site.siteName}`,
+          description: (curso.descripcion[0] || '').slice(0, 160),
+          canonicalPath: `/academy/${curso.id}.html`,
         }
       )
     );
@@ -366,17 +489,26 @@ function main() {
 
     const tarjetaUrl = `${site.domain}/tarjetas/${prof.slug}.html`;
     const qrSvg = generateQrSvg(tarjetaUrl, { darkColor: tokens.azul });
+    const mensajeWhatsappTarjeta = `Hola, me gustaría contactar a ${nombreCompleto} de ${site.siteName}.`;
+    const whatsappNumeroTarjeta = whatsappNumeroDesde(prof.telefono_personal || prof.telefono);
+    // La tarjeta digital es una página autónoma (sin header/navegación del sitio, mismo
+    // criterio que 404.html): se renderiza directo, sin pasar por layout.html.
     writeFile(
       `tarjetas/${prof.slug}.html`,
-      renderPage(
-        'tarjeta',
-        { profesional: prof, qrSvg },
+      render(
+        loadPage('tarjeta'),
         {
+          site,
+          profesional: prof,
+          oficinas,
+          qrSvg,
+          whatsappNumeroTarjeta,
+          mensajeWhatsappTarjetaCodificado: encodeURIComponent(mensajeWhatsappTarjeta),
           title: `${nombreCompleto} — Tarjeta digital ${site.siteName}`,
           description: `Tarjeta de contacto digital de ${nombreCompleto}, ${prof.cargo}.`,
           canonicalPath: `/tarjetas/${prof.slug}.html`,
-          bodyClass: 'tarjeta-page',
-        }
+        },
+        partials
       )
     );
     writeFile(`tarjetas/${prof.slug}.vcf`, buildVCard(prof, site));
@@ -385,6 +517,7 @@ function main() {
   // JSON de apoyo para filtros/buscador del lado del cliente
   writeFile('data/propiedades.json', JSON.stringify(propiedades, null, 2));
   writeFile('data/publicaciones.json', JSON.stringify(publicaciones, null, 2));
+  writeFile('data/academy.json', JSON.stringify(academyCursos, null, 2));
 
   // sitemap.xml
   const staticPaths = [
@@ -401,6 +534,7 @@ function main() {
   const dynamicPaths = [
     ...propiedades.map((p) => `/propiedades/${p.slug}.html`),
     ...publicaciones.map((p) => `/publicaciones/${p.slug}.html`),
+    ...academyCursos.map((c) => `/academy/${c.id}.html`),
     ...profesionales.map((p) => `/equipo/${p.slug}.html`),
   ];
   const allPaths = [...staticPaths, ...dynamicPaths];
@@ -412,6 +546,22 @@ function main() {
   // robots.txt
   writeFile('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.domain}/sitemap.xml\n`);
 
+  // Página 404: pantalla de error autónoma (sin header/footer del layout principal),
+  // servida automáticamente por Cloudflare Pages para cualquier ruta no encontrada.
+  writeFile(
+    '404.html',
+    render(
+      loadPage('404'),
+      {
+        site,
+        title: `Página no encontrada — ${site.siteName}`,
+        description: 'La página que buscas no existe o fue movida. Vuelve al inicio o explora las publicaciones de Lefinor Capital Group.',
+        canonicalPath: '/404.html',
+      },
+      partials
+    )
+  );
+
   // Assets estáticos
   copyDir(PUBLIC_DIR, DIST_DIR);
 
@@ -419,7 +569,7 @@ function main() {
   buildTailwindCss();
 
   console.log(`Sitio generado en ${DIST_DIR}`);
-  console.log(`Páginas: ${allPaths.length + profesionales.length} | Propiedades: ${propiedades.length} | Publicaciones: ${publicaciones.length} | Profesionales: ${profesionales.length}`);
+  console.log(`Páginas: ${allPaths.length + profesionales.length} | Propiedades: ${propiedades.length} | Publicaciones: ${publicaciones.length} | Cursos Academy: ${academyCursos.length} | Profesionales: ${profesionales.length}`);
 }
 
 main();

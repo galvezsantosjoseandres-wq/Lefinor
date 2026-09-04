@@ -29,8 +29,13 @@
 
     <div>
       <h3 class="text-sm font-semibold uppercase tracking-wide text-lefinor-dorado mb-3">Contacto</h3>
-      <ul class="space-y-2 text-sm text-white/80">
-        <li>{{site.address}}</li>
+      <ul class="space-y-3 text-sm text-white/80">
+        {{#each oficinas}}
+        <li>
+          <p class="font-semibold text-white">{{this.nombre}}</p>
+          <p>{{this.direccion}}</p>
+        </li>
+        {{/each}}
         <li><a href="tel:+{{site.whatsappNumber}}" class="hover:text-lefinor-dorado">{{site.phoneDisplay}}</a></li>
         <li><a href="mailto:{{site.email}}" class="hover:text-lefinor-dorado">{{site.email}}</a></li>
       </ul>

@@ -11,6 +11,11 @@
     initContactForms();
     initPropiedades();
     initPublicaciones();
+    initAcademy();
+    initWhatsappFloat();
+    initGoogleForms();
+    initInscripcionModal();
+    initSedesModal();
   });
 
   function initMobileMenu() {
@@ -26,6 +31,27 @@
       if (iconOpen) iconOpen.classList.toggle('hidden');
       if (iconClose) iconClose.classList.toggle('hidden');
     });
+  }
+
+  // El botón flotante de WhatsApp permanece oculto hasta que el usuario baja un poco la
+  // página: en pantallas angostas, el encabezado/hero de algunas páginas ya ocupa casi
+  // todo el viewport inicial, y el botón (fijo en la esquina) puede tapar texto en la
+  // primera pantalla si aparece desde la carga. Mostrarlo recién tras el scroll evita el
+  // solapamiento en cualquier página, sin depender de cuánto contenido tenga cada una.
+  function initWhatsappFloat() {
+    var boton = document.getElementById('whatsapp-float');
+    if (!boton) return;
+    var UMBRAL_SCROLL = 200;
+
+    function actualizarVisibilidad() {
+      var visible = window.scrollY > UMBRAL_SCROLL;
+      boton.classList.toggle('opacity-0', !visible);
+      boton.classList.toggle('opacity-100', visible);
+      boton.classList.toggle('pointer-events-none', !visible);
+    }
+
+    window.addEventListener('scroll', actualizarVisibilidad, { passive: true });
+    actualizarVisibilidad();
   }
 
   function initCookieBanner() {
@@ -300,6 +326,148 @@
     });
   }
 
+  // URL del Web App de Google Apps Script que recibe los formularios de Lefinor Academy
+  // (formulario general + inscripción por curso) y los agrega a una hoja de Google Sheets.
+  var GOOGLE_FORM_URL =
+    'https://script.google.com/macros/s/AKfycbw4UIBRM1WXirfJ7aHAkLv8mD4Ol5K2FxXmcvlDzQmd8nBiMpcxIQoPpUtNjmHLZF98/exec';
+
+  // Apps Script no permite leer la respuesta por CORS desde un dominio distinto, así que
+  // se envía en modo "no-cors" (con Content-Type: text/plain para evitar el preflight
+  // OPTIONS que Apps Script no maneja) y se asume éxito si el fetch no lanzó una excepción.
+  function enviarFormularioGoogle(datos) {
+    return fetch(GOOGLE_FORM_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(datos),
+    });
+  }
+
+  function initGoogleForms() {
+    var forms = document.querySelectorAll('[data-google-form]');
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var status = form.querySelector('[data-form-status]');
+        var submitBtn = form.querySelector('button[type="submit"]');
+        var formData = new FormData(form);
+        var datos = {
+          curso: form.dataset.curso || 'Formulario general',
+          nombre: (formData.get('nombre') || '').toString().trim(),
+          telefono: (formData.get('telefono') || '').toString().trim(),
+          correo: (formData.get('correo') || '').toString().trim(),
+          ciudad: (formData.get('ciudad') || '').toString().trim(),
+          area: (formData.get('area') || '').toString().trim(),
+          mensaje: (formData.get('mensaje') || '').toString().trim(),
+        };
+
+        if (submitBtn) submitBtn.disabled = true;
+        if (status) {
+          status.textContent = 'Enviando...';
+          status.className = 'text-xs text-center text-lefinor-gris';
+        }
+
+        enviarFormularioGoogle(datos)
+          .then(function () {
+            form.reset();
+            if (status) {
+              status.textContent = '¡Gracias! Hemos recibido tu solicitud, te contactaremos pronto.';
+              status.className = 'text-xs text-center text-lefinor-dorado font-semibold';
+            }
+            // Evento genérico que UI externa (ej. el modal de inscripción) puede escuchar
+            // sin que este handler necesite saber nada sobre modales.
+            form.dispatchEvent(new CustomEvent('lefinor:formulario-exito', { bubbles: true }));
+          })
+          .catch(function () {
+            if (status) {
+              status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.';
+              status.className = 'text-xs text-center text-red-600 font-semibold';
+            }
+          })
+          .finally(function () {
+            if (submitBtn) submitBtn.disabled = false;
+          });
+      });
+    });
+  }
+
+  // Modal "Solicitar inscripción" de cada curso disponible: overlay oscuro + ventana
+  // centrada (mismo patrón que el lightbox de galería de propiedades), en vez de una
+  // sección que empuja el resto del contenido de la página.
+  function initInscripcionModal() {
+    var modal = document.getElementById('inscripcion-modal');
+    var boton = document.querySelector('[data-inscripcion-abrir]');
+    if (!modal || !boton) return;
+
+    var form = modal.querySelector('form[data-google-form]');
+    var status = modal.querySelector('[data-form-status]');
+    var autoCierreId;
+
+    function open() {
+      clearTimeout(autoCierreId);
+      if (status) {
+        status.textContent = '';
+        status.className = 'text-xs text-center';
+      }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function close() {
+      clearTimeout(autoCierreId);
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    boton.addEventListener('click', open);
+    modal.querySelectorAll('[data-inscripcion-cerrar]').forEach(function (el) {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+
+    // Tras un envío exitoso, el mensaje de gracias queda visible unos segundos dentro
+    // del propio modal antes de cerrarlo solo — el usuario también puede cerrarlo antes
+    // con la X, el fondo o Escape.
+    if (form) {
+      form.addEventListener('lefinor:formulario-exito', function () {
+        autoCierreId = setTimeout(close, 2500);
+      });
+    }
+  }
+
+  // Modal "¿A cuál sede quieres ir?" del botón "Cómo llegar" de la tarjeta digital: mismo
+  // patrón de overlay + ventana centrada que el modal de inscripción de Academy, pero sin
+  // formulario — solo la lista de sedes con su propio botón "Abrir en Google Maps".
+  function initSedesModal() {
+    var modal = document.getElementById('sedes-modal');
+    var boton = document.querySelector('[data-sedes-abrir]');
+    if (!modal || !boton) return;
+
+    function open() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function close() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    boton.addEventListener('click', open);
+    modal.querySelectorAll('[data-sedes-cerrar]').forEach(function (el) {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+  }
+
   function formatTipo(tipo) {
     if (tipo === 'venta') return 'En Venta';
     if (tipo === 'alquiler') return 'En Alquiler';
@@ -411,9 +579,9 @@
     var node = template.content.firstElementChild.cloneNode(true);
     node.href = '/publicaciones/' + publicacion.slug + '.html';
     node.querySelector('.publicacion-card-portada').style.backgroundImage = "url('" + publicacion.portada + "')";
-    node.querySelector('.publicacion-card-categoria').textContent = publicacion.categoria || '';
+    node.querySelector('.publicacion-card-categoria').textContent = publicacion.categoriaLabel || '';
     node.querySelector('.publicacion-card-titulo').textContent = publicacion.titulo;
-    node.querySelector('.publicacion-card-resumen').textContent = publicacion.resumen || '';
+    node.querySelector('.publicacion-card-resumen').textContent = publicacion.extracto || '';
     node.querySelector('.publicacion-card-fecha').textContent = publicacion.fecha || '';
     return node;
   }
@@ -424,8 +592,23 @@
     var url = window.__LEFINOR_PUBLICACIONES_URL;
     if (!grid || !template || !url) return;
 
+    var filtroWrap = document.getElementById('publicaciones-filtro-categoria');
     var buscador = document.getElementById('publicaciones-buscador');
     var vacio = document.getElementById('publicaciones-resultado-vacio');
+    var categoriaActiva = 'todas';
+    // Deep-link desde el botón "Sus publicaciones" de la tarjeta de autor: /publicaciones.html?autor=slug
+    var autorActivo = new URLSearchParams(window.location.search).get('autor');
+
+    function actualizarBotonesFiltro() {
+      if (!filtroWrap) return;
+      var botones = filtroWrap.querySelectorAll('.filtro-btn');
+      botones.forEach(function (btn) {
+        var activo = btn.dataset.categoria === categoriaActiva;
+        btn.classList.toggle('bg-lefinor-azul', activo);
+        btn.classList.toggle('text-white', activo);
+        btn.classList.toggle('text-lefinor-azul', !activo);
+      });
+    }
 
     fetch(url)
       .then(function (res) { return res.json(); })
@@ -433,11 +616,13 @@
         function render() {
           var texto = (buscador.value || '').toLowerCase().trim();
           var filtradas = publicaciones.filter(function (p) {
-            return (
+            var coincideCategoria = categoriaActiva === 'todas' || p.categoria === categoriaActiva;
+            var coincideAutor = !autorActivo || p.autor_id === autorActivo;
+            var coincideTexto =
               !texto ||
               p.titulo.toLowerCase().indexOf(texto) !== -1 ||
-              (p.categoria && p.categoria.toLowerCase().indexOf(texto) !== -1)
-            );
+              (p.categoriaLabel && p.categoriaLabel.toLowerCase().indexOf(texto) !== -1);
+            return coincideCategoria && coincideAutor && coincideTexto;
           });
 
           grid.innerHTML = '';
@@ -451,11 +636,110 @@
           });
         }
 
+        if (filtroWrap) {
+          filtroWrap.querySelectorAll('.filtro-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              categoriaActiva = btn.dataset.categoria;
+              actualizarBotonesFiltro();
+              render();
+            });
+          });
+          actualizarBotonesFiltro();
+        }
         if (buscador) buscador.addEventListener('input', render);
         render();
       })
       .catch(function () {
         grid.innerHTML = '<p class="text-center text-lefinor-gris py-16 col-span-full">No se pudo cargar el listado de publicaciones.</p>';
+      });
+  }
+
+  var ACADEMY_ICON_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 h-12 text-lefinor-dorado" fill="currentColor">' +
+    '<path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zm0 10.5L4.4 9 12 4.9 19.6 9 12 13.5zM5 13.18v3.64L12 21l7-4.18v-3.64l-7 3.82-7-3.82z"/></svg>';
+
+  function estadoBadgeClasses(estado) {
+    return estado === 'disponible' ? 'bg-lefinor-dorado text-lefinor-azul' : 'bg-lefinor-gris text-white';
+  }
+
+  function buildAcademyCard(template, curso) {
+    var node = template.content.firstElementChild.cloneNode(true);
+    node.href = '/academy/' + curso.id + '.html';
+    var portadaEl = node.querySelector('.academy-card-portada');
+    if (curso.imagen_portada) {
+      portadaEl.style.backgroundImage = "url('" + curso.imagen_portada + "')";
+    } else {
+      portadaEl.classList.add('bg-lefinor-azul', 'flex', 'items-center', 'justify-center');
+      portadaEl.innerHTML = ACADEMY_ICON_SVG;
+    }
+    var badgeEl = node.querySelector('.academy-card-badge');
+    badgeEl.textContent = curso.estadoLabel;
+    badgeEl.className = 'absolute top-3 right-3 text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded academy-card-badge ' + estadoBadgeClasses(curso.estado);
+    node.querySelector('.academy-card-titulo').textContent = curso.titulo;
+    node.querySelector('.academy-card-lugar').textContent = curso.lugar || '';
+    node.querySelector('.academy-card-fecha').textContent = curso.fecha || '';
+    return node;
+  }
+
+  function initAcademy() {
+    var grid = document.getElementById('academy-grid');
+    var template = document.getElementById('academy-card-template');
+    var url = window.__LEFINOR_ACADEMY_URL;
+    if (!grid || !template || !url) return;
+
+    var filtroWrap = document.getElementById('academy-filtro-estado');
+    var buscador = document.getElementById('academy-buscador');
+    var vacio = document.getElementById('academy-resultado-vacio');
+    var estadoActivo = 'todos';
+
+    function actualizarBotonesFiltro() {
+      if (!filtroWrap) return;
+      var botones = filtroWrap.querySelectorAll('.filtro-btn');
+      botones.forEach(function (btn) {
+        var activo = btn.dataset.estado === estadoActivo;
+        btn.classList.toggle('bg-lefinor-azul', activo);
+        btn.classList.toggle('text-white', activo);
+        btn.classList.toggle('text-lefinor-azul', !activo);
+      });
+    }
+
+    fetch(url)
+      .then(function (res) { return res.json(); })
+      .then(function (cursos) {
+        function render() {
+          var texto = (buscador.value || '').toLowerCase().trim();
+          var filtrados = cursos.filter(function (c) {
+            var coincideEstado = estadoActivo === 'todos' || c.estado === estadoActivo;
+            var coincideTexto = !texto || c.titulo.toLowerCase().indexOf(texto) !== -1;
+            return coincideEstado && coincideTexto;
+          });
+
+          grid.innerHTML = '';
+          if (filtrados.length === 0) {
+            vacio.classList.remove('hidden');
+            return;
+          }
+          vacio.classList.add('hidden');
+          filtrados.forEach(function (c) {
+            grid.appendChild(buildAcademyCard(template, c));
+          });
+        }
+
+        if (filtroWrap) {
+          filtroWrap.querySelectorAll('.filtro-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              estadoActivo = btn.dataset.estado;
+              actualizarBotonesFiltro();
+              render();
+            });
+          });
+          actualizarBotonesFiltro();
+        }
+        if (buscador) buscador.addEventListener('input', render);
+        render();
+      })
+      .catch(function () {
+        grid.innerHTML = '<p class="text-center text-lefinor-gris py-16 col-span-full">No se pudo cargar el listado de Academy.</p>';
       });
   }
 })();

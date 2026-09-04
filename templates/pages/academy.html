@@ -1,58 +1,63 @@
 <section class="bg-lefinor-azul text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
     <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Lefinor Academy</p>
-    <h1 class="text-3xl md:text-4xl font-bold max-w-3xl mx-auto">Formación legal y financiera para el Cibao</h1>
+    <h1 class="text-3xl md:text-4xl font-bold max-w-3xl mx-auto">Formación legal y financiera</h1>
     <p class="mt-4 max-w-2xl mx-auto text-white/80">
       Talleres, cursos y diplomados pensados para fortalecer el conocimiento legal y financiero de profesionales,
       emprendedores y familias.
     </p>
-    <div class="mt-6">
-      <a
-        href="https://wa.me/{{site.whatsappNumber}}?text=Hola%2C%20quiero%20más%20información%20sobre%20Lefinor%20Academy"
-        target="_blank"
-        rel="noopener"
-        class="inline-flex bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
-        >Consultar por WhatsApp</a
-      >
+  </div>
+</section>
+
+<section class="py-10 border-b border-lefinor-gris/10 sticky top-16 md:top-20 z-30 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+    <div class="flex flex-wrap gap-2" id="academy-filtro-estado" data-active="todos">
+      <button type="button" data-estado="todos" class="filtro-btn px-4 py-2 rounded-md text-sm font-semibold border border-lefinor-azul/20">Todos</button>
+      <button type="button" data-estado="disponible" class="filtro-btn px-4 py-2 rounded-md text-sm font-semibold border border-lefinor-azul/20">Disponibles</button>
+      <button type="button" data-estado="impartido" class="filtro-btn px-4 py-2 rounded-md text-sm font-semibold border border-lefinor-azul/20">Impartidos</button>
+    </div>
+    <div class="relative w-full md:w-72">
+      <input
+        id="academy-buscador"
+        type="search"
+        placeholder="Buscar por título..."
+        class="w-full rounded-md border border-lefinor-gris/30 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+      />
     </div>
   </div>
 </section>
 
-<section class="py-16">
+<section class="py-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="rounded-xl border border-lefinor-gris/15 p-6">
-        <h2 class="text-lg font-bold text-lefinor-azul mb-2">Talleres</h2>
-        <p class="text-sm text-lefinor-gris">
-          Sesiones prácticas y de corta duración sobre temas legales y financieros de interés inmediato.
-        </p>
-        <p class="text-xs text-lefinor-dorado font-semibold mt-4">Contenido próximamente</p>
-      </div>
-      <div class="rounded-xl border border-lefinor-gris/15 p-6">
-        <h2 class="text-lg font-bold text-lefinor-azul mb-2">Cursos</h2>
-        <p class="text-sm text-lefinor-gris">
-          Formación estructurada de varias semanas con seguimiento y materiales de estudio.
-        </p>
-        <p class="text-xs text-lefinor-dorado font-semibold mt-4">Contenido próximamente</p>
-      </div>
-      <div class="rounded-xl border border-lefinor-gris/15 p-6">
-        <h2 class="text-lg font-bold text-lefinor-azul mb-2">Diplomados</h2>
-        <p class="text-sm text-lefinor-gris">
-          Programas de mayor profundidad dirigidos a profesionales que buscan especializarse.
-        </p>
-        <p class="text-xs text-lefinor-dorado font-semibold mt-4">Contenido próximamente</p>
-      </div>
+    <div id="academy-resultado-vacio" class="hidden text-center text-lefinor-gris py-16">
+      No encontramos cursos que coincidan con tu búsqueda.
     </div>
-    <p class="text-center text-sm text-lefinor-gris mt-10">
-      Estamos preparando el calendario de Lefinor Academy. Escríbenos para que te avisemos apenas abramos inscripciones.
-    </p>
+    <div id="academy-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </div>
 </section>
+
+<template id="academy-card-template">
+  <a class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow flex flex-col">
+    <div class="relative h-44">
+      <div class="absolute inset-0 bg-cover bg-center academy-card-portada"></div>
+      <span class="absolute top-3 right-3 text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded academy-card-badge"></span>
+    </div>
+    <div class="p-4 flex-1 flex flex-col">
+      <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors academy-card-titulo"></h3>
+      <p class="text-sm text-lefinor-gris mt-2 academy-card-lugar"></p>
+      <p class="text-xs text-lefinor-gris mt-3 academy-card-fecha"></p>
+    </div>
+  </a>
+</template>
+
+<script>
+  window.__LEFINOR_ACADEMY_URL = '/data/academy.json';
+</script>
 
 <section class="py-16 bg-lefinor-azul/[0.03]">
   <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-2xl font-bold text-lefinor-azul text-center mb-8">Recibe información de Lefinor Academy</h2>
-    <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-contact-form data-subject="Lefinor Academy">
+    <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-google-form data-curso="Formulario general">
       <div>
         <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-nombre">Nombre</label>
         <input
@@ -64,24 +69,52 @@
         />
       </div>
       <div>
-        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-email">Correo electrónico</label>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-telefono">Teléfono</label>
         <input
-          id="academy-email"
-          name="email"
+          id="academy-telefono"
+          name="telefono"
+          type="tel"
+          required
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-correo">Correo electrónico</label>
+        <input
+          id="academy-correo"
+          name="correo"
           type="email"
           required
           class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
         />
       </div>
       <div>
-        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-interes">¿Qué te interesa?</label>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-ciudad">Ciudad</label>
         <input
-          id="academy-interes"
-          name="interes"
+          id="academy-ciudad"
+          name="ciudad"
           type="text"
-          placeholder="Talleres, cursos, diplomados..."
           class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
         />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-area">Área de estudio</label>
+        <input
+          id="academy-area"
+          name="area"
+          type="text"
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-lefinor-azul mb-1" for="academy-interes">¿Qué te interesa?</label>
+        <textarea
+          id="academy-interes"
+          name="mensaje"
+          rows="3"
+          placeholder="Talleres, cursos, diplomados..."
+          class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+        ></textarea>
       </div>
       <button
         type="submit"

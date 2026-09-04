@@ -11,7 +11,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "qrcode-generator": "^2.0.4"
+    "qrcode-generator": "^2.0.4",
+    "vcards-js": "^2.11.1"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.19"

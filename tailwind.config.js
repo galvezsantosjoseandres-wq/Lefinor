@@ -19,6 +19,15 @@ module.exports = {
     'md:gap-1.5',
     'md:h-auto',
     'md:h-[420px]',
+    // Etiqueta de estado "Impartido" de los cursos de Academy: la clase se arma como
+    // string en generator/build.js (detalle) y public/js/main.js (tarjetas del listado),
+    // nunca aparece como texto literal en una plantilla .html, así que el escaneo de
+    // contenido de Tailwind nunca la detecta sin este safelist.
+    'bg-lefinor-gris',
+    // Estado de error de los formularios conectados a Google Apps Script (Academy): la
+    // clase se arma como string en public/js/main.js al mostrar el mensaje de fallo de
+    // envío, nunca aparece como texto literal en una plantilla .html.
+    'text-red-600',
   ],
   theme: {
     extend: {

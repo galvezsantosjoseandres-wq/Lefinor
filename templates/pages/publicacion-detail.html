@@ -6,48 +6,48 @@
       <span class="text-lefinor-azul">{{publicacion.titulo}}</span>
     </nav>
 
-    <span class="text-xs font-semibold uppercase tracking-wide text-lefinor-dorado">{{publicacion.categoria}}</span>
+    <span class="text-xs font-semibold uppercase tracking-wide text-lefinor-dorado">{{publicacion.categoriaLabel}}</span>
     <h1 class="text-2xl md:text-4xl font-bold text-lefinor-azul mt-2">{{publicacion.titulo}}</h1>
-    <p class="text-sm text-lefinor-gris mt-3">Por {{publicacion.autor}} · {{publicacion.fecha}}</p>
+    <p class="text-sm text-lefinor-gris mt-3">{{publicacion.fecha}}</p>
 
     <img src="{{publicacion.portada}}" alt="{{publicacion.titulo}}" class="w-full rounded-xl mt-8 mb-8" />
 
-    <div class="prose prose-lefinor max-w-none text-lefinor-azul/90 leading-relaxed">{{{publicacion.cuerpoHtml}}}</div>
-
-    {{#if publicacion.imagenes}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
-      {{#each publicacion.imagenes}}
-      <img src="{{this}}" alt="{{publicacion.titulo}}" class="w-full rounded-xl" />
+    <div class="prose prose-lefinor max-w-none text-lefinor-azul/90 leading-relaxed space-y-4">
+      {{#each publicacion.cuerpo}}
+      <p>{{this}}</p>
       {{/each}}
     </div>
+
+    {{#if publicacion.fuente}}
+    <p class="italic text-sm text-lefinor-gris mt-8">
+      Fuente: {{publicacion.fuente}}. Resumen elaborado por el equipo de Lefinor Capital Group con fines
+      informativos.
+    </p>
     {{/if}}
 
-    <div class="mt-12 rounded-xl bg-lefinor-azul/[0.04] p-6 text-center">
-      <p class="text-lefinor-azul font-semibold mb-3">¿Tienes dudas sobre este tema?</p>
-      <a
-        href="https://wa.me/{{site.whatsappNumber}}"
-        target="_blank"
-        rel="noopener"
-        class="inline-flex bg-lefinor-dorado text-lefinor-azul font-semibold px-6 py-3 rounded-md hover:opacity-90"
-        >Escribir por WhatsApp</a
-      >
-    </div>
-
-    {{#if relacionadas}}
-    <div class="mt-16">
-      <h2 class="text-xl font-bold text-lefinor-azul mb-6">Más publicaciones</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {{#each relacionadas}}
-        <a
-          href="/publicaciones/{{this.slug}}.html"
-          class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
-        >
-          <div class="h-36 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
-          <div class="p-4">
-            <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors">{{this.titulo}}</h3>
-          </div>
-        </a>
-        {{/each}}
+    {{#if publicacion.autor}}
+    <div class="mt-8 rounded-xl border border-lefinor-gris/15 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5">
+      <img
+        src="{{publicacion.autor.foto}}"
+        alt="{{publicacion.autor.fotoAlt}}"
+        class="w-20 h-20 aspect-square rounded-full object-cover object-top shrink-0"
+      />
+      <div class="text-center sm:text-left">
+        <h3 class="font-semibold text-lefinor-azul">{{publicacion.autor.honorifico}} {{publicacion.autor.nombre}}</h3>
+        <p class="text-sm text-lefinor-dorado font-medium">{{publicacion.autor.cargo}}</p>
+        <p class="text-sm text-lefinor-gris mt-2">{{publicacion.autor.bioExtracto}}</p>
+        <div class="flex flex-wrap justify-center sm:justify-start gap-3 mt-4">
+          <a
+            href="/equipo/{{publicacion.autor.slug}}.html"
+            class="text-sm font-semibold bg-lefinor-azul text-white px-4 py-2 rounded-md hover:bg-lefinor-azul/90"
+            >Ver perfil</a
+          >
+          <a
+            href="/publicaciones.html?autor={{publicacion.autor.slug}}"
+            class="text-sm font-semibold border border-lefinor-azul/20 text-lefinor-azul px-4 py-2 rounded-md hover:bg-lefinor-azul/5"
+            >Sus publicaciones</a
+          >
+        </div>
       </div>
     </div>
     {{/if}}

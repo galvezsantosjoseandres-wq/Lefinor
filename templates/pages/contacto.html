@@ -3,7 +3,7 @@
     <p class="text-lefinor-dorado font-semibold tracking-wide uppercase text-sm mb-3">Contacto</p>
     <h1 class="text-3xl md:text-4xl font-bold max-w-3xl mx-auto">Conversemos sobre tu caso</h1>
     <p class="mt-4 max-w-2xl mx-auto text-white/80">
-      Estamos ubicados en {{site.address}}. Escríbenos por el medio que prefieras.
+      Contamos con sedes en Fantino y La Vega — escríbenos por el medio que prefieras.
     </p>
   </div>
 </section>
@@ -66,9 +66,12 @@
       <div class="rounded-xl border border-lefinor-gris/15 p-6">
         <h2 class="text-xl font-bold text-lefinor-azul mb-4">Otras formas de contacto</h2>
         <ul class="space-y-3 text-sm text-lefinor-gris">
-          <li class="flex items-center gap-3">
-            <span class="text-lefinor-dorado font-semibold">Dirección:</span> {{site.address}}
+          {{#each oficinas}}
+          <li>
+            <span class="text-lefinor-dorado font-semibold">{{this.nombre}}:</span>
+            <span>{{this.direccion}}</span>
           </li>
+          {{/each}}
           <li class="flex items-center gap-3">
             <span class="text-lefinor-dorado font-semibold">Teléfono / WhatsApp:</span>
             <a href="tel:+{{site.whatsappNumber}}" class="hover:text-lefinor-azul">{{site.phoneDisplay}}</a>
@@ -94,15 +97,18 @@
         </a>
       </div>
 
+      {{#each oficinas}}
       <div class="rounded-xl overflow-hidden border border-lefinor-gris/15">
+        <p class="px-4 py-3 text-sm font-semibold text-lefinor-azul bg-lefinor-neutro">{{this.nombre}}</p>
         <iframe
-          src="{{site.mapsEmbedUrl}}"
-          class="w-full h-72 border-0"
+          src="{{this.mapsEmbedUrl}}"
+          class="w-full h-64 border-0"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          title="Mapa de {{site.siteName}}"
+          title="Mapa de {{this.nombre}}"
         ></iframe>
       </div>
+      {{/each}}
     </div>
   </div>
 </section>

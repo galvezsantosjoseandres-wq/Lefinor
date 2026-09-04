@@ -1,0 +1,15 @@
+{
+  "id": "curso-derecho-penal-nuevos-abogados",
+  "titulo": "Derecho Penal para Nuevos Abogados",
+  "instructor_id": "hugo-taveras",
+  "estado": "impartido",
+  "fecha": "15 de noviembre, 2023",
+  "lugar": "Salón Multiuso de Fantino",
+  "modalidad": "Presencial",
+  "imagen_portada": "/img/academy/cursos/curso-derecho-penal/portada.jpg",
+  "descripcion": [
+    "Un curso práctico dirigido a abogados recién egresados y estudiantes en su último año de la carrera, enfocado en los fundamentos del derecho penal dominicano y su aplicación en el ejercicio profesional real.",
+    "El programa cubre los principios generales del derecho penal, la estructura del proceso penal dominicano, y una introducción a las principales figuras delictivas contempladas en el nuevo Código Penal — incluyendo los cambios más relevantes frente a la legislación anterior.",
+    "A través de casos prácticos y ejercicios de análisis, los participantes desarrollan herramientas para la representación legal en materia penal, la elaboración de escritos judiciales, y la comprensión de las etapas procesales desde la investigación hasta el juicio."
+  ]
+}

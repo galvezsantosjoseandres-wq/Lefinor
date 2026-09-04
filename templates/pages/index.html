@@ -86,6 +86,35 @@
   <div id="hero-dots" class="absolute bottom-4 inset-x-0 flex justify-center gap-2"></div>
 </section>
 
+{{#if profesionales}}
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-2xl font-bold text-lefinor-azul">Nuestro equipo</h2>
+      <p class="text-lefinor-gris mt-2">Profesionales legales y financieros listos para asesorarte.</p>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+      {{#each profesionales}}
+      <div class="text-center">
+        <img
+          src="{{this.foto}}"
+          alt="{{this.fotoAlt}}"
+          class="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full object-cover object-top"
+        />
+        <h3 class="font-semibold text-lefinor-azul text-sm mt-3">{{this.honorifico}} {{this.nombre}}</h3>
+        <p class="text-xs text-lefinor-dorado font-medium mt-0.5">{{this.cargo}}</p>
+      </div>
+      {{/each}}
+    </div>
+    <div class="text-center mt-10">
+      <a href="/quienes-somos.html" class="inline-flex items-center text-sm font-semibold text-lefinor-dorado hover:underline"
+        >Conoce a todo nuestro equipo →</a
+      >
+    </div>
+  </div>
+</section>
+{{/if}}
+
 {{#if confianza}}
 <section class="py-12 border-b border-lefinor-gris/10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -138,26 +167,25 @@
   </div>
 </section>
 
-{{#if destacadas}}
+{{#if ultimasPublicaciones}}
 <section class="py-16 bg-lefinor-azul/[0.03]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-end justify-between mb-8">
-      <h2 class="text-2xl font-bold text-lefinor-azul">Propiedades destacadas</h2>
-      <a href="/propiedades.html" class="text-sm font-semibold text-lefinor-dorado hover:underline">Ver todas →</a>
+      <h2 class="text-2xl font-bold text-lefinor-azul">Últimas publicaciones</h2>
+      <a href="/publicaciones.html" class="text-sm font-semibold text-lefinor-dorado hover:underline">Ver todas →</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {{#each destacadas}}
+      {{#each ultimasPublicaciones}}
       <a
-        href="/propiedades/{{this.slug}}.html"
+        href="/publicaciones/{{this.slug}}.html"
         class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
       >
-        <div class="h-44 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
+        <div class="h-40 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
         <div class="p-4">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wide text-lefinor-dorado mb-1"
-            >{{#if this.tipo_operacion}}{{this.tipo_operacion}}{{/if}} · {{this.ciudad}}</span
-          >
-          <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors">{{this.titulo}}</h3>
-          <p class="text-sm text-lefinor-gris mt-1">Precio a consultar</p>
+          <span class="text-xs font-semibold uppercase tracking-wide text-lefinor-dorado">{{this.categoriaLabel}}</span>
+          <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors mt-1">
+            {{this.titulo}}
+          </h3>
         </div>
       </a>
       {{/each}}
@@ -187,25 +215,26 @@
 </section>
 {{/if}}
 
-{{#if ultimasPublicaciones}}
+{{#if destacadas}}
 <section class="py-16 bg-lefinor-azul/[0.03]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-end justify-between mb-8">
-      <h2 class="text-2xl font-bold text-lefinor-azul">Últimas publicaciones</h2>
-      <a href="/publicaciones.html" class="text-sm font-semibold text-lefinor-dorado hover:underline">Ver todas →</a>
+      <h2 class="text-2xl font-bold text-lefinor-azul">Propiedades destacadas</h2>
+      <a href="/propiedades.html" class="text-sm font-semibold text-lefinor-dorado hover:underline">Ver todas →</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {{#each ultimasPublicaciones}}
+      {{#each destacadas}}
       <a
-        href="/publicaciones/{{this.slug}}.html"
+        href="/propiedades/{{this.slug}}.html"
         class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
       >
-        <div class="h-40 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
+        <div class="h-44 bg-cover bg-center" style="background-image:url('{{this.portada}}')"></div>
         <div class="p-4">
-          <span class="text-xs font-semibold uppercase tracking-wide text-lefinor-dorado">{{this.categoria}}</span>
-          <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors mt-1">
-            {{this.titulo}}
-          </h3>
+          <span class="inline-block text-xs font-semibold uppercase tracking-wide text-lefinor-dorado mb-1"
+            >{{#if this.tipo_operacion}}{{this.tipo_operacion}}{{/if}} · {{this.ciudad}}</span
+          >
+          <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors">{{this.titulo}}</h3>
+          <p class="text-sm text-lefinor-gris mt-1">Precio a consultar</p>
         </div>
       </a>
       {{/each}}
