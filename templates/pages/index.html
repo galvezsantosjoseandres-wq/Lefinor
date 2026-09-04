@@ -247,13 +247,17 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
     <div>
       <h2 class="text-2xl font-bold text-lefinor-azul mb-4">Visítanos o escríbenos</h2>
-      <p class="text-lefinor-gris mb-6">{{site.address}}</p>
+      <ul class="space-y-2 text-lefinor-gris mb-6">
+        {{#each oficinas}}
+        <li><span class="font-semibold text-lefinor-azul">{{this.nombre}}:</span> {{this.direccion}}</li>
+        {{/each}}
+      </ul>
       <iframe
-        src="{{site.mapsEmbedUrl}}"
+        src="{{oficinas.0.mapsEmbedUrl}}"
         class="w-full h-64 rounded-xl border-0"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        title="Mapa de {{site.siteName}}"
+        title="Mapa de {{oficinas.0.nombre}}"
       ></iframe>
     </div>
     <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-contact-form>
