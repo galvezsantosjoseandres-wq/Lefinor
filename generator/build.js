@@ -197,14 +197,17 @@ function whatsappNumeroDesde(telefonoLocal) {
   return '1' + String(telefonoLocal).replace(/\D/g, '');
 }
 
-// Las URLs de mapa de cada oficina se calculan a partir de su dirección (única fuente de
+// Las URLs de mapa de cada oficina se calculan a partir de sus coordenadas GPS (única fuente de
 // verdad) en vez de guardarse como campos aparte en el JSON — así nunca pueden desincronizarse
-// si alguien actualiza la dirección pero olvida actualizar la URL codificada.
+// si alguien actualiza las coordenadas pero olvida actualizar la URL. Se usan lat/lng en vez de
+// la dirección en texto porque Google no siempre geolocaliza con precisión direcciones de
+// interior de plaza/local (ej. "Segundo Nivel, Módulo 200"); las coordenadas sí garantizan el
+// pin en el punto exacto. `direccion` se mantiene solo para mostrarla legible en pantalla.
 function prepararOficina(oficina) {
-  const direccionCodificada = encodeURIComponent(oficina.direccion);
+  const coordenadas = `${oficina.lat},${oficina.lng}`;
   return Object.assign({}, oficina, {
-    mapsEmbedUrl: `https://www.google.com/maps?q=${direccionCodificada}&output=embed`,
-    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${direccionCodificada}`,
+    mapsEmbedUrl: `https://www.google.com/maps?q=${coordenadas}&output=embed`,
+    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${coordenadas}`,
   });
 }
 
