@@ -12,9 +12,7 @@
   },
   "dependencies": {
     "qrcode-generator": "^2.0.4",
+    "tailwindcss": "^3.4.19",
     "vcards-js": "^2.11.1"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.4.19"
   }
 }
