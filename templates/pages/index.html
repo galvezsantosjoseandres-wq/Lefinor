@@ -262,10 +262,14 @@
     </div>
     <form
       class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4"
-      data-google-form
-      data-curso="Formulario de Inicio"
+      data-worker-form
+      data-origen="Formulario de Inicio"
     >
       <div data-form-campos class="space-y-4">
+        <div class="hidden" aria-hidden="true">
+          <label for="home-pagina-web">No completar este campo</label>
+          <input id="home-pagina-web" name="pagina_web" type="text" tabindex="-1" autocomplete="off" />
+        </div>
         <div>
           <label class="block text-sm font-medium text-lefinor-azul mb-1" for="home-nombre">Nombre</label>
           <input
