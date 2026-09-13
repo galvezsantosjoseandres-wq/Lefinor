@@ -346,6 +346,14 @@
   function initGoogleForms() {
     var forms = document.querySelectorAll('[data-google-form]');
     forms.forEach(function (form) {
+      // Banner de éxito opcional: si el formulario trae un [data-form-campos] y un
+      // [data-form-exito], se oculta el formulario y se muestra el banner unos segundos
+      // en su lugar. Si no los trae (caso de Academy), el comportamiento no cambia: solo
+      // se actualiza el texto de [data-form-status].
+      var camposEl = form.querySelector('[data-form-campos]');
+      var exitoEl = form.querySelector('[data-form-exito]');
+      var autoOcultarId;
+
       form.addEventListener('submit', function (event) {
         event.preventDefault();
         var status = form.querySelector('[data-form-status]');
@@ -370,7 +378,19 @@
         enviarFormularioGoogle(datos)
           .then(function () {
             form.reset();
-            if (status) {
+            if (exitoEl) {
+              clearTimeout(autoOcultarId);
+              if (status) {
+                status.textContent = '';
+                status.className = 'text-xs text-center';
+              }
+              if (camposEl) camposEl.classList.add('hidden');
+              exitoEl.classList.remove('hidden');
+              autoOcultarId = setTimeout(function () {
+                exitoEl.classList.add('hidden');
+                if (camposEl) camposEl.classList.remove('hidden');
+              }, 5000);
+            } else if (status) {
               status.textContent = '¡Gracias! Hemos recibido tu solicitud, te contactaremos pronto.';
               status.className = 'text-xs text-center text-lefinor-dorado font-semibold';
             }
