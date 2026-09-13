@@ -450,9 +450,15 @@
               }, 5000);
             }
           })
-          .catch(function () {
+          .catch(function (error) {
+            // TEMPORAL — diagnóstico en vivo del fallo de envío en producción. Expone el
+            // código de error real en el banner para poder verlo sin DevTools (ej. desde el
+            // celular). Revertir a un mensaje genérico en cuanto se identifique la causa.
             if (status) {
-              status.textContent = 'No pudimos enviar tu mensaje. Escríbenos por WhatsApp mientras lo solucionamos.';
+              status.textContent =
+                'No pudimos enviar tu mensaje (código: ' +
+                (error && error.message ? error.message : 'desconocido') +
+                '). Escríbenos por WhatsApp mientras lo solucionamos.';
               status.className = 'text-xs text-center text-red-600 font-semibold';
             }
           })
