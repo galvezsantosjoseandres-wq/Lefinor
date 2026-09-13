@@ -20,11 +20,16 @@ function jsonResponse(body, status) {
   });
 }
 
-// Quita caracteres de control (incluidos saltos de línea, que podrían usarse para inyectar
-// encabezados adicionales en el correo) y recorta a la longitud máxima permitida.
-function sanearTexto(valor, longitudMaxima) {
+// Quita caracteres de control y recorta a la longitud máxima permitida. Los saltos de línea
+// (\n, \r) se quitan también por defecto — nombre/correo/teléfono/origen son campos de una
+// sola línea, y como "nombre" y "origen" se usan tal cual en el asunto del correo, un salto
+// de línea ahí serviría para inyectar contenido adicional. Solo "mensaje" los conserva
+// (permitirSaltosDeLinea), ya que sí puede ser un texto de varias líneas legítimo.
+function sanearTexto(valor, longitudMaxima, opciones) {
   if (typeof valor !== 'string') return '';
-  const limpio = valor.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim();
+  const permitirSaltosDeLinea = Boolean(opciones && opciones.permitirSaltosDeLinea);
+  const patron = permitirSaltosDeLinea ? /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g : /[\x00-\x1F\x7F]/g;
+  const limpio = valor.replace(patron, '').trim();
   return limpio.slice(0, longitudMaxima);
 }
 
@@ -75,7 +80,7 @@ async function manejarContacto(request, env) {
   const nombre = sanearTexto(datos.nombre, MAX_LENGTHS.nombre);
   const correo = sanearTexto(datos.correo, MAX_LENGTHS.correo);
   const telefono = sanearTexto(datos.telefono, MAX_LENGTHS.telefono);
-  const mensaje = sanearTexto(datos.mensaje, MAX_LENGTHS.mensaje);
+  const mensaje = sanearTexto(datos.mensaje, MAX_LENGTHS.mensaje, { permitirSaltosDeLinea: true });
   const origen = sanearTexto(datos.origen, MAX_LENGTHS.origen) || 'Formulario de contacto';
 
   if (!nombre || !correo || !mensaje) {
