@@ -14,6 +14,7 @@
     initAcademy();
     initWhatsappFloat();
     initGoogleForms();
+    initWorkerForms();
     initInscripcionModal();
     initSedesModal();
   });
@@ -346,14 +347,6 @@
   function initGoogleForms() {
     var forms = document.querySelectorAll('[data-google-form]');
     forms.forEach(function (form) {
-      // Banner de éxito opcional: si el formulario trae un [data-form-campos] y un
-      // [data-form-exito], se oculta el formulario y se muestra el banner unos segundos
-      // en su lugar. Si no los trae (caso de Academy), el comportamiento no cambia: solo
-      // se actualiza el texto de [data-form-status].
-      var camposEl = form.querySelector('[data-form-campos]');
-      var exitoEl = form.querySelector('[data-form-exito]');
-      var autoOcultarId;
-
       form.addEventListener('submit', function (event) {
         event.preventDefault();
         var status = form.querySelector('[data-form-status]');
@@ -378,19 +371,7 @@
         enviarFormularioGoogle(datos)
           .then(function () {
             form.reset();
-            if (exitoEl) {
-              clearTimeout(autoOcultarId);
-              if (status) {
-                status.textContent = '';
-                status.className = 'text-xs text-center';
-              }
-              if (camposEl) camposEl.classList.add('hidden');
-              exitoEl.classList.remove('hidden');
-              autoOcultarId = setTimeout(function () {
-                exitoEl.classList.add('hidden');
-                if (camposEl) camposEl.classList.remove('hidden');
-              }, 5000);
-            } else if (status) {
+            if (status) {
               status.textContent = '¡Gracias! Hemos recibido tu solicitud, te contactaremos pronto.';
               status.className = 'text-xs text-center text-lefinor-dorado font-semibold';
             }
@@ -401,6 +382,77 @@
           .catch(function () {
             if (status) {
               status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.';
+              status.className = 'text-xs text-center text-red-600 font-semibold';
+            }
+          })
+          .finally(function () {
+            if (submitBtn) submitBtn.disabled = false;
+          });
+      });
+    });
+  }
+
+  // Formularios de Inicio y Contacto: conectados al Worker de Cloudflare en /api/contacto
+  // (que reenvía el mensaje por correo con Resend) — completamente separado de Academy y
+  // su Google Apps Script. Muestra un banner de éxito notorio, ocultando los campos del
+  // formulario durante unos segundos antes de volver a mostrarlos ya vacíos.
+  function initWorkerForms() {
+    var forms = document.querySelectorAll('[data-worker-form]');
+    forms.forEach(function (form) {
+      var camposEl = form.querySelector('[data-form-campos]');
+      var exitoEl = form.querySelector('[data-form-exito]');
+      var autoOcultarId;
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var status = form.querySelector('[data-form-status]');
+        var submitBtn = form.querySelector('button[type="submit"]');
+        var formData = new FormData(form);
+        var datos = {
+          nombre: (formData.get('nombre') || '').toString().trim(),
+          correo: (formData.get('correo') || '').toString().trim(),
+          telefono: (formData.get('telefono') || '').toString().trim(),
+          mensaje: (formData.get('mensaje') || '').toString().trim(),
+          origen: form.dataset.origen || 'Formulario de contacto',
+          // Honeypot anti-spam: un visitante real nunca completa este campo (está oculto).
+          pagina_web: (formData.get('pagina_web') || '').toString(),
+        };
+
+        if (submitBtn) submitBtn.disabled = true;
+        if (status) {
+          status.textContent = 'Enviando...';
+          status.className = 'text-xs text-center text-lefinor-gris';
+        }
+
+        fetch('/api/contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(datos),
+        })
+          .then(function (response) {
+            return response.json().then(function (cuerpo) {
+              if (!response.ok || !cuerpo.ok) throw new Error(cuerpo.error || 'envio_fallido');
+            });
+          })
+          .then(function () {
+            form.reset();
+            clearTimeout(autoOcultarId);
+            if (status) {
+              status.textContent = '';
+              status.className = 'text-xs text-center';
+            }
+            if (exitoEl) {
+              if (camposEl) camposEl.classList.add('hidden');
+              exitoEl.classList.remove('hidden');
+              autoOcultarId = setTimeout(function () {
+                exitoEl.classList.add('hidden');
+                if (camposEl) camposEl.classList.remove('hidden');
+              }, 5000);
+            }
+          })
+          .catch(function () {
+            if (status) {
+              status.textContent = 'No pudimos enviar tu mensaje. Escríbenos por WhatsApp mientras lo solucionamos.';
               status.className = 'text-xs text-center text-red-600 font-semibold';
             }
           })
