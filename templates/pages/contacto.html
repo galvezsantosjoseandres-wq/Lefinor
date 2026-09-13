@@ -12,53 +12,68 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10">
     <div>
       <h2 class="text-xl font-bold text-lefinor-azul mb-6">Formulario de contacto</h2>
-      <form class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4" data-contact-form data-subject="Contacto general">
-        <div>
-          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-nombre">Nombre</label>
-          <input
-            id="contacto-nombre"
-            name="nombre"
-            type="text"
-            required
-            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
-          />
+      <form
+        class="bg-white border border-lefinor-gris/15 rounded-xl p-6 shadow-sm space-y-4"
+        data-google-form
+        data-curso="Formulario de Contacto"
+      >
+        <div data-form-campos class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-nombre">Nombre</label>
+            <input
+              id="contacto-nombre"
+              name="nombre"
+              type="text"
+              required
+              class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-email">Correo electrónico</label>
+            <input
+              id="contacto-email"
+              name="correo"
+              type="email"
+              required
+              class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-telefono">Teléfono</label>
+            <input
+              id="contacto-telefono"
+              name="telefono"
+              type="tel"
+              class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-mensaje">Mensaje</label>
+            <textarea
+              id="contacto-mensaje"
+              name="mensaje"
+              rows="4"
+              required
+              class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90 transition-colors"
+          >
+            Enviar mensaje
+          </button>
+          <p class="text-xs text-center" data-form-status></p>
         </div>
-        <div>
-          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-email">Correo electrónico</label>
-          <input
-            id="contacto-email"
-            name="email"
-            type="email"
-            required
-            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
-          />
+        <div data-form-exito class="hidden rounded-lg bg-green-50 border border-green-200 p-6 text-center">
+          <div class="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-green-600 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <p class="font-semibold text-green-800">¡Mensaje enviado con éxito!</p>
+          <p class="text-sm text-green-700 mt-1">Te contactaremos pronto.</p>
         </div>
-        <div>
-          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-telefono">Teléfono</label>
-          <input
-            id="contacto-telefono"
-            name="telefono"
-            type="tel"
-            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
-          />
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-lefinor-azul mb-1" for="contacto-mensaje">Mensaje</label>
-          <textarea
-            id="contacto-mensaje"
-            name="mensaje"
-            rows="4"
-            required
-            class="w-full rounded-md border border-lefinor-gris/30 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lefinor-dorado"
-          ></textarea>
-        </div>
-        <button
-          type="submit"
-          class="w-full bg-lefinor-azul text-white font-semibold py-2.5 rounded-md hover:bg-lefinor-azul/90 transition-colors"
-        >
-          Enviar mensaje
-        </button>
-        <p class="text-xs text-lefinor-gris text-center" data-form-status></p>
       </form>
     </div>
 
