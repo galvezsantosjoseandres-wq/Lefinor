@@ -28,6 +28,18 @@ module.exports = {
     // clase se arma como string en public/js/main.js al mostrar el mensaje de fallo de
     // envío, nunca aparece como texto literal en una plantilla .html.
     'text-red-600',
+    // Foto/video del lightbox de galería de propiedad: el <img>/<video> se crea por completo
+    // en JS (initGaleriaLightbox, public/js/main.js), así que ninguna de estas clases
+    // aparece como texto literal en una plantilla .html. Sin este safelist, Tailwind nunca
+    // genera las reglas y el elemento queda sin ninguna restricción de tamaño — con fotos
+    // no se notaba (resolución moderada, apaisadas), pero con un video vertical real el
+    // elemento crecía más alto que el viewport y empujaba los controles nativos fuera de vista.
+    'max-h-[85vh]',
+    'max-w-[90vw]',
+    'w-auto',
+    'h-auto',
+    'object-contain',
+    'rounded',
   ],
   theme: {
     extend: {
