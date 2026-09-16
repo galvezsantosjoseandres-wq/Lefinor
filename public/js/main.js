@@ -226,7 +226,8 @@
         var video = document.createElement('video');
         video.src = item.src;
         video.controls = true;
-        video.autoplay = true;
+        // Sin autoplay: debe requerir que la persona le dé play manualmente, en cualquier
+        // dispositivo (reportado específicamente en móvil, donde el video arrancaba solo).
         // max-h-full/max-w-full (en vez de vh/vw fijos): el escenario ya queda acotado por
         // el layout flex de #propiedad-lightbox (flex-1 min-h-0, con la tira de miniaturas
         // debajo tomando su propio espacio), así que el elemento se ajusta al espacio real
