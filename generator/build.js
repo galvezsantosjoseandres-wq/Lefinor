@@ -118,7 +118,12 @@ function tipoOperacionLabel(tipoOperacion) {
 }
 
 function prepararGaleria(propiedad) {
-  const galeria = (propiedad.galeria || []).map((item) => Object.assign({}, item, { mostrarFoto: item.tipo === 'foto' && Boolean(item.src) }));
+  const galeria = (propiedad.galeria || []).map((item) =>
+    Object.assign({}, item, {
+      mostrarFoto: item.tipo === 'foto' && Boolean(item.src),
+      mostrarVideo: item.tipo === 'video' && Boolean(item.src),
+    })
+  );
   const galeriaMain = galeria[0]
     ? Object.assign({}, galeria[0], { previewIndex: 0 })
     : undefined;
