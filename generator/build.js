@@ -149,7 +149,11 @@ function leerGaleriaPropiedad(slug) {
   if (numeros[0] !== 1) {
     console.warn(`⚠ Galería de "${slug}": no hay archivo número 1 -- la portada será "${porNumero.get(numeros[0]).archivo}".`);
   } else if (porNumero.get(1).tipo === 'video') {
-    console.warn(`⚠ Galería de "${slug}": la portada (archivo número 1) es un video -- no se puede mostrar como imagen de fondo en las tarjetas.`);
+    console.warn(
+      `⚠ [${slug}]: el archivo #1 de la galería es un video (${porNumero.get(1).archivo}).\n` +
+        '  Los videos no se pueden usar como imagen de portada -- verifica que esto sea intencional,\n' +
+        '  o renumera para que una foto ocupe el puesto #1.'
+    );
   }
   for (let i = 0; i < numeros.length - 1; i++) {
     if (numeros[i + 1] !== numeros[i] + 1) {
