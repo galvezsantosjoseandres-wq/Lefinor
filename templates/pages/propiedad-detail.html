@@ -10,9 +10,6 @@
     <div class="mb-8" id="propiedad-galeria">
       <div class="{{propiedad.galeriaContainerClass}}">
         <div class="relative {{propiedad.galeriaMainClass}} cursor-pointer overflow-hidden" data-lightbox-open data-lightbox-index="0">
-          {{#if propiedad.galeriaMain.mostrarFoto}}
-          <div class="w-full h-full" style="background-image:url('{{propiedad.galeriaMain.src}}');background-size:cover;background-position:center;"></div>
-          {{else}}
           {{#if propiedad.galeriaMain.mostrarVideo}}
           <video class="w-full h-full object-cover" src="{{propiedad.galeriaMain.src}}" muted playsinline preload="metadata"></video>
           <div class="absolute inset-0 flex items-center justify-center">
@@ -21,11 +18,7 @@
             </span>
           </div>
           {{else}}
-          <div
-            class="w-full h-full"
-            style="background-image:repeating-linear-gradient(135deg, var(--azul-2) 0, var(--azul-2) 2px, var(--azul) 2px, var(--azul) 40px);"
-          ></div>
-          {{/if}}
+          <div class="w-full h-full" style="background-image:url('{{propiedad.galeriaMain.src}}');background-size:cover;background-position:center;"></div>
           {{/if}}
           {{#if propiedad.galeriaMain.duracion}}
           <span class="absolute bottom-3 left-3 bg-lefinor-azul/85 text-white text-xs font-semibold px-2.5 py-1 rounded flex items-center gap-1.5">
@@ -37,9 +30,6 @@
 
         {{#each propiedad.galeriaSecundarias}}
         <div class="relative hidden md:block overflow-hidden cursor-pointer" data-lightbox-open data-lightbox-index="{{previewIndex}}">
-          {{#if mostrarFoto}}
-          <div class="w-full h-full" style="background-image:url('{{src}}');background-size:cover;background-position:center;"></div>
-          {{else}}
           {{#if mostrarVideo}}
           <video class="w-full h-full object-cover" src="{{src}}" muted playsinline preload="metadata"></video>
           <div class="absolute inset-0 flex items-center justify-center">
@@ -48,11 +38,7 @@
             </span>
           </div>
           {{else}}
-          <div
-            class="w-full h-full"
-            style="background-image:repeating-linear-gradient(135deg, var(--azul-2) 0, var(--azul-2) 2px, var(--azul) 2px, var(--azul) 40px);"
-          ></div>
-          {{/if}}
+          <div class="w-full h-full" style="background-image:url('{{src}}');background-size:cover;background-position:center;"></div>
           {{/if}}
           {{#if duracion}}
           <span class="absolute bottom-2 left-2 bg-lefinor-azul/85 text-white text-xs font-semibold px-2 py-0.5 rounded flex items-center gap-1">
@@ -65,9 +51,6 @@
 
         {{#if propiedad.galeriaQuintaTile}}
         <div class="relative hidden md:block overflow-hidden cursor-pointer" data-lightbox-open data-lightbox-index="4">
-          {{#if propiedad.galeriaQuintaTile.mostrarFoto}}
-          <div class="w-full h-full" style="background-image:url('{{propiedad.galeriaQuintaTile.src}}');background-size:cover;background-position:center;"></div>
-          {{else}}
           {{#if propiedad.galeriaQuintaTile.mostrarVideo}}
           <video class="w-full h-full object-cover" src="{{propiedad.galeriaQuintaTile.src}}" muted playsinline preload="metadata"></video>
           <div class="absolute inset-0 flex items-center justify-center">
@@ -76,11 +59,7 @@
             </span>
           </div>
           {{else}}
-          <div
-            class="w-full h-full"
-            style="background-image:repeating-linear-gradient(135deg, var(--azul-2) 0, var(--azul-2) 2px, var(--azul) 2px, var(--azul) 40px);"
-          ></div>
-          {{/if}}
+          <div class="w-full h-full" style="background-image:url('{{propiedad.galeriaQuintaTile.src}}');background-size:cover;background-position:center;"></div>
           {{/if}}
           {{#if propiedad.galeriaQuintaTile.duracion}}
           <span class="absolute bottom-2 left-2 bg-lefinor-azul/85 text-white text-xs font-semibold px-2 py-0.5 rounded flex items-center gap-1">

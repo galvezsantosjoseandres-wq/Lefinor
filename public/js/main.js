@@ -213,44 +213,30 @@
     var counter = modal.querySelector('[data-lightbox-counter]');
     var galeriaGrid = document.getElementById('propiedad-galeria');
     var current = 0;
-    var STRIPE_BG = 'repeating-linear-gradient(135deg, var(--azul-2) 0, var(--azul-2) 2px, var(--azul) 2px, var(--azul) 40px)';
 
+    // Cada elemento viene de la galería detectada por carpeta en el build (generator/build.js):
+    // siempre trae un src real, así que ya no existe el caso "video/foto sin archivo todavía".
     function renderSlide(index) {
       var item = items[index];
       stage.innerHTML = '';
       if (!item) return;
-      if (item.tipo === 'foto' && item.src) {
-        var img = document.createElement('img');
-        img.src = item.src;
-        img.alt = '';
-        // max-h-[85vh]/max-w-[90vw] en vez de porcentuales (max-h-full/max-w-full): estas
-        // clases se generan a partir del safelist de tailwind.config.js, no del escaneo de
-        // contenido (que solo lee templates/**/*.html, nunca este archivo) — ver el
-        // comentario junto al safelist para más contexto.
-        img.className = 'max-h-[85vh] max-w-[90vw] w-auto h-auto object-contain rounded';
-        stage.appendChild(img);
-      } else if (item.tipo === 'video' && item.src) {
+      if (item.tipo === 'video') {
         var video = document.createElement('video');
         video.src = item.src;
         video.controls = true;
         video.autoplay = true;
+        // max-h-[85vh]/max-w-[90vw] en vez de porcentuales (max-h-full/max-w-full): estas
+        // clases se generan a partir del safelist de tailwind.config.js, no del escaneo de
+        // contenido (que solo lee templates/**/*.html, nunca este archivo) — ver el
+        // comentario junto al safelist para más contexto.
         video.className = 'max-h-[85vh] max-w-[90vw] w-auto h-auto object-contain rounded';
         stage.appendChild(video);
       } else {
-        // Sin archivo real todavía (placeholder): ocupa igualmente la mayor parte del
-        // escenario, no un ícono pequeño, para que siga leyéndose como una vista de un
-        // solo elemento ampliado.
-        var ph = document.createElement('div');
-        ph.className = 'w-full h-full rounded flex flex-col items-center justify-center gap-3';
-        ph.style.backgroundImage = STRIPE_BG;
-        if (item.tipo === 'video') {
-          ph.innerHTML =
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-20 h-20 text-white/80" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
-            '<span class="text-white/70 text-sm font-medium">Video no disponible todavía</span>';
-        } else {
-          ph.innerHTML = '<span class="text-white/70 text-sm font-medium">Foto no disponible todavía</span>';
-        }
-        stage.appendChild(ph);
+        var img = document.createElement('img');
+        img.src = item.src;
+        img.alt = '';
+        img.className = 'max-h-[85vh] max-w-[90vw] w-auto h-auto object-contain rounded';
+        stage.appendChild(img);
       }
       if (counter) counter.textContent = index + 1 + ' / ' + items.length;
     }
