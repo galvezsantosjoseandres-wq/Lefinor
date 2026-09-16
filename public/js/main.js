@@ -211,8 +211,10 @@
 
     var stage = modal.querySelector('[data-lightbox-stage]');
     var counter = modal.querySelector('[data-lightbox-counter]');
+    var thumbsTrack = modal.querySelector('[data-lightbox-thumbs]');
     var galeriaGrid = document.getElementById('propiedad-galeria');
     var current = 0;
+    var thumbButtons = [];
 
     // Cada elemento viene de la galería detectada por carpeta en el build (generator/build.js):
     // siempre trae un src real, así que ya no existe el caso "video/foto sin archivo todavía".
@@ -225,20 +227,70 @@
         video.src = item.src;
         video.controls = true;
         video.autoplay = true;
-        // max-h-[85vh]/max-w-[90vw] en vez de porcentuales (max-h-full/max-w-full): estas
-        // clases se generan a partir del safelist de tailwind.config.js, no del escaneo de
-        // contenido (que solo lee templates/**/*.html, nunca este archivo) — ver el
-        // comentario junto al safelist para más contexto.
-        video.className = 'max-h-[85vh] max-w-[90vw] w-auto h-auto object-contain rounded';
+        // max-h-full/max-w-full (en vez de vh/vw fijos): el escenario ya queda acotado por
+        // el layout flex de #propiedad-lightbox (flex-1 min-h-0, con la tira de miniaturas
+        // debajo tomando su propio espacio), así que el elemento se ajusta al espacio real
+        // que queda, sea cual sea la altura de la tira en cada pantalla.
+        video.className = 'max-h-full max-w-full w-auto h-auto object-contain rounded';
         stage.appendChild(video);
       } else {
         var img = document.createElement('img');
         img.src = item.src;
         img.alt = '';
-        img.className = 'max-h-[85vh] max-w-[90vw] w-auto h-auto object-contain rounded';
+        img.className = 'max-h-full max-w-full w-auto h-auto object-contain rounded';
         stage.appendChild(img);
       }
       if (counter) counter.textContent = index + 1 + ' / ' + items.length;
+      thumbButtons.forEach(function (btn, i) {
+        if (i === index) {
+          btn.classList.remove('opacity-60');
+          btn.classList.add('opacity-100', 'ring-2', 'ring-lefinor-dorado');
+        } else {
+          btn.classList.add('opacity-60');
+          btn.classList.remove('opacity-100', 'ring-2', 'ring-lefinor-dorado');
+        }
+      });
+    }
+
+    // Tira de miniaturas debajo del elemento principal: se construye una sola vez (los
+    // elementos de la galería no cambian mientras la página está abierta) y clic en
+    // cualquiera salta directo a ese índice, sin pasar una por una con las flechas.
+    function buildThumbs() {
+      if (!thumbsTrack || thumbsTrack.childElementCount) return;
+      items.forEach(function (item, index) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'Ver elemento ' + (index + 1) + ' de ' + items.length);
+        btn.className =
+          'relative shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-md overflow-hidden opacity-60 hover:opacity-100 transition-opacity';
+        if (item.tipo === 'video') {
+          var video = document.createElement('video');
+          video.src = item.src;
+          video.muted = true;
+          video.setAttribute('playsinline', '');
+          video.preload = 'metadata';
+          video.className = 'w-full h-full object-cover';
+          btn.appendChild(video);
+          var overlay = document.createElement('span');
+          overlay.className = 'absolute inset-0 flex items-center justify-center';
+          overlay.innerHTML =
+            '<span class="w-6 h-6 rounded-full bg-lefinor-azul/70 flex items-center justify-center">' +
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-3 h-3 text-white" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+            '</span>';
+          btn.appendChild(overlay);
+        } else {
+          var img = document.createElement('img');
+          img.src = item.src;
+          img.alt = '';
+          img.className = 'w-full h-full object-cover';
+          btn.appendChild(img);
+        }
+        btn.addEventListener('click', function () {
+          goTo(index);
+        });
+        thumbsTrack.appendChild(btn);
+        thumbButtons.push(btn);
+      });
     }
 
     function goTo(index) {
@@ -247,6 +299,7 @@
     }
 
     function open(index) {
+      buildThumbs();
       goTo(index);
       modal.classList.remove('hidden');
       modal.classList.add('flex');
