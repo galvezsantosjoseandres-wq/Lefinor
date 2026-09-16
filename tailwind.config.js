@@ -1,34 +1,15 @@
 'use strict';
 
 module.exports = {
-  content: ['./templates/**/*.html'],
-  // La grilla de la galería de propiedades arma sus clases dinámicamente en
-  // generator/build.js (según cuántas fotos tenga cada propiedad) y las inyecta en el HTML
-  // ya generado, así que el escaneo de contenido de Tailwind (que solo lee las plantillas
-  // fuente, no dist/) nunca las ve como texto literal. Sin este safelist, Tailwind nunca
-  // genera las reglas y la grilla se rompe silenciosamente en producción.
-  safelist: [
-    'md:grid',
-    'md:grid-cols-2',
-    'md:grid-cols-[1.6fr_1fr]',
-    'md:grid-cols-[1.6fr_1fr_1fr]',
-    'md:grid-rows-2',
-    'md:grid-rows-3',
-    'md:row-span-2',
-    'md:row-span-3',
-    'md:gap-1.5',
-    'md:h-auto',
-    'md:h-[420px]',
-    // Etiqueta de estado "Impartido" de los cursos de Academy: la clase se arma como
-    // string en generator/build.js (detalle) y public/js/main.js (tarjetas del listado),
-    // nunca aparece como texto literal en una plantilla .html, así que el escaneo de
-    // contenido de Tailwind nunca la detecta sin este safelist.
-    'bg-lefinor-gris',
-    // Estado de error de los formularios conectados a Google Apps Script (Academy): la
-    // clase se arma como string en public/js/main.js al mostrar el mensaje de fallo de
-    // envío, nunca aparece como texto literal en una plantilla .html.
-    'text-red-600',
-  ],
+  // Además de las plantillas, se escanean los .js que arman clases de Tailwind como
+  // strings literales en tiempo de ejecución (generator/build.js para la grilla de la
+  // galería y las etiquetas de estado; public/js/main.js para el lightbox, los formularios
+  // y las tarjetas de Academy). Así Tailwind las detecta automáticamente sin depender de un
+  // safelist que haya que recordar mantener cada vez que se agregue una clase nueva ahí.
+  // Esto solo funciona porque esas clases se arman como strings completos (o como opciones
+  // completas dentro de un ternario/switch) — una clase ensamblada por concatenación de
+  // fragmentos (ej. 'bg-' + color) seguiría sin ser detectable y necesitaría safelist.
+  content: ['./templates/**/*.html', './generator/**/*.js', './public/js/**/*.js'],
   theme: {
     extend: {
       colors: {

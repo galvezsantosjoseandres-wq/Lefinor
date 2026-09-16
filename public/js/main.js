@@ -223,14 +223,18 @@
         var img = document.createElement('img');
         img.src = item.src;
         img.alt = '';
-        img.className = 'max-h-full max-w-full object-contain rounded';
+        // max-h-[85vh]/max-w-[90vw] en vez de porcentuales (max-h-full/max-w-full): estas
+        // clases se generan a partir del safelist de tailwind.config.js, no del escaneo de
+        // contenido (que solo lee templates/**/*.html, nunca este archivo) — ver el
+        // comentario junto al safelist para más contexto.
+        img.className = 'max-h-[85vh] max-w-[90vw] w-auto h-auto object-contain rounded';
         stage.appendChild(img);
       } else if (item.tipo === 'video' && item.src) {
         var video = document.createElement('video');
         video.src = item.src;
         video.controls = true;
         video.autoplay = true;
-        video.className = 'max-h-full max-w-full rounded';
+        video.className = 'max-h-[85vh] max-w-[90vw] w-auto h-auto object-contain rounded';
         stage.appendChild(video);
       } else {
         // Sin archivo real todavía (placeholder): ocupa igualmente la mayor parte del
