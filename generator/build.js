@@ -80,6 +80,100 @@ function slugSort(list) {
 
 const GALERIA_PREVIEW_MAX = 5;
 
+const GALERIA_IMG_EXTS = { jpg: 'foto', jpeg: 'foto', png: 'foto', webp: 'foto' };
+const GALERIA_VIDEO_EXTS = { mp4: 'video', mov: 'video', webm: 'video' };
+const GALERIA_MEDIA_EXTS = Object.assign({}, GALERIA_IMG_EXTS, GALERIA_VIDEO_EXTS);
+
+// Detecta automáticamente la galería de una propiedad a partir de los archivos en
+// public/img/propiedades/<slug>/, en vez de un array "galeria" escrito a mano en el JSON
+// (que podía desincronizarse de los archivos reales). Orden: por el número al inicio del
+// nombre del archivo (numérico, no alfabético -- para que "10.jpg" no quede antes que
+// "2.jpg"). Tipo: por la extensión (foto: jpg/jpeg/png/webp, video: mp4/mov/webm). El
+// archivo número 1 es siempre la portada, sea foto o video.
+//
+// Para un elemento alojado externamente (ej. un video servido desde Cloudflare R2 en vez
+// de committeado al repo), se usa un archivo puntero local del mismo número
+// ("3.mp4.url" en vez de "3.mp4") cuyo único contenido es la URL remota -- mantiene el
+// mismo criterio de orden/tipo por extensión sin subir el binario al repo.
+function leerGaleriaPropiedad(slug) {
+  const dir = path.join(PUBLIC_DIR, 'img', 'propiedades', slug);
+  let archivos = [];
+  try {
+    archivos = fs.readdirSync(dir);
+  } catch (e) {
+    return [];
+  }
+
+  const porNumero = new Map();
+
+  for (const nombre of archivos) {
+    let match = /^(\d+)\.([A-Za-z0-9]+)\.url$/.exec(nombre);
+    let numero;
+    let ext;
+    let esRemoto;
+    if (match) {
+      numero = parseInt(match[1], 10);
+      ext = match[2].toLowerCase();
+      esRemoto = true;
+    } else {
+      match = /^(\d+)\.([A-Za-z0-9]+)$/.exec(nombre);
+      if (!match) continue; // no sigue la convención de numeración: se ignora
+      numero = parseInt(match[1], 10);
+      ext = match[2].toLowerCase();
+      esRemoto = false;
+    }
+
+    const tipo = GALERIA_MEDIA_EXTS[ext];
+    if (!tipo) continue; // extensión desconocida: se ignora
+
+    if (porNumero.has(numero)) {
+      console.warn(
+        `⚠ Galería de "${slug}": el número ${numero} está repetido entre "${porNumero.get(numero).archivo}" y "${nombre}" -- se ignora "${nombre}".`
+      );
+      continue;
+    }
+
+    const src = esRemoto
+      ? fs.readFileSync(path.join(dir, nombre), 'utf8').trim()
+      : `/img/propiedades/${slug}/${nombre}`;
+
+    porNumero.set(numero, { tipo, src, archivo: nombre });
+  }
+
+  const numeros = Array.from(porNumero.keys()).sort((a, b) => a - b);
+
+  if (!numeros.length) {
+    console.warn(`⚠ Galería de "${slug}": no se encontró ningún archivo de foto/video en la carpeta.`);
+    return [];
+  }
+  if (numeros[0] !== 1) {
+    console.warn(`⚠ Galería de "${slug}": no hay archivo número 1 -- la portada será "${porNumero.get(numeros[0]).archivo}".`);
+  } else if (porNumero.get(1).tipo === 'video') {
+    console.warn(`⚠ Galería de "${slug}": la portada (archivo número 1) es un video -- no se puede mostrar como imagen de fondo en las tarjetas.`);
+  }
+  for (let i = 0; i < numeros.length - 1; i++) {
+    if (numeros[i + 1] !== numeros[i] + 1) {
+      console.warn(`⚠ Galería de "${slug}": hay un salto en la numeración entre ${numeros[i]} y ${numeros[i + 1]}.`);
+    }
+  }
+
+  return numeros.map((n) => {
+    const item = porNumero.get(n);
+    return { tipo: item.tipo, src: item.src };
+  });
+}
+
+// La portada (usada en tarjetas de listado/relacionadas) es siempre el archivo número 1
+// de la galería detectada -- ya no un campo aparte en el JSON, que podía quedar
+// desincronizado del contenido real de la carpeta.
+function prepararPropiedadBase(propiedad) {
+  const galeria = leerGaleriaPropiedad(propiedad.slug);
+  return Object.assign({}, propiedad, {
+    galeria,
+    portada: galeria.length ? galeria[0].src : undefined,
+  });
+}
+
 // Clases de grilla para la galería según cuántos tiles de previsualización hay (1 a 5).
 // CSS Grid coloca automáticamente los tiles secundarios en las celdas libres una vez que
 // el tile principal reserva su columna/filas con row-span, así que nunca queda una celda
@@ -118,10 +212,12 @@ function tipoOperacionLabel(tipoOperacion) {
 }
 
 function prepararGaleria(propiedad) {
+  // Cada elemento de propiedad.galeria (detectada por leerGaleriaPropiedad) siempre trae
+  // un tipo y un src reales -- ya no existe el caso "video/foto sin archivo todavía".
   const galeria = (propiedad.galeria || []).map((item) =>
     Object.assign({}, item, {
-      mostrarFoto: item.tipo === 'foto' && Boolean(item.src),
-      mostrarVideo: item.tipo === 'video' && Boolean(item.src),
+      mostrarFoto: item.tipo === 'foto',
+      mostrarVideo: item.tipo === 'video',
     })
   );
   const galeriaMain = galeria[0]
@@ -274,7 +370,7 @@ function main() {
 
   const site = readJson(path.join(DATA_DIR, 'site.json'));
   const profesionales = slugSort(readJsonDir(path.join(DATA_DIR, 'profesionales')));
-  const propiedades = readJsonDir(path.join(DATA_DIR, 'propiedades'));
+  const propiedades = readJsonDir(path.join(DATA_DIR, 'propiedades')).map(prepararPropiedadBase);
   const publicaciones = readJsonDir(path.join(DATA_DIR, 'publicaciones'))
     .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
     .map((p) => prepararPublicacion(p, profesionales));

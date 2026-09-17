@@ -4,12 +4,6 @@
   "tipo_operacion": "venta",
   "ciudad": "Moca",
   "quickspecs": ["3 habitaciones", "2 baños", "1 nivel"],
-  "portada": "/img/propiedades/apartamento-moca/1.png",
-  "galeria": [
-    { "tipo": "video", "src": "https://videos.lefinor.com/lefinor/propiedades/apartamento-moca/prueba.mp4" },
-    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/1.png" },
-    { "tipo": "foto", "src": "/img/propiedades/apartamento-moca/2.png" }
-  ],
   "caracteristicas": [
     { "label": "Localización", "valor": "Moca" },
     { "label": "Condición", "valor": "Segundo uso, muy buen estado" },
