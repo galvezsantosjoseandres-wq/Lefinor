@@ -228,17 +228,22 @@
         video.controls = true;
         // Sin autoplay: debe requerir que la persona le dé play manualmente, en cualquier
         // dispositivo (reportado específicamente en móvil, donde el video arrancaba solo).
-        // max-h-full/max-w-full (en vez de vh/vw fijos): el escenario ya queda acotado por
-        // el layout flex de #propiedad-lightbox (flex-1 min-h-0, con la tira de miniaturas
-        // debajo tomando su propio espacio), así que el elemento se ajusta al espacio real
-        // que queda, sea cual sea la altura de la tira en cada pantalla.
-        video.className = 'max-h-full max-w-full w-auto h-auto object-contain rounded';
+        // h-full/w-full (no w-auto/h-auto): max-h-full/max-w-full por sí solos NUNCA agrandan
+        // un elemento más chico que el escenario disponible -- solo achican uno más grande.
+        // Con una foto real de resolución modesta (ej. 719x536), eso la deja renderizando a su
+        // tamaño intrínseco, mucho más chica que el espacio real disponible. Con h-full/w-full
+        // el elemento ocupa el 100% de la caja que ya calcula el layout flex del lightbox
+        // (flex-1 min-h-0, dejando espacio para la tira de miniaturas debajo), y object-contain
+        // ajusta el contenido dentro de esa caja sin deformarlo -- crece o se achica según haga
+        // falta. max-h-[85vh]/max-w-[90vw] quedan como techo absoluto, el mismo límite ya
+        // validado con el video, por si el espacio que deja el layout flex fuera mayor a eso.
+        video.className = 'h-full max-h-[85vh] w-full max-w-[90vw] object-contain rounded';
         stage.appendChild(video);
       } else {
         var img = document.createElement('img');
         img.src = item.src;
         img.alt = '';
-        img.className = 'max-h-full max-w-full w-auto h-auto object-contain rounded';
+        img.className = 'h-full max-h-[85vh] w-full max-w-[90vw] object-contain rounded';
         stage.appendChild(img);
       }
       if (counter) counter.textContent = index + 1 + ' / ' + items.length;
