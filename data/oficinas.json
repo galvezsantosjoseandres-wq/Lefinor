@@ -11,6 +11,7 @@
     "nombre": "Sede La Vega",
     "direccion": "Calle Manuel Ubaldo Gómez, Esquina Núñez de Cáceres, Plaza Polonia, Segundo Nivel, Módulo 200, La Vega, República Dominicana",
     "lat": 19.227139,
-    "lng": -70.531111
+    "lng": -70.531111,
+    "mapsUrlVerificado": "https://maps.app.goo.gl/vD68GDHhDKNv8TzD8"
   }
 ]
