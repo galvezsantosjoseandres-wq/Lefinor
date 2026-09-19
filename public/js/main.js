@@ -424,6 +424,14 @@
               status.textContent = '¡Gracias! Hemos recibido tu solicitud, te contactaremos pronto.';
               status.className = 'text-xs text-center text-lefinor-dorado font-semibold';
             }
+            // El mismo formulario[data-google-form] sirve tanto al general de Academy como al
+            // de inscripción por curso (dentro de #inscripcion-modal) -- se distinguen por si
+            // el form vive dentro del modal, no por el texto de data-curso.
+            if (form.closest('#inscripcion-modal')) {
+              gtag('event', 'generate_lead', { form_id: 'academy_curso', curso: form.dataset.curso });
+            } else {
+              gtag('event', 'generate_lead', { form_id: 'academy_general' });
+            }
             // Evento genérico que UI externa (ej. el modal de inscripción) puede escuchar
             // sin que este handler necesite saber nada sobre modales.
             form.dispatchEvent(new CustomEvent('lefinor:formulario-exito', { bubbles: true }));
@@ -497,6 +505,13 @@
                 exitoEl.classList.add('hidden');
                 if (camposEl) camposEl.classList.remove('hidden');
               }, 5000);
+            }
+            // El mismo formulario[data-worker-form] sirve tanto a Inicio como a Contacto --
+            // se distinguen por data-origen, ya usado para el asunto del correo.
+            if (form.dataset.origen === 'Formulario de Inicio') {
+              gtag('event', 'generate_lead', { form_id: 'inicio' });
+            } else {
+              gtag('event', 'generate_lead', { form_id: 'contacto' });
             }
           })
           .catch(function () {
