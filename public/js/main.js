@@ -4,7 +4,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     initMobileMenu();
     initCookieBanner();
-    initHeroCarousel();
     initGallery();
     initGaleriaLightbox();
     initWhatsappMensajes();
@@ -78,70 +77,6 @@
       banner.classList.add('hidden');
       banner.classList.remove('flex');
     });
-  }
-
-  function initHeroCarousel() {
-    var root = document.getElementById('hero-carousel');
-    if (!root) return;
-    var track = document.getElementById('hero-track');
-    var slides = root.querySelectorAll('.hero-slide');
-    var dotsWrap = document.getElementById('hero-dots');
-    var prevBtn = document.getElementById('hero-prev');
-    var nextBtn = document.getElementById('hero-next');
-    if (!track || slides.length === 0) return;
-
-    var current = 0;
-    var dots = [];
-
-    slides.forEach(function (_, index) {
-      var dot = document.createElement('button');
-      dot.type = 'button';
-      dot.setAttribute('aria-label', 'Ir a la diapositiva ' + (index + 1));
-      dot.className = 'w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-colors';
-      dot.addEventListener('click', function () {
-        goTo(index);
-        resetAutoplay();
-      });
-      dotsWrap.appendChild(dot);
-      dots.push(dot);
-    });
-
-    function updateDots() {
-      dots.forEach(function (dot, index) {
-        dot.className =
-          'w-2.5 h-2.5 rounded-full transition-colors ' + (index === current ? 'bg-lefinor-dorado' : 'bg-white/50 hover:bg-white');
-      });
-    }
-
-    function goTo(index) {
-      current = (index + slides.length) % slides.length;
-      track.style.transform = 'translateX(-' + current * 100 + '%)';
-      updateDots();
-    }
-
-    var autoplayId;
-    function resetAutoplay() {
-      clearInterval(autoplayId);
-      autoplayId = setInterval(function () {
-        goTo(current + 1);
-      }, 6000);
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function () {
-        goTo(current - 1);
-        resetAutoplay();
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function () {
-        goTo(current + 1);
-        resetAutoplay();
-      });
-    }
-
-    goTo(0);
-    resetAutoplay();
   }
 
   function initGallery() {
