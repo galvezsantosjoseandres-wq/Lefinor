@@ -12,5 +12,6 @@
   ],
   "imagen_portada": null,
   "fuente": null,
-  "autor_id": "franklin-morillo"
+  "autor_id": "franklin-morillo",
+  "visible": false
 }

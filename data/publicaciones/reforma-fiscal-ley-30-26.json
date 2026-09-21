@@ -12,5 +12,6 @@
   ],
   "imagen_portada": null,
   "fuente": null,
-  "autor_id": "francheska-rodriguez"
+  "autor_id": "francheska-rodriguez",
+  "visible": false
 }

@@ -19,5 +19,6 @@
     "Escalera interior en madera maciza"
   ],
   "detalle_cierre": "",
-  "destacada": true
+  "destacada": true,
+  "visible": false
 }

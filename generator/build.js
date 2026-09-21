@@ -380,11 +380,15 @@ function main() {
 
   const site = readJson(path.join(DATA_DIR, 'site.json'));
   const profesionales = slugSort(readJsonDir(path.join(DATA_DIR, 'profesionales')));
-  const propiedades = readJsonDir(path.join(DATA_DIR, 'propiedades')).map(prepararPropiedadBase);
+  const propiedades = readJsonDir(path.join(DATA_DIR, 'propiedades'))
+    .filter((x) => x.visible !== false)
+    .map(prepararPropiedadBase);
   const publicaciones = readJsonDir(path.join(DATA_DIR, 'publicaciones'))
+    .filter((x) => x.visible !== false)
     .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
     .map((p) => prepararPublicacion(p, profesionales));
   const academyCursos = readJsonDir(path.join(DATA_DIR, 'academy'))
+    .filter((x) => x.visible !== false)
     .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
     .map((c) => prepararCurso(c, profesionales));
   const confianzaPath = path.join(DATA_DIR, 'confianza.json');
