@@ -12,5 +12,6 @@
   ],
   "imagen_portada": null,
   "fuente": null,
-  "autor_id": "hugo-taveras"
+  "autor_id": "hugo-taveras",
+  "visible": false
 }

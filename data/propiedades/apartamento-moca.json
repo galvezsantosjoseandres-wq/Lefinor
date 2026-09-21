@@ -19,5 +19,6 @@
     "Área social techada"
   ],
   "detalle_cierre": "",
-  "destacada": true
+  "destacada": true,
+  "visible": false
 }

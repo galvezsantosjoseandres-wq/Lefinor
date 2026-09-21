@@ -6,6 +6,7 @@
   </div>
 </section>
 
+{{#if publicaciones}}
 <section class="py-10 border-b border-lefinor-gris/10 sticky top-16 md:top-20 z-30 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
     <div class="flex flex-wrap gap-2" id="publicaciones-filtro-categoria" data-active="todas">
@@ -49,3 +50,10 @@
 <script>
   window.__LEFINOR_PUBLICACIONES_URL = '/data/publicaciones.json';
 </script>
+{{else}}
+<section class="py-20">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="text-lefinor-gris">Próximamente publicaremos aquí análisis y artículos de nuestro equipo.</p>
+  </div>
+</section>
+{{/if}}

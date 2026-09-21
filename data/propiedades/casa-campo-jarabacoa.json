@@ -20,5 +20,6 @@
     "Área de parqueo con acceso privado"
   ],
   "detalle_cierre": "",
-  "destacada": true
+  "destacada": true,
+  "visible": false
 }

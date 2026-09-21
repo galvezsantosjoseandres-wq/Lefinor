@@ -12,5 +12,6 @@
   ],
   "imagen_portada": null,
   "fuente": null,
-  "autor_id": "teodoro-galan"
+  "autor_id": "teodoro-galan",
+  "visible": false
 }
