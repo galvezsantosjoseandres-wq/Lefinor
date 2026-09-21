@@ -12,16 +12,16 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-2xl font-bold text-lefinor-azul text-center mb-2">Nuestro equipo</h2>
     <p class="text-center text-lefinor-gris mb-10">Haz clic en cada profesional para conocer más</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
       {{#each profesionales}}
       <a
         href="/equipo/{{this.slug}}.html"
         class="text-left rounded-xl border border-lefinor-gris/15 bg-white overflow-hidden hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-lefinor-dorado block"
       >
-        <img src="{{this.foto}}" alt="{{this.fotoAlt}}" class="w-full aspect-[4/5] object-cover object-top" />
-        <div class="p-4">
-          <h3 class="font-semibold text-lefinor-azul">{{this.nombre}}</h3>
-          <p class="text-sm text-lefinor-dorado font-medium">{{this.cargo}}</p>
+        <img src="{{this.foto}}" alt="{{this.fotoAlt}}" class="w-full aspect-[3/4] sm:aspect-[4/5] object-cover object-top" />
+        <div class="p-3 sm:p-4">
+          <h3 class="text-sm sm:text-base font-semibold text-lefinor-azul leading-snug">{{this.nombre}}</h3>
+          <p class="text-xs sm:text-sm text-lefinor-dorado font-medium">{{this.cargo}}</p>
           <p class="text-xs text-lefinor-gris mt-1">{{this.area}}</p>
         </div>
       </a>
