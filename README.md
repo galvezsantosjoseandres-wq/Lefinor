@@ -81,20 +81,24 @@ Request como verificación de que el sitio compila sin errores.
   (`public/img/lefinor-isotipo.svg`, `lefinor-logo-principal.svg`, `lefinor-logo-blanco.svg`,
   `lefinor-logo-sobre-navy.svg` y `lefinor-logo-horizontal.svg`). Header usa la versión
   horizontal (dorado, fondo claro); footer usa la versión principal (dorado, fondo oscuro).
-- Favicons: `public/favicon/` está vacía a la espera de que se suban manualmente los 3 PNG
-  (16×16, 32×32, 48×48) definitivos vía la interfaz web de GitHub.
-- Contenido detallado de Lefinor Academy (talleres, cursos, diplomados).
+- Favicons: ya resuelto — `public/favicon/` contiene los 3 PNG definitivos
+  (`favicon-16x16.png`, `favicon-32x32.png`, `favicon-48x48.png`).
+- Contenido detallado de Lefinor Academy (talleres, cursos, diplomados): los 3 cursos en
+  `data/academy/` ya tienen descripción real y específica escrita; están marcados
+  `"visible": false` a la espera de que el negocio confirme cuáles publicar.
 - Confirmación del cliente sobre dónde debe aparecer el slogan oficial (por ahora aparece en
   el hero de Inicio y en los encabezados internos de cada página).
 - Activación de Cloudflare R2 para alojar video de propiedades (cada elemento de
   `propiedad.galeria` con `"tipo": "video"` ya soporta una URL de video en `src` cuando esté
-  disponible).
-- **Envío real de los formularios de contacto:** por ser un sitio 100% estático (sin backend
-  ni base de datos), los formularios actualmente arman un `mailto:` prellenado hacia
-  `info@lefinor.com` al enviarse. Si se prefiere entrega directa sin depender del cliente de
-  correo del visitante, se puede conectar una Cloudflare Pages Function más adelante.
-- Decisión final del dominio canónico (`www` vs. apex) para configurar la redirección en
-  Cloudflare.
+  disponible; `wrangler.jsonc` todavía no tiene ningún binding de R2 configurado).
+- **Envío real de los formularios de contacto:** ya resuelto para Inicio y Contacto (Worker en
+  `worker.js`, endpoint `/api/contacto`, envía por correo vía Resend) y para Academy (Google
+  Apps Script, `data-google-form` en `main.js`). Sigue pendiente solo el formulario de consulta
+  por propiedad (`propiedad-detail.html`), que todavía usa `mailto:` (`data-contact-form`).
+- Decisión final del dominio canónico (`www` vs. apex) para configurar la redirección HTTP —
+  no hay ninguna regla de redirección en el código (`worker.js` solo lista ambos dominios en
+  `ALLOWED_ORIGINS` para CORS); si ya se configuró, es directamente en Cloudflare (Page Rules /
+  Redirect Rules), fuera de este repo.
 
 ## Desarrollado por
 
