@@ -428,7 +428,8 @@ function main() {
       { destacadas: propiedades.filter((p) => p.destacada), ultimasPublicaciones: publicaciones.slice(0, 3) },
       {
         title: site.siteName,
-        description: `${site.siteName}: asesoría legal y financiera en Fantino, República Dominicana. ${site.slogan}.`,
+        description:
+          'Asesoría legal y financiera integral en República Dominicana: derecho civil, inmobiliario, comercial y familia. Conoce también Lefinor Academy, nuestras propiedades y publicaciones.',
         canonicalPath: '/',
       }
     )
