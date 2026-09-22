@@ -13,6 +13,62 @@ const RATE_LIMIT_WINDOW_SECONDS = 15 * 60;
 const MAX_LENGTHS = { nombre: 100, correo: 150, telefono: 30, mensaje: 2000, origen: 60 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Hoy, si una petición no trae cabecera Origin (curl, un script, cualquier cliente que no
+// sea un navegador), la validación de origen de manejarContacto se salta entera. Exigirla
+// cierra ese hueco, pero rechazar envíos legítimos costaría leads reales, así que queda
+// desactivado hasta poder probarlo fuera de Chromium.
+// Verificado con Playwright (22/09/2026): un fetch POST mismo-origen desde Chromium SÍ
+// envía Origin, así que activarlo no rompería el formulario ahí. No se pudo verificar en
+// Safari ni en Firefox (no están disponibles en el entorno de auditoría). Poner en true
+// solo después de comprobarlo en staging con esos dos navegadores.
+const EXIGIR_ORIGIN = false;
+
+// Las cabeceras se añaden aquí, en el Worker, y no en un archivo _headers: el Worker es el
+// único camino por el que se sirve el sitio, así que este es el punto donde el control es
+// verificable directamente en el código, sin depender de que la plataforma interprete un
+// archivo aparte.
+// La CSP va en modo Report-Only a propósito: el sitio carga Google Fonts, GA4, Clarity, el
+// embed de Maps y script.google.com, y una CSP en modo bloqueo desplegada a ciegas rompería
+// alguna de esas piezas. Report-Only no restringe nada — solo reporta lo que restringiría.
+// OJO: sin una directiva report-uri/report-to (que necesitaría un endpoint que recolecte los
+// informes), las violaciones solo aparecen en la consola de DevTools del navegador; no se
+// están recolectando en ningún lado.
+const CSP_REPORT_ONLY = [
+  "default-src 'self'",
+  // 'unsafe-inline' es necesario hoy: hay <script> en línea (configuración de gtag, snippet
+  // de Clarity, variables window.__LEFINOR_*). Quitarlo exige refactorizarlos primero.
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms",
+  // 'unsafe-inline' es necesario aquí porque el JS asigna estilos en línea a los elementos
+  // (carrusel: style.transform; tarjetas: style.backgroundImage).
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self' data: https:",
+  "connect-src 'self' https://script.google.com https://www.google-analytics.com https://*.google-analytics.com https://*.clarity.ms",
+  "frame-src https://www.google.com",
+  "frame-ancestors 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+].join('; ');
+
+const CABECERAS_DE_SEGURIDAD = {
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  'Content-Security-Policy-Report-Only': CSP_REPORT_ONLY,
+};
+
+// La respuesta que devuelve env.ASSETS.fetch() trae las cabeceras inmutables, así que hay
+// que copiarla para poder añadir las propias.
+function conCabecerasDeSeguridad(respuesta) {
+  const copia = new Response(respuesta.body, respuesta);
+  for (const nombre of Object.keys(CABECERAS_DE_SEGURIDAD)) {
+    copia.headers.set(nombre, CABECERAS_DE_SEGURIDAD[nombre]);
+  }
+  return copia;
+}
+
 function jsonResponse(body, status) {
   return new Response(JSON.stringify(body), {
     status: status,
@@ -60,6 +116,9 @@ async function manejarContacto(request, env) {
   }
 
   const origin = request.headers.get('Origin');
+  if (EXIGIR_ORIGIN && !origin) {
+    return jsonResponse({ ok: false, error: 'origen_no_permitido' }, 403);
+  }
   if (origin && !ALLOWED_ORIGINS.includes(origin)) {
     return jsonResponse({ ok: false, error: 'origen_no_permitido' }, 403);
   }
@@ -136,6 +195,6 @@ export default {
     if (url.pathname === '/api/contacto') {
       return manejarContacto(request, env);
     }
-    return env.ASSETS.fetch(request);
+    return conCabecerasDeSeguridad(await env.ASSETS.fetch(request));
   },
 };

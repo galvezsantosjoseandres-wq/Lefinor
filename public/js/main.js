@@ -409,6 +409,10 @@
           ciudad: (formData.get('ciudad') || '').toString().trim(),
           area: (formData.get('area') || '').toString().trim(),
           mensaje: (formData.get('mensaje') || '').toString().trim(),
+          // Honeypot anti-spam, mismo patrón que los formularios del Worker. Se envía para
+          // que el Apps Script pueda descartar el registro cuando venga con contenido: este
+          // archivo solo lo transporta, quien decide es el lado servidor en Google.
+          pagina_web: (formData.get('pagina_web') || '').toString(),
         };
 
         if (submitBtn) submitBtn.disabled = true;
@@ -427,10 +431,16 @@
             // El mismo formulario[data-google-form] sirve tanto al general de Academy como al
             // de inscripción por curso (dentro de #inscripcion-modal) -- se distinguen por si
             // el form vive dentro del modal, no por el texto de data-curso.
-            if (form.closest('#inscripcion-modal')) {
-              gtag('event', 'generate_lead', { form_id: 'academy_curso', curso: form.dataset.curso });
-            } else {
-              gtag('event', 'generate_lead', { form_id: 'academy_general' });
+            // Guarda de gtag: si GA4 está bloqueado (bloqueador de anuncios, protección
+            // antirastreo) o simplemente no cargó, gtag es undefined y la llamada lanzaría
+            // dentro del .then() -- lo atraparía el .catch() de abajo y le diríamos a la
+            // persona que su solicitud falló cuando en realidad sí se envió.
+            if (typeof gtag === 'function') {
+              if (form.closest('#inscripcion-modal')) {
+                gtag('event', 'generate_lead', { form_id: 'academy_curso', curso: form.dataset.curso });
+              } else {
+                gtag('event', 'generate_lead', { form_id: 'academy_general' });
+              }
             }
             // Evento genérico que UI externa (ej. el modal de inscripción) puede escuchar
             // sin que este handler necesite saber nada sobre modales.
@@ -508,10 +518,14 @@
             }
             // El mismo formulario[data-worker-form] sirve tanto a Inicio como a Contacto --
             // se distinguen por data-origen, ya usado para el asunto del correo.
-            if (form.dataset.origen === 'Formulario de Inicio') {
-              gtag('event', 'generate_lead', { form_id: 'inicio' });
-            } else {
-              gtag('event', 'generate_lead', { form_id: 'contacto' });
+            // Misma guarda que en initGoogleForms: sin ella, un GA4 bloqueado convierte un
+            // envío exitoso en un mensaje de error para la persona.
+            if (typeof gtag === 'function') {
+              if (form.dataset.origen === 'Formulario de Inicio') {
+                gtag('event', 'generate_lead', { form_id: 'inicio' });
+              } else {
+                gtag('event', 'generate_lead', { form_id: 'contacto' });
+              }
             }
           })
           .catch(function () {

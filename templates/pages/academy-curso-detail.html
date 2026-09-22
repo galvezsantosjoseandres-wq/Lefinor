@@ -103,6 +103,10 @@
     </button>
     <h2 id="inscripcion-modal-titulo" class="font-bold text-lefinor-azul mb-4 pr-8">Solicitar inscripción</h2>
     <form class="space-y-3" data-google-form data-curso="{{curso.titulo}}">
+      <div class="hidden" aria-hidden="true">
+        <label for="inscripcion-pagina-web">No completar este campo</label>
+        <input id="inscripcion-pagina-web" name="pagina_web" type="text" tabindex="-1" autocomplete="off" />
+      </div>
       <div>
         <label class="block text-xs font-semibold text-lefinor-gris uppercase tracking-wide mb-1" for="inscripcion-nombre">Nombre</label>
         <input
