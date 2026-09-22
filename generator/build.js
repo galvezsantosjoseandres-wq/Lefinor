@@ -427,7 +427,7 @@ function main() {
       'index',
       { destacadas: propiedades.filter((p) => p.destacada), ultimasPublicaciones: publicaciones.slice(0, 3) },
       {
-        title: `${site.siteName} — ${site.slogan}`,
+        title: site.siteName,
         description: `${site.siteName}: asesoría legal y financiera en Fantino, República Dominicana. ${site.slogan}.`,
         canonicalPath: '/',
       }
@@ -440,7 +440,7 @@ function main() {
       'quienes-somos',
       {},
       {
-        title: `Quiénes Somos — ${site.siteName}`,
+        title: `Quiénes Somos | ${site.siteName}`,
         description: 'Conoce al equipo de abogados y asesores financieros de Lefinor Capital Group en Fantino, República Dominicana.',
         canonicalPath: '/quienes-somos.html',
       }
@@ -453,7 +453,7 @@ function main() {
       'servicios',
       {},
       {
-        title: `Servicios Legales y Financieros — ${site.siteName}`,
+        title: `Servicios Legales y Financieros | ${site.siteName}`,
         description: 'Servicios de asesoría legal y financiera de Lefinor Capital Group: derecho civil, inmobiliario, comercial, laboral, familia, migratorio y financiero.',
         canonicalPath: '/servicios.html',
       }
@@ -466,7 +466,7 @@ function main() {
       'academy',
       {},
       {
-        title: `Lefinor Academy — ${site.siteName}`,
+        title: `Lefinor Academy | ${site.siteName}`,
         description: 'Talleres, cursos y diplomados de Lefinor Academy en Fantino, República Dominicana.',
         canonicalPath: '/academy.html',
       }
@@ -479,7 +479,7 @@ function main() {
       'propiedades-list',
       {},
       {
-        title: `Propiedades — ${site.siteName}`,
+        title: `Propiedades | ${site.siteName}`,
         description: 'Propiedades en venta y alquiler gestionadas por Lefinor Capital Group.',
         canonicalPath: '/propiedades.html',
       }
@@ -492,7 +492,7 @@ function main() {
       'publicaciones-list',
       { categoriasDisponibles },
       {
-        title: `Publicaciones — ${site.siteName}`,
+        title: `Publicaciones | ${site.siteName}`,
         description: 'Artículos y publicaciones de Lefinor Capital Group sobre derecho y finanzas.',
         canonicalPath: '/publicaciones.html',
       }
@@ -505,7 +505,7 @@ function main() {
       'contacto',
       {},
       {
-        title: `Contacto — ${site.siteName}`,
+        title: `Contacto | ${site.siteName}`,
         description: `Contacta a ${site.siteName} en nuestras sedes de ${oficinas.map((o) => o.nombre.replace(/^Sede /, '')).join(' y ')}.`,
         canonicalPath: '/contacto.html',
       }
@@ -518,7 +518,7 @@ function main() {
       'terminos',
       {},
       {
-        title: `Términos de Uso — ${site.siteName}`,
+        title: `Términos de Uso | ${site.siteName}`,
         description: `Términos de uso del sitio web de ${site.siteName}.`,
         canonicalPath: '/terminos-de-uso.html',
       }
@@ -531,7 +531,7 @@ function main() {
       'privacidad',
       {},
       {
-        title: `Política de Privacidad — ${site.siteName}`,
+        title: `Política de Privacidad | ${site.siteName}`,
         description: `Política de privacidad del sitio web de ${site.siteName}.`,
         canonicalPath: '/politica-de-privacidad.html',
       }
@@ -547,7 +547,7 @@ function main() {
         'propiedad-detail',
         { propiedad: prepararGaleria(propiedad), relacionadas },
         {
-          title: `${propiedad.titulo} — ${site.siteName}`,
+          title: `${propiedad.titulo} | ${site.siteName}`,
           description: propiedad.detalle_intro.slice(0, 160),
           canonicalPath: `/propiedades/${propiedad.slug}.html`,
         }
@@ -564,7 +564,7 @@ function main() {
         'publicacion-detail',
         { publicacion, relacionadas },
         {
-          title: `${publicacion.titulo} — ${site.siteName}`,
+          title: `${publicacion.titulo} | ${site.siteName}`,
           description: publicacion.extracto,
           canonicalPath: `/publicaciones/${publicacion.slug}.html`,
         }
@@ -580,7 +580,7 @@ function main() {
         'academy-curso-detail',
         { curso },
         {
-          title: `${curso.titulo} — ${site.siteName}`,
+          title: `${curso.titulo} | ${site.siteName}`,
           description: (curso.descripcion[0] || '').slice(0, 160),
           canonicalPath: `/academy/${curso.id}.html`,
         }
@@ -598,7 +598,7 @@ function main() {
         'profesional-detail',
         { profesional: prof },
         {
-          title: `${nombreCompleto} — ${site.siteName}`,
+          title: `${nombreCompleto} | ${site.siteName}`,
           description: `${nombreCompleto}, ${prof.cargo} en ${prof.area}.`,
           canonicalPath: `/equipo/${prof.slug}.html`,
         }
@@ -622,7 +622,7 @@ function main() {
           qrSvg,
           whatsappNumeroTarjeta,
           mensajeWhatsappTarjetaCodificado: encodeURIComponent(mensajeWhatsappTarjeta),
-          title: `${nombreCompleto} — Tarjeta digital ${site.siteName}`,
+          title: `${nombreCompleto} | Tarjeta digital ${site.siteName}`,
           description: `Tarjeta de contacto digital de ${nombreCompleto}, ${prof.cargo}.`,
           canonicalPath: `/tarjetas/${prof.slug}.html`,
         },
@@ -672,7 +672,7 @@ function main() {
       loadPage('404'),
       {
         site,
-        title: `Página no encontrada — ${site.siteName}`,
+        title: `Página no encontrada | ${site.siteName}`,
         description: 'La página que buscas no existe o fue movida. Vuelve al inicio o explora las publicaciones de Lefinor Capital Group.',
         canonicalPath: '/404.html',
       },
