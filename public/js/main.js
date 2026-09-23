@@ -508,6 +508,10 @@
   function initGoogleForms() {
     var forms = document.querySelectorAll('[data-google-form]');
     forms.forEach(function (form) {
+      var camposEl = form.querySelector('[data-form-campos]');
+      var exitoEl = form.querySelector('[data-form-exito]');
+      var autoOcultarId;
+
       form.addEventListener('submit', function (event) {
         event.preventDefault();
         var status = form.querySelector('[data-form-status]');
@@ -536,7 +540,28 @@
         enviarFormularioGoogle(datos)
           .then(function () {
             form.reset();
-            if (status) {
+            clearTimeout(autoOcultarId);
+            // Mismo patrón visual que initWorkerForms (banner verde con ícono, no texto plano):
+            // oculta los campos y muestra [data-form-exito] unos segundos antes de restaurarlos.
+            if (exitoEl) {
+              if (status) {
+                status.textContent = '';
+                status.className = 'text-xs text-center';
+              }
+              if (camposEl) camposEl.classList.add('hidden');
+              exitoEl.classList.remove('hidden');
+              // Ocultar los campos puede achicar mucho la altura de la página (ej. el
+              // formulario general de Academy, la última sección de esa página): el
+              // navegador puede recortar el scroll de golpe y dejar el banner tapado por
+              // la barra de filtros sticky de arriba. Se vuelve a centrar explícitamente.
+              if (typeof exitoEl.scrollIntoView === 'function') {
+                exitoEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+              autoOcultarId = setTimeout(function () {
+                exitoEl.classList.add('hidden');
+                if (camposEl) camposEl.classList.remove('hidden');
+              }, 5000);
+            } else if (status) {
               status.textContent = '¡Gracias! Hemos recibido tu solicitud, te contactaremos pronto.';
               status.className = 'text-xs text-center text-lefinor-dorado font-semibold';
             }
@@ -663,6 +688,8 @@
 
     var form = modal.querySelector('form[data-google-form]');
     var status = modal.querySelector('[data-form-status]');
+    var camposEl = modal.querySelector('[data-form-campos]');
+    var exitoEl = modal.querySelector('[data-form-exito]');
     var autoCierreId;
 
     function open() {
@@ -671,6 +698,10 @@
         status.textContent = '';
         status.className = 'text-xs text-center';
       }
+      // Por si se reabre el modal antes de que initGoogleForms restaure el formulario por su
+      // cuenta (su temporizador es más largo que el cierre automático de este modal, 2.5s).
+      if (exitoEl) exitoEl.classList.add('hidden');
+      if (camposEl) camposEl.classList.remove('hidden');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
       document.body.classList.add('overflow-hidden');
