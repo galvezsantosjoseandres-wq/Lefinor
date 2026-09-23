@@ -97,7 +97,6 @@
     var vistaInicial = document.getElementById('cookie-vista-inicial');
     var vistaDetalle = document.getElementById('cookie-vista-detalle');
     var btnAceptar = document.getElementById('cookie-aceptar');
-    var btnRechazar = document.getElementById('cookie-rechazar');
     var btnConfigurar = document.getElementById('cookie-configurar');
     var btnCerrarDetalle = document.getElementById('cookie-cerrar-detalle');
     var btnAceptarDetalle = document.getElementById('cookie-aceptar-detalle');
@@ -169,7 +168,6 @@
     }
 
     if (btnAceptar) btnAceptar.addEventListener('click', aceptar);
-    if (btnRechazar) btnRechazar.addEventListener('click', rechazar);
     if (btnAceptarDetalle) btnAceptarDetalle.addEventListener('click', aceptar);
     if (btnRechazarDetalle) btnRechazarDetalle.addEventListener('click', rechazar);
     if (btnConfigurar) btnConfigurar.addEventListener('click', function () { mostrarVista(true); });
