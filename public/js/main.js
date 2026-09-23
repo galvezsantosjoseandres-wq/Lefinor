@@ -55,29 +55,141 @@
     actualizarVisibilidad();
   }
 
+  var COOKIE_CONSENT_KEY = 'lefinor_cookie_consent';
+  var COOKIE_CONSENT_FECHA_KEY = 'lefinor_cookie_consent_fecha';
+
+  // Antes estos dos bloques se inyectaban sin condición en templates/partials/head.html,
+  // así que corrían en cada carga de página antes de que la persona pudiera decidir nada.
+  // Ahora viven como funciones y solo se ejecutan desde initCookieBanner: al pulsar
+  // "Aceptar" (consentimiento nuevo), o al cargar la página si ya había una preferencia
+  // "accepted" guardada de una visita anterior.
+  function cargarGA4() {
+    if (window.__lefinorGA4Cargado) return;
+    window.__lefinorGA4Cargado = true;
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0KJQ2HK3J2';
+    document.head.appendChild(script);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-0KJQ2HK3J2');
+  }
+
+  function cargarClarity() {
+    if (window.__lefinorClarityCargado) return;
+    window.__lefinorClarityCargado = true;
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+      t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', 'ym28n6vqgr');
+  }
+
+  function activarAnalitica() {
+    cargarGA4();
+    cargarClarity();
+  }
+
   function initCookieBanner() {
     var banner = document.getElementById('cookie-banner');
-    var acceptBtn = document.getElementById('cookie-accept');
-    if (!banner || !acceptBtn) return;
-    var KEY = 'lefinor_cookie_consent';
-    try {
-      if (!localStorage.getItem(KEY)) {
-        banner.classList.remove('hidden');
-        banner.classList.add('flex');
-      }
-    } catch (e) {
-      banner.classList.remove('hidden');
-      banner.classList.add('flex');
-    }
-    acceptBtn.addEventListener('click', function () {
+    if (!banner) return;
+    var vistaInicial = document.getElementById('cookie-vista-inicial');
+    var vistaDetalle = document.getElementById('cookie-vista-detalle');
+    var btnAceptar = document.getElementById('cookie-aceptar');
+    var btnConfigurar = document.getElementById('cookie-configurar');
+    var btnCerrarDetalle = document.getElementById('cookie-cerrar-detalle');
+    var btnAceptarDetalle = document.getElementById('cookie-aceptar-detalle');
+    var btnRechazarDetalle = document.getElementById('cookie-rechazar-detalle');
+    var toggle = document.getElementById('cookie-toggle-analitica');
+    var togglePunto = toggle && toggle.querySelector('.toggle-dot');
+    var linksPreferencias = document.querySelectorAll('[data-cookie-preferencias]');
+
+    function guardarPreferencia(valor) {
       try {
-        localStorage.setItem(KEY, 'accepted');
+        localStorage.setItem(COOKIE_CONSENT_KEY, valor);
+        localStorage.setItem(COOKIE_CONSENT_FECHA_KEY, new Date().toISOString());
       } catch (e) {
         /* almacenamiento no disponible: se ignora */
       }
+    }
+
+    function leerPreferencia() {
+      try {
+        return localStorage.getItem(COOKIE_CONSENT_KEY);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function actualizarToggle(activo) {
+      if (!toggle) return;
+      toggle.setAttribute('aria-checked', String(activo));
+      toggle.classList.toggle('bg-lefinor-dorado', activo);
+      toggle.classList.toggle('bg-white/20', !activo);
+      if (togglePunto) {
+        togglePunto.classList.toggle('translate-x-6', activo);
+        togglePunto.classList.toggle('translate-x-1', !activo);
+      }
+    }
+
+    function mostrarVista(detalle) {
+      banner.classList.remove('hidden');
+      banner.classList.add('flex');
+      if (detalle) {
+        vistaInicial.classList.add('hidden');
+        vistaDetalle.classList.remove('hidden');
+        actualizarToggle(leerPreferencia() !== 'rejected');
+      } else {
+        vistaInicial.classList.remove('hidden');
+        vistaDetalle.classList.add('hidden');
+      }
+    }
+
+    function ocultarBanner() {
       banner.classList.add('hidden');
       banner.classList.remove('flex');
+    }
+
+    function aceptar() {
+      guardarPreferencia('accepted');
+      activarAnalitica();
+      ocultarBanner();
+    }
+
+    // Nota: si la persona ya había aceptado antes (scripts ya inyectados en esta misma
+    // carga de página) y ahora rechaza desde "Preferencias de cookies", esta preferencia
+    // queda guardada para la próxima carga -- pero los scripts ya inyectados en la página
+    // actual no se pueden "desinyectar" sin recargar. Es una limitación conocida de este
+    // enfoque, no un error: la próxima carga de página ya respeta el rechazo.
+    function rechazar() {
+      guardarPreferencia('rejected');
+      ocultarBanner();
+    }
+
+    if (btnAceptar) btnAceptar.addEventListener('click', aceptar);
+    if (btnAceptarDetalle) btnAceptarDetalle.addEventListener('click', aceptar);
+    if (btnRechazarDetalle) btnRechazarDetalle.addEventListener('click', rechazar);
+    if (btnConfigurar) btnConfigurar.addEventListener('click', function () { mostrarVista(true); });
+    if (btnCerrarDetalle) btnCerrarDetalle.addEventListener('click', function () { mostrarVista(false); });
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        actualizarToggle(toggle.getAttribute('aria-checked') !== 'true');
+      });
+    }
+    linksPreferencias.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        mostrarVista(true);
+      });
     });
+
+    var preferencia = leerPreferencia();
+    if (preferencia === 'accepted') {
+      activarAnalitica();
+    } else if (preferencia !== 'rejected') {
+      mostrarVista(false);
+    }
   }
 
   function initHeroCarousel() {

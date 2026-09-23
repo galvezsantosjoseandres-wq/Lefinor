@@ -2,22 +2,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KJQ2HK3J2"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-0KJQ2HK3J2');
-  </script>
-
-  <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "ym28n6vqgr");
-  </script>
+  <!-- GA4 y Microsoft Clarity ya NO se cargan aquí de forma incondicional: ahora se inyectan
+       desde public/js/main.js (cargarGA4/cargarClarity), y solo tras que la persona acepte el
+       aviso de cookies (o si ya había aceptado en una visita anterior). Ver initCookieBanner. -->
 
   <title>{{title}}</title>
   <meta name="description" content="{{description}}" />
