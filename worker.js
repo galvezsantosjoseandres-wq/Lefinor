@@ -13,14 +13,12 @@ const RATE_LIMIT_WINDOW_SECONDS = 15 * 60;
 const MAX_LENGTHS = { nombre: 100, correo: 150, telefono: 30, mensaje: 2000, origen: 60 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Hoy, si una petición no trae cabecera Origin (curl, un script, cualquier cliente que no
-// sea un navegador), la validación de origen de manejarContacto se salta entera. Exigirla
-// cierra ese hueco, pero rechazar envíos legítimos costaría leads reales, así que queda
-// desactivado hasta poder probarlo fuera de Chromium.
-// Verificado con Playwright (22/09/2026): un fetch POST mismo-origen desde Chromium SÍ
-// envía Origin, así que activarlo no rompería el formulario ahí. No se pudo verificar en
-// Safari ni en Firefox (no están disponibles en el entorno de auditoría). Poner en true
-// solo después de comprobarlo en staging con esos dos navegadores.
+// Sin esto, una petición que no trae cabecera Origin (curl, un script, cualquier cliente
+// que no sea un navegador) se saltaba entera la validación de origen de manejarContacto.
+// Verificado en los tres navegadores relevantes -- Chrome (Playwright, 22/09/2026), Safari
+// y Firefox -- que un fetch POST mismo-origen del formulario de Contacto sí envía Origin,
+// así que activarlo no rompe el formulario en ninguno. Ya activado: una petición sin
+// Origin ahora se rechaza con 403.
 const EXIGIR_ORIGIN = true;
 
 // Las cabeceras se añaden aquí, en el Worker, y no en un archivo _headers: el Worker es el
