@@ -35,13 +35,13 @@ const CSP_REPORT_ONLY = [
   "default-src 'self'",
   // 'unsafe-inline' es necesario hoy: hay <script> en línea (configuración de gtag, snippet
   // de Clarity, variables window.__LEFINOR_*). Quitarlo exige refactorizarlos primero.
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms",
   // 'unsafe-inline' es necesario aquí porque el JS asigna estilos en línea a los elementos
   // (carrusel: style.transform; tarjetas: style.backgroundImage).
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https:",
-  "connect-src 'self' https://script.google.com https://www.google-analytics.com https://*.google-analytics.com https://*.clarity.ms",
+  "connect-src 'self' https://script.google.com https://www.google-analytics.com https://*.google-analytics.com https://*.clarity.ms https://www.google.com",
   "frame-src https://www.google.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
