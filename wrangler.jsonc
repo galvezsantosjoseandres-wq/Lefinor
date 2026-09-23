@@ -15,28 +15,16 @@
     // siempre. Contrapartida: cada carga de página pasa por el Worker en vez de servirse
     // directo del borde, con algo de latencia extra por petición.
     "run_worker_first": true
-  }
+  },
 
-  // PENDIENTE — Activar el límite de tasa de POST /api/contacto.
-  //
-  // worker.js ya trae la lógica completa (dentroDelLimiteDeTasa: 5 envíos por IP cada 15
-  // minutos), pero está inactiva porque falta este binding: sin él, env.RATE_LIMIT_KV es
-  // undefined y la función devuelve true siempre, dejando el endpoint sin ningún límite.
-  //
-  // El bloque va comentado a propósito, no con un id de relleno: wrangler valida el id del
-  // namespace al desplegar, así que un valor inventado haría fallar el deploy y dejaría el
-  // sitio sin actualizar. Descomentar solo cuando el id real esté a mano.
-  //
-  // Pasos:
-  //   1. npx wrangler kv namespace create RATE_LIMIT_KV
-  //   2. Copiar el id que imprime el comando.
-  //   3. Descomentar el bloque de abajo y pegar ese id en "id".
-  //   4. Desplegar.
-  //
-  // ,"kv_namespaces": [
-  //   {
-  //     "binding": "RATE_LIMIT_KV",
-  //     "id": "<pegar aqui el id que devuelve el comando del paso 1>"
-  //   }
-  // ]
+  // Activa el límite de tasa de POST /api/contacto (5 envíos por IP cada 15 minutos, ya
+  // implementado en worker.js). El binding se llama RATE_LIMIT_KV -- así lo lee worker.js --
+  // independientemente de que el namespace se llame distinto en el dashboard de Cloudflare
+  // ("LEFINOR_RATE_LIMIT_KV"): el nombre del binding es lo único que importa para el código.
+  "kv_namespaces": [
+    {
+      "binding": "RATE_LIMIT_KV",
+      "id": "4a6473273146442a889f12daffa18a18"
+    }
+  ]
 }
