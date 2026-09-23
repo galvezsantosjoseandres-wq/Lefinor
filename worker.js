@@ -21,7 +21,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // envía Origin, así que activarlo no rompería el formulario ahí. No se pudo verificar en
 // Safari ni en Firefox (no están disponibles en el entorno de auditoría). Poner en true
 // solo después de comprobarlo en staging con esos dos navegadores.
-const EXIGIR_ORIGIN = false;
+const EXIGIR_ORIGIN = true;
 
 // Las cabeceras se añaden aquí, en el Worker, y no en un archivo _headers: el Worker es el
 // único camino por el que se sirve el sitio, así que este es el punto donde el control es
