@@ -5,7 +5,16 @@
   "main": "worker.js",
   "assets": {
     "directory": "dist",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    // Por defecto, Cloudflare sirve los assets que coinciden con un archivo real
+    // directamente desde su borde, sin pasar por el fetch() del Worker -- por eso las
+    // cabeceras de seguridad (worker.js: conCabecerasDeSeguridad, agregadas en el PR #32)
+    // nunca llegaban a ninguna página real, solo a rutas que no son un asset (ej. un 404
+    // real, o /api/contacto). run_worker_first fuerza a que TODA petición pase primero por
+    // el Worker -- inclusive las que sí son un asset -- para que esas cabeceras se apliquen
+    // siempre. Contrapartida: cada carga de página pasa por el Worker en vez de servirse
+    // directo del borde, con algo de latencia extra por petición.
+    "run_worker_first": true
   }
 
   // PENDIENTE — Activar el límite de tasa de POST /api/contacto.
