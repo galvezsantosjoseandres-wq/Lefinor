@@ -4,6 +4,7 @@
   "instructor_ids": ["francheska-rodriguez"],
   "estado": "disponible",
   "fecha": "15 de noviembre, 2026",
+  "fecha_iso": "2026-11-15",
   "lugar": "Salón Multiuso de Fantino",
   "modalidad": "Presencial",
   "imagen_portada": null,
@@ -12,5 +13,6 @@
     "Se cubren temas como la elaboración de un presupuesto realista, estrategias de ahorro, el uso responsable del crédito, y una introducción a los conceptos básicos de inversión — todo explicado en un lenguaje claro y aplicado a la realidad económica dominicana.",
     "Ideal para profesionales jóvenes, emprendedores, y cualquier persona que quiera empezar a planificar su futuro financiero con bases sólidas."
   ],
+  "destacado": false,
   "visible": false
 }
