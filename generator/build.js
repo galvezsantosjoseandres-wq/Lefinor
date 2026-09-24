@@ -427,7 +427,11 @@ function main() {
     'index.html',
     renderPage(
       'index',
-      { destacadas: propiedades.filter((p) => p.destacada), ultimasPublicaciones: publicaciones.slice(0, 3) },
+      {
+        destacadas: propiedades.filter((p) => p.destacada),
+        ultimasPublicaciones: publicaciones.slice(0, 3),
+        proximosCursos: academyCursos.filter((c) => c.disponible).slice(0, 3),
+      },
       {
         title: site.siteName,
         description:

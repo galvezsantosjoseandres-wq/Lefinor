@@ -252,6 +252,40 @@
 </section>
 {{/if}}
 
+{{#if proximosCursos}}
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-end justify-between mb-8">
+      <h2 class="text-2xl font-bold text-lefinor-azul">Próximos cursos</h2>
+      <a href="/academy.html" class="text-sm font-semibold text-lefinor-dorado hover:underline">Ver todos →</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{#each proximosCursos}}
+      <a
+        href="/academy/{{this.id}}.html"
+        class="group rounded-xl overflow-hidden border border-lefinor-gris/15 bg-white hover:shadow-lg transition-shadow"
+      >
+        {{#if this.imagen_portada}}
+        <div class="h-40 bg-cover bg-center" style="background-image:url('{{this.imagen_portada}}')"></div>
+        {{else}}
+        <div class="h-40 bg-lefinor-azul flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-10 h-10 text-lefinor-dorado" fill="currentColor">
+            <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zm0 10.5L4.4 9 12 4.9 19.6 9 12 13.5zM5 13.18v3.64L12 21l7-4.18v-3.64l-7 3.82-7-3.82z" />
+          </svg>
+        </div>
+        {{/if}}
+        <div class="p-4">
+          <span class="inline-block text-xs font-semibold uppercase tracking-wide text-lefinor-dorado mb-1">{{this.estadoLabel}}</span>
+          <h3 class="font-semibold text-lefinor-azul group-hover:text-lefinor-dorado transition-colors">{{this.titulo}}</h3>
+          <p class="text-sm text-lefinor-gris mt-1">{{this.fecha}}</p>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
 {{#if destacadas}}
 <section class="py-16 bg-lefinor-azul/[0.03]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
