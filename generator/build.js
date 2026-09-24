@@ -386,12 +386,15 @@ function prepararCurso(curso, profesionales) {
 // que más le interesa a Lefinor aunque no sea el más próximo en fecha), y dentro de cada
 // grupo -- destacados y el resto -- se ordena por fecha_iso ascendente (el más próximo
 // primero). Se compara como string porque YYYY-MM-DD ordena igual lexicográfica que
-// cronológicamente, sin necesidad de parsear a Date. Un curso sin fecha_iso, o cuya fecha ya
-// pasó respecto a hoyIso (la fecha del build), no aparece acá -- sigue existiendo en
-// /academy.html, solo no se promociona en Inicio como "próximo".
+// cronológicamente, sin necesidad de parsear a Date. Un curso sin fecha_iso, cuya fecha ya
+// pasó respecto a hoyIso (la fecha del build), o marcado estado: 'impartido', no aparece
+// acá -- sigue existiendo en /academy.html, solo no se promociona en Inicio como "próximo".
+// El filtro de estado compara con !== 'impartido' en vez de === 'disponible' a propósito:
+// así no hay que tocar este filtro el día que aparezca un tercer estado válido (ej.
+// "agotado") que igual deba considerarse "próximo".
 function calcularProximosCursos(academyCursos, hoyIso) {
   return academyCursos
-    .filter((c) => c.fecha_iso && c.fecha_iso >= hoyIso)
+    .filter((c) => c.fecha_iso && c.fecha_iso >= hoyIso && c.estado !== 'impartido')
     .slice()
     .sort((a, b) => {
       if (a.destacado !== b.destacado) return a.destacado ? -1 : 1;
