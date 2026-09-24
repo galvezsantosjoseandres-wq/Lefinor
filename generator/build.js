@@ -375,7 +375,34 @@ function prepararCurso(curso, profesionales) {
     disponible,
     estadoLabel: disponible ? 'Disponible' : 'Impartido',
     estadoBadgeClass: disponible ? 'bg-lefinor-dorado text-lefinor-azul' : 'bg-lefinor-gris text-white',
+    // Boolean(...) normaliza el default (false si el campo no está presente en el JSON) y
+    // evita que un valor undefined llegue al comparador de calcularProximosCursos, donde
+    // se compara con === / se usa en una condición -- undefined ahí sería un bug silencioso.
+    destacado: Boolean(curso.destacado),
   });
+}
+
+// "Próximos cursos" en Inicio: los destacados van primero (para poder promocionar el curso
+// que más le interesa a Lefinor aunque no sea el más próximo en fecha), y dentro de cada
+// grupo -- destacados y el resto -- se ordena por fecha_iso ascendente (el más próximo
+// primero). Se compara como string porque YYYY-MM-DD ordena igual lexicográfica que
+// cronológicamente, sin necesidad de parsear a Date. Un curso sin fecha_iso, cuya fecha ya
+// pasó respecto a hoyIso (la fecha del build), o marcado estado: 'impartido', no aparece
+// acá -- sigue existiendo en /academy.html, solo no se promociona en Inicio como "próximo".
+// El filtro de estado compara con !== 'impartido' en vez de === 'disponible' a propósito:
+// así no hay que tocar este filtro el día que aparezca un tercer estado válido (ej.
+// "agotado") que igual deba considerarse "próximo".
+function calcularProximosCursos(academyCursos, hoyIso) {
+  return academyCursos
+    .filter((c) => c.fecha_iso && c.fecha_iso >= hoyIso && c.estado !== 'impartido')
+    .slice()
+    .sort((a, b) => {
+      if (a.destacado !== b.destacado) return a.destacado ? -1 : 1;
+      if (a.fecha_iso < b.fecha_iso) return -1;
+      if (a.fecha_iso > b.fecha_iso) return 1;
+      return 0;
+    })
+    .slice(0, 3);
 }
 
 function prepararPublicacion(publicacion, profesionales) {
@@ -419,6 +446,9 @@ function main() {
     .filter((x) => x.visible !== false)
     .sort((a, b) => fechaEspanolAOrden(b.fecha) - fechaEspanolAOrden(a.fecha))
     .map((c) => prepararCurso(c, profesionales));
+  // Fecha del build en formato YYYY-MM-DD, usada por calcularProximosCursos para decidir
+  // qué cursos ya pasaron -- ver esa función para el resto de la lógica de orden mixto.
+  const hoyIso = new Date().toISOString().slice(0, 10);
   const confianzaPath = path.join(DATA_DIR, 'confianza.json');
   const testimoniosPath = path.join(DATA_DIR, 'testimonios.json');
   const oficinasPath = path.join(DATA_DIR, 'oficinas.json');
@@ -458,7 +488,7 @@ function main() {
       {
         destacadas: propiedades.filter((p) => p.destacada),
         ultimasPublicaciones: publicaciones.slice(0, 3),
-        proximosCursos: academyCursos.filter((c) => c.disponible).slice(0, 3),
+        proximosCursos: calcularProximosCursos(academyCursos, hoyIso),
       },
       {
         title: site.siteName,

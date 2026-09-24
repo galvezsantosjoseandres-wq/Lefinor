@@ -4,6 +4,7 @@
   "instructor_ids": ["hugo-taveras"],
   "estado": "impartido",
   "fecha": "15 de noviembre, 2023",
+  "fecha_iso": "2023-11-15",
   "lugar": "Salón Multiuso de Fantino",
   "modalidad": "Presencial",
   "imagen_portada": "/img/academy/cursos/curso-derecho-penal/portada.jpg",
@@ -12,5 +13,6 @@
     "El programa cubre los principios generales del derecho penal, la estructura del proceso penal dominicano, y una introducción a las principales figuras delictivas contempladas en el nuevo Código Penal — incluyendo los cambios más relevantes frente a la legislación anterior.",
     "A través de casos prácticos y ejercicios de análisis, los participantes desarrollan herramientas para la representación legal en materia penal, la elaboración de escritos judiciales, y la comprensión de las etapas procesales desde la investigación hasta el juicio."
   ],
+  "destacado": false,
   "visible": false
 }
