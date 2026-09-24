@@ -26,5 +26,15 @@
       "binding": "RATE_LIMIT_KV",
       "id": "4a6473273146442a889f12daffa18a18"
     }
-  ]
+  ],
+
+  // Obligatorio bajo Worker Previews, aunque quede vacío (confirmado en
+  // developers.cloudflare.com/workers/previews/configuration/): sin esta clave, Preview no
+  // hereda ni siquiera la configuración de nivel superior (como `assets`), y el deployment
+  // de preview queda sin nada que servir. RATE_LIMIT_KV no se duplica acá a propósito --
+  // worker.js ya tolera que env.RATE_LIMIT_KV no exista (el rate limit simplemente no se
+  // aplica en preview); si en algún momento se necesita probarlo ahí, hace falta crear un
+  // KV namespace aparte para preview y añadirlo como previews.kv_namespaces (nunca apuntar
+  // al mismo namespace de producción).
+  "previews": {}
 }

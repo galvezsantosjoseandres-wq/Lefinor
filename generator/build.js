@@ -324,6 +324,32 @@ function prepararOficina(oficina) {
   });
 }
 
+// Clases de Tailwind completas y literales (ver comentario en tailwind.config.js: el
+// escaneo de contenido necesita ver el nombre de clase entero en algún .html/.js, nunca
+// ensamblado por concatenación) -- se arman acá, no en el template, para que
+// templates/pages/index.html se mantenga como un simple {{#each}} sin condicionales de
+// estilo adentro.
+const HERO_BOTON_PRIMARIO_CLASE =
+  'text-center bg-lefinor-dorado text-lefinor-azul font-semibold px-[8px] py-[11px] lg:px-6 lg:py-3 text-[12.5px] lg:text-base rounded-md hover:opacity-90';
+const HERO_BOTON_SECUNDARIO_CLASE =
+  'lg:w-auto text-center border border-white/40 text-white px-[8px] py-[11px] lg:px-6 lg:py-3 text-[12.5px] lg:text-base rounded-md hover:bg-white/10';
+
+// El primer botón siempre es el CTA principal (fondo dorado); el segundo, si existe, es
+// secundario (borde). Cuando hay un solo botón, va a ancho completo en móvil
+// (w-full lg:w-auto); con dos, cada uno solo ocupa su contenido (lg:w-auto) para poder
+// quedar uno al lado del otro -- mismo comportamiento que tenían las 3 slides hardcodeadas.
+function prepararHeroSlide(slide) {
+  const botonesOriginales = slide.botones || [];
+  const botones = botonesOriginales.map((boton, index) => {
+    if (index === 0) {
+      const anchoClase = botonesOriginales.length > 1 ? 'lg:w-auto' : 'w-full lg:w-auto';
+      return Object.assign({}, boton, { clase: `${anchoClase} ${HERO_BOTON_PRIMARIO_CLASE}` });
+    }
+    return Object.assign({}, boton, { clase: HERO_BOTON_SECUNDARIO_CLASE });
+  });
+  return Object.assign({}, slide, { botones });
+}
+
 function truncar(texto, maxLength) {
   if (!texto || texto.length <= maxLength) return texto || '';
   return texto.slice(0, maxLength).trim().replace(/[.,;:]?\s*\S*$/, '') + '…';
@@ -396,9 +422,11 @@ function main() {
   const confianzaPath = path.join(DATA_DIR, 'confianza.json');
   const testimoniosPath = path.join(DATA_DIR, 'testimonios.json');
   const oficinasPath = path.join(DATA_DIR, 'oficinas.json');
+  const heroPath = path.join(DATA_DIR, 'hero.json');
   const confianza = fs.existsSync(confianzaPath) ? readJson(confianzaPath) : [];
   const testimonios = fs.existsSync(testimoniosPath) ? readJson(testimoniosPath) : [];
   const oficinas = (fs.existsSync(oficinasPath) ? readJson(oficinasPath) : []).map(prepararOficina);
+  const heroSlides = (fs.existsSync(heroPath) ? readJson(heroPath) : []).map(prepararHeroSlide);
 
   const tokens = loadColorTokens();
 
@@ -414,7 +442,7 @@ function main() {
   function renderPage(pageName, extraData, layoutData) {
     const pageTemplate = loadPage(pageName);
     const baseData = Object.assign(
-      { site, profesionales, propiedades, publicaciones, academyCursos, ciudades, confianza, testimonios, oficinas },
+      { site, profesionales, propiedades, publicaciones, academyCursos, ciudades, confianza, testimonios, oficinas, heroSlides },
       extraData
     );
     const content = render(pageTemplate, baseData, partials);

@@ -1,0 +1,36 @@
+[
+  {
+    "eyebrow": "Asesores Legales & Financieros del Norte",
+    "titulo": "Asesoría legal y financiera confiable en Fantino y todo el Cibao",
+    "subtexto": "Acompañamos a personas y empresas con soluciones legales y financieras claras, cercanas y profesionales.",
+    "imagen": "/img/hero/fachada-oficina-fantino.jpg",
+    "imagen_alt": "Fachada de las oficinas de Lefinor Capital Group en Fantino",
+    "imagen_posicion": "50% 0%",
+    "botones": [
+      { "texto": "Contáctanos", "href": "/contacto.html" },
+      { "texto": "Ver Servicios", "href": "/servicios.html" }
+    ]
+  },
+  {
+    "eyebrow": "Lefinor Finanzas",
+    "titulo": "Planificación financiera y gestión de capitales a tu medida",
+    "subtexto": "Contabilidad integral, análisis financiero, facilidades crediticias y acompañamiento a emprendedores.",
+    "imagen": "/img/hero/justicia-oficina-fantino.jpg",
+    "imagen_alt": "Cuadro alegórico de la justicia en las oficinas de Lefinor Capital Group",
+    "imagen_posicion": "50% 35%",
+    "botones": [
+      { "texto": "Conocer más", "href": "/servicios.html" }
+    ]
+  },
+  {
+    "eyebrow": "Lefinor Academy",
+    "titulo": "Formación legal y financiera para crecer con confianza",
+    "subtexto": "Talleres, cursos y diplomados pensados para el Cibao.",
+    "imagen": "/img/hero/recepcion-oficina-fantino.jpg",
+    "imagen_alt": "Recepción de las oficinas de Lefinor Capital Group en Fantino",
+    "imagen_posicion": "50% 20%",
+    "botones": [
+      { "texto": "Ver Academy", "href": "/academy.html" }
+    ]
+  }
+]
