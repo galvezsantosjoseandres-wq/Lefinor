@@ -309,15 +309,17 @@ function whatsappNumeroDesde(telefonoLocal) {
 // interior de plaza/local (ej. "Segundo Nivel, Módulo 200"); las coordenadas sí garantizan el
 // pin en el punto exacto. `direccion` se mantiene solo para mostrarla legible en pantalla.
 //
-// mapsEmbedUrl (el iframe) siempre se calcula por coordenadas -- un link maps.app.goo.gl no es
-// embebible de forma confiable. mapsUrl (el botón externo "Abrir en Google Maps") usa el link
-// corto ya verificado en Google Maps (mapsUrlVerificado) cuando la oficina lo tiene, en vez del
-// link genérico por coordenadas; si no lo tiene, se sigue construyendo por coordenadas como
-// siempre.
+// mapsEmbedUrl (el iframe) se calcula por coordenadas por defecto -- un link maps.app.goo.gl no
+// es embebible de forma confiable -- salvo que la oficina tenga mapsEmbedUrlVerificado, el código
+// de inserción oficial que da Google una vez la ubicación de negocio queda verificada/aprobada;
+// en ese caso se usa ese, porque apunta a la ficha real del negocio en vez de solo a un punto GPS.
+// mapsUrl (el botón externo "Abrir en Google Maps") usa el link corto ya verificado en Google
+// Maps (mapsUrlVerificado) cuando la oficina lo tiene, en vez del link genérico por coordenadas;
+// si no lo tiene, se sigue construyendo por coordenadas como siempre.
 function prepararOficina(oficina) {
   const coordenadas = `${oficina.lat},${oficina.lng}`;
   return Object.assign({}, oficina, {
-    mapsEmbedUrl: `https://www.google.com/maps?q=${coordenadas}&output=embed`,
+    mapsEmbedUrl: oficina.mapsEmbedUrlVerificado || `https://www.google.com/maps?q=${coordenadas}&output=embed`,
     mapsUrl: oficina.mapsUrlVerificado || `https://www.google.com/maps/search/?api=1&query=${coordenadas}`,
   });
 }
