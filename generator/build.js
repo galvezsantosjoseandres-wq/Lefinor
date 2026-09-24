@@ -330,22 +330,22 @@ function truncar(texto, maxLength) {
 }
 
 function prepararCurso(curso, profesionales) {
-  const instructorBase = profesionales.find((p) => p.slug === curso.instructor_id);
-  const instructor = instructorBase
-    ? {
-        slug: instructorBase.slug,
-        honorifico: instructorBase.honorifico,
-        nombre: instructorBase.nombre,
-        cargo: instructorBase.cargo,
-        foto: instructorBase.foto,
-        fotoAlt: instructorBase.fotoAlt,
-        bioExtracto: truncar(instructorBase.bioCompleta, 160),
-      }
-    : null;
+  const instructores = (curso.instructor_ids || [])
+    .map((slug) => profesionales.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .map((instructorBase) => ({
+      slug: instructorBase.slug,
+      honorifico: instructorBase.honorifico,
+      nombre: instructorBase.nombre,
+      cargo: instructorBase.cargo,
+      foto: instructorBase.foto,
+      fotoAlt: instructorBase.fotoAlt,
+      bioExtracto: truncar(instructorBase.bioCompleta, 160),
+    }));
   const disponible = curso.estado === 'disponible';
 
   return Object.assign({}, curso, {
-    instructor,
+    instructores,
     disponible,
     estadoLabel: disponible ? 'Disponible' : 'Impartido',
     estadoBadgeClass: disponible ? 'bg-lefinor-dorado text-lefinor-azul' : 'bg-lefinor-gris text-white',

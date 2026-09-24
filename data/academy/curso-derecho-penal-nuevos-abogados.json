@@ -1,7 +1,7 @@
 {
   "id": "curso-derecho-penal-nuevos-abogados",
   "titulo": "Derecho Penal para Nuevos Abogados",
-  "instructor_id": "hugo-taveras",
+  "instructor_ids": ["hugo-taveras"],
   "estado": "impartido",
   "fecha": "15 de noviembre, 2023",
   "lugar": "Salón Multiuso de Fantino",

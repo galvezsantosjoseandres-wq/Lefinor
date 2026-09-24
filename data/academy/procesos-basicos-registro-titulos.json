@@ -1,0 +1,22 @@
+{
+  "id": "procesos-basicos-registro-titulos",
+  "titulo": "Procesos Básicos ante el Registro de Títulos",
+  "instructor_ids": ["franklin-morillo"],
+  "estado": "disponible",
+  "fecha": "Sábado 14 de noviembre, 2026 · 9:00 a.m. a 12:00 p.m.",
+  "lugar": "Vía Zoom / Google Meet",
+  "modalidad": "Virtual",
+  "precio": "RD$500.00 por persona (incluye certificado y material de apoyo digital)",
+  "temario": [
+    "Estructura y función: roles principales del Registro de Títulos y la Jurisdicción Inmobiliaria",
+    "Depósito de expedientes: documentación indispensable y requisitos formales para inscripciones y transferencias",
+    "Manejo de casos observados y rechazados: principales causales de rechazo u observación y cómo subsanarlas oportunamente",
+    "Consultas y seguimiento: herramientas y técnicas para el rastreo eficiente de expedientes en trámite"
+  ],
+  "imagen_portada": "/img/academy/cursos/procesos-basicos-registro-titulos/portada.jpg",
+  "descripcion": [
+    "Taller práctico dirigido a nuevos abogados y estudiantes de derecho, enfocado en el dominio práctico del ámbito registral e inmobiliario en la República Dominicana.",
+    "El ámbito del derecho inmobiliario y registral requiere de un dominio práctico claro para evitar objeciones, agilizar trámites y brindar un servicio eficiente a los clientes. En este taller conocerás paso a paso la tramitación básica, los requisitos legales y las mejores prácticas ante el Registro de Títulos, permitiéndote desenvolverte con seguridad desde el depósito hasta la emisión del Certificado de Título."
+  ],
+  "visible": true
+}
