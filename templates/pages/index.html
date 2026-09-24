@@ -1,29 +1,30 @@
 <section id="hero-carousel" class="relative overflow-hidden bg-lefinor-azul text-white">
   <div id="hero-track" class="flex w-full transition-transform duration-700 ease-in-out">
+    {{#each heroSlides}}
     <div class="hero-slide w-full shrink-0">
       <div class="relative grid grid-cols-1 lg:grid-cols-[56%_44%] h-[620px] lg:h-full">
         <div class="absolute inset-x-0 bottom-0 z-10 lg:static lg:order-1 flex flex-col justify-end lg:justify-center px-[20px] pb-[24px] pt-[18px] sm:px-8 lg:px-12 lg:py-20">
-          <p class="text-lefinor-dorado font-semibold tracking-[.1em] lg:tracking-wide uppercase text-[10px] lg:text-sm mb-3">Asesores Legales &amp; Financieros del Norte</p>
-          <h1 class="text-[21px] leading-[1.2] md:text-4xl lg:text-5xl font-extrabold lg:font-bold max-w-xl">Asesoría legal y financiera confiable en Fantino y todo el Cibao</h1>
-          <p class="mt-4 max-w-[310px] lg:max-w-md text-[12.5px] leading-[1.45] lg:text-base text-white/80">Acompañamos a personas y empresas con soluciones legales y financieras claras, cercanas y profesionales.</p>
+          <p class="text-lefinor-dorado font-semibold tracking-[.1em] lg:tracking-wide uppercase text-[10px] lg:text-sm mb-3">{{this.eyebrow}}</p>
+          <h1 class="text-[21px] leading-[1.2] md:text-4xl lg:text-5xl font-extrabold lg:font-bold max-w-xl">{{this.titulo}}</h1>
+          <p class="mt-4 max-w-[310px] lg:max-w-md text-[12.5px] leading-[1.45] lg:text-base text-white/80">{{this.subtexto}}</p>
+          {{#if this.botones}}
           <div class="mt-6 flex flex-row flex-wrap lg:flex-row lg:flex-nowrap gap-3">
+            {{#each this.botones}}
             <a
-              href="/contacto.html"
-              class="lg:w-auto text-center bg-lefinor-dorado text-lefinor-azul font-semibold px-[8px] py-[11px] lg:px-6 lg:py-3 text-[12.5px] lg:text-base rounded-md hover:opacity-90"
-              >Contáctanos</a
+              href="{{this.href}}"
+              class="{{this.clase}}"
+              >{{this.texto}}</a
             >
-            <a
-              href="/servicios.html"
-              class="lg:w-auto text-center border border-white/40 text-white px-[8px] py-[11px] lg:px-6 lg:py-3 text-[12.5px] lg:text-base rounded-md hover:bg-white/10"
-              >Ver Servicios</a
-            >
+            {{/each}}
           </div>
+          {{/if}}
         </div>
         <div class="absolute inset-x-0 top-0 lg:relative lg:order-2 h-[620px] sm:h-80 lg:h-auto">
           <img
-            src="/img/hero/fachada-oficina-fantino.jpg"
-            alt="Fachada de las oficinas de Lefinor Capital Group en Fantino"
-            class="absolute inset-0 w-full h-full object-cover object-[50%_0%]"
+            src="{{this.imagen}}"
+            alt="{{this.imagen_alt}}"
+            class="absolute inset-0 w-full h-full object-cover"
+            style="object-position: {{this.imagen_posicion}}"
           />
           <div
             class="absolute inset-0 lg:hidden"
@@ -36,70 +37,7 @@
         </div>
       </div>
     </div>
-
-    <div class="hero-slide w-full shrink-0">
-      <div class="relative grid grid-cols-1 lg:grid-cols-[56%_44%] h-[620px] lg:h-full">
-        <div class="absolute inset-x-0 bottom-0 z-10 lg:static lg:order-1 flex flex-col justify-end lg:justify-center px-[20px] pb-[24px] pt-[18px] sm:px-8 lg:px-12 lg:py-20">
-          <p class="text-lefinor-dorado font-semibold tracking-[.1em] lg:tracking-wide uppercase text-[10px] lg:text-sm mb-3">Lefinor Finanzas</p>
-          <h1 class="text-[21px] leading-[1.2] md:text-4xl lg:text-5xl font-extrabold lg:font-bold max-w-xl">Planificación financiera y gestión de capitales a tu medida</h1>
-          <p class="mt-4 max-w-[310px] lg:max-w-md text-[12.5px] leading-[1.45] lg:text-base text-white/80">Contabilidad integral, análisis financiero, facilidades crediticias y acompañamiento a emprendedores.</p>
-          <div class="mt-6 flex flex-col lg:flex-row gap-3">
-            <a
-              href="/servicios.html"
-              class="w-full lg:w-auto text-center bg-lefinor-dorado text-lefinor-azul font-semibold px-[8px] py-[11px] lg:px-6 lg:py-3 text-[12.5px] lg:text-base rounded-md hover:opacity-90"
-              >Conocer más</a
-            >
-          </div>
-        </div>
-        <div class="absolute inset-x-0 top-0 lg:relative lg:order-2 h-[620px] sm:h-80 lg:h-auto">
-          <img
-            src="/img/hero/justicia-oficina-fantino.jpg"
-            alt="Cuadro alegórico de la justicia en las oficinas de Lefinor Capital Group"
-            class="absolute inset-0 w-full h-full object-cover object-[50%_35%]"
-          />
-          <div
-            class="absolute inset-0 lg:hidden"
-            style="background-image: linear-gradient(180deg, rgba(11,29,51,0) 0%, rgba(11,29,51,0) 46%, rgba(11,29,51,.55) 62%, rgba(11,29,51,.94) 100%)"
-          ></div>
-          <div
-            class="hidden lg:block absolute inset-0"
-            style="background-image: linear-gradient(to right, rgba(11,29,51,0.95) 0%, rgba(11,29,51,0) 42%)"
-          ></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-slide w-full shrink-0">
-      <div class="relative grid grid-cols-1 lg:grid-cols-[56%_44%] h-[620px] lg:h-full">
-        <div class="absolute inset-x-0 bottom-0 z-10 lg:static lg:order-1 flex flex-col justify-end lg:justify-center px-[20px] pb-[24px] pt-[18px] sm:px-8 lg:px-12 lg:py-20">
-          <p class="text-lefinor-dorado font-semibold tracking-[.1em] lg:tracking-wide uppercase text-[10px] lg:text-sm mb-3">Lefinor Academy</p>
-          <h1 class="text-[21px] leading-[1.2] md:text-4xl lg:text-5xl font-extrabold lg:font-bold max-w-xl">Formación legal y financiera para crecer con confianza</h1>
-          <p class="mt-4 max-w-[310px] lg:max-w-md text-[12.5px] leading-[1.45] lg:text-base text-white/80">Talleres, cursos y diplomados pensados para el Cibao.</p>
-          <div class="mt-6 flex flex-col lg:flex-row gap-3">
-            <a
-              href="/academy.html"
-              class="w-full lg:w-auto text-center bg-lefinor-dorado text-lefinor-azul font-semibold px-[8px] py-[11px] lg:px-6 lg:py-3 text-[12.5px] lg:text-base rounded-md hover:opacity-90"
-              >Ver Academy</a
-            >
-          </div>
-        </div>
-        <div class="absolute inset-x-0 top-0 lg:relative lg:order-2 h-[620px] sm:h-80 lg:h-auto">
-          <img
-            src="/img/hero/recepcion-oficina-fantino.jpg"
-            alt="Recepción de las oficinas de Lefinor Capital Group en Fantino"
-            class="absolute inset-0 w-full h-full object-cover object-[50%_20%]"
-          />
-          <div
-            class="absolute inset-0 lg:hidden"
-            style="background-image: linear-gradient(180deg, rgba(11,29,51,0) 0%, rgba(11,29,51,0) 46%, rgba(11,29,51,.55) 62%, rgba(11,29,51,.94) 100%)"
-          ></div>
-          <div
-            class="hidden lg:block absolute inset-0"
-            style="background-image: linear-gradient(to right, rgba(11,29,51,0.95) 0%, rgba(11,29,51,0) 42%)"
-          ></div>
-        </div>
-      </div>
-    </div>
+    {{/each}}
   </div>
 
   <button
