@@ -1,7 +1,7 @@
 {
   "id": "curso-derecho-civil",
   "titulo": "Curso de Derecho Civil",
-  "instructor_id": "franklin-morillo",
+  "instructor_ids": ["franklin-morillo"],
   "estado": "impartido",
   "fecha": "15 de diciembre, 2023",
   "lugar": "Salón Multiuso, Santo Domingo",

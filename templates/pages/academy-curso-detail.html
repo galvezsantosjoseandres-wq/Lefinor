@@ -19,7 +19,7 @@
     <span class="inline-block text-xs font-bold uppercase tracking-wide px-3 py-1 rounded {{curso.estadoBadgeClass}}">{{curso.estadoLabel}}</span>
     <h1 class="text-2xl md:text-4xl font-bold text-lefinor-azul mt-3">{{curso.titulo}}</h1>
 
-    <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 rounded-xl border border-lefinor-gris/15 bg-lefinor-neutro p-5">
+    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 rounded-xl border border-lefinor-gris/15 bg-lefinor-neutro p-5">
       <div>
         <p class="text-xs font-semibold uppercase tracking-wide text-lefinor-gris">Fecha</p>
         <p class="text-sm font-semibold text-lefinor-azul mt-1">{{curso.fecha}}</p>
@@ -32,6 +32,12 @@
         <p class="text-xs font-semibold uppercase tracking-wide text-lefinor-gris">Modalidad</p>
         <p class="text-sm font-semibold text-lefinor-azul mt-1">{{curso.modalidad}}</p>
       </div>
+      {{#if curso.precio}}
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide text-lefinor-gris">Precio</p>
+        <p class="text-sm font-semibold text-lefinor-azul mt-1">{{curso.precio}}</p>
+      </div>
+      {{/if}}
     </div>
 
     <div class="mt-6">
@@ -57,26 +63,39 @@
       {{/each}}
     </div>
 
-    {{#if curso.instructor}}
+    {{#if curso.temario}}
+    <div class="mt-8">
+      <h2 class="font-bold text-lefinor-azul text-lg mb-3">Temario</h2>
+      <ul class="space-y-2 text-sm text-lefinor-azul/90">
+        {{#each curso.temario}}
+        <li class="flex gap-2"><span class="text-lefinor-dorado">•</span><span>{{this}}</span></li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+
+    {{#if curso.instructores}}
+    {{#each curso.instructores}}
     <div class="mt-8 rounded-xl border border-lefinor-gris/15 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5">
       <img
-        src="{{curso.instructor.foto}}"
-        alt="{{curso.instructor.fotoAlt}}"
+        src="{{this.foto}}"
+        alt="{{this.fotoAlt}}"
         class="w-20 h-20 aspect-square rounded-full object-cover object-top shrink-0"
       />
       <div class="text-center sm:text-left">
-        <h3 class="font-semibold text-lefinor-azul">{{curso.instructor.nombre}}</h3>
-        <p class="text-sm text-lefinor-dorado font-medium">{{curso.instructor.cargo}}</p>
-        <p class="text-sm text-lefinor-gris mt-2">{{curso.instructor.bioExtracto}}</p>
+        <h3 class="font-semibold text-lefinor-azul">{{this.nombre}}</h3>
+        <p class="text-sm text-lefinor-dorado font-medium">{{this.cargo}}</p>
+        <p class="text-sm text-lefinor-gris mt-2">{{this.bioExtracto}}</p>
         <div class="flex flex-wrap justify-center sm:justify-start gap-3 mt-4">
           <a
-            href="/equipo/{{curso.instructor.slug}}.html"
+            href="/equipo/{{this.slug}}.html"
             class="text-sm font-semibold bg-lefinor-azul text-white px-4 py-2 rounded-md hover:bg-lefinor-azul/90"
             >Ver perfil</a
           >
         </div>
       </div>
     </div>
+    {{/each}}
     {{/if}}
   </div>
 </article>
