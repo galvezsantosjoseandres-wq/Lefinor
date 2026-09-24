@@ -1,0 +1,25 @@
+{
+  "slug": "1",
+  "titulo": "Hermosa Casa en Jardines Suiza Fantino",
+  "tipo_operacion": "venta",
+  "ciudad": "Fantino",
+  "quickspecs": [
+    "3 Habitaciones",
+    "Habitación Principal con Working clóset",
+    "Balcón privado",
+    "Sala comedor cocina modular lista",
+    "1/2 Baño de visita",
+    "Título deslindado"
+  ],
+  "caracteristicas": [
+    {
+      "label": "Sanchez Ramirez",
+      "valor": "Fantino"
+    }
+  ],
+  "detalle_intro": "Hermosa Casa en Jardines Suiza Fantino\n3 habitaciones \nCada una con su propio baño\nHabitación Principal con Working clóset\nBalcón privado\nSala comedor cocina modular lista\nTerraza \nPatio en azotea \nSala de estar o family room\nClosert de ropa blanca grande \n1/2 Baño de visita\nPatio\nTítulo deslindado \nFinanciamiento disponibl\n",
+  "detalle_bullets": [],
+  "detalle_cierre": "Financiamiento Disponible",
+  "destacada": true,
+  "visible": true
+}
