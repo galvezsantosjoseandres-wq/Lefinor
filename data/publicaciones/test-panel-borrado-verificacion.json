@@ -1,0 +1,12 @@
+{
+  "slug": "test-panel-borrado-verificacion",
+  "categoria": "derecho-civil",
+  "titulo": "ARCHIVO DE PRUEBA -- NO ES CONTENIDO REAL",
+  "fecha": "1 de enero, 2000",
+  "extracto": "Este archivo existe únicamente para verificar de punta a punta que un squash-merge de un PR que borra un archivo efectivamente lo elimina de main. Se borra en el PR inmediatamente siguiente.",
+  "cuerpo": ["Archivo de prueba descartable, sin contenido real de Lefinor."],
+  "imagen_portada": null,
+  "fuente": null,
+  "autor_id": "test-no-existe",
+  "visible": false
+}
