@@ -18,7 +18,9 @@
       "valor": "En construcción"
     }
   ],
-  "detalle_intro": "Casa en proceso de construcción, ubicada en Jardines Suiza, Fantino. Ideal para quienes buscan personalizar su próximo hogar con una distribución funcional y buena ubicación.",
+  "detalle_intro": [
+    "Casa en proceso de construcción, ubicada en Jardines Suiza, Fantino. Ideal para quienes buscan personalizar su próximo hogar con una distribución funcional y buena ubicación."
+  ],
   "detalle_bullets": [
     "Habitación principal con baño",
     "Baño común",
