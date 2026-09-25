@@ -1,0 +1,38 @@
+{
+  "slug": "casaconstruccionfantinotipoc",
+  "titulo": "Casa en Construcción Tipo C en Jardines Suiza, Fantino",
+  "tipo_operacion": "venta",
+  "ciudad": "Fantino",
+  "quickspecs": [
+    "Tipo Casa",
+    "Habitaciones: 3",
+    "Baños: 2 completos + ½ baño de visitas"
+  ],
+  "caracteristicas": [
+    {
+      "label": "Jardines Suiza",
+      "valor": "Fantino"
+    },
+    {
+      "label": "Estado",
+      "valor": "En construcción"
+    }
+  ],
+  "detalle_intro": "Casa en proceso de construcción, Tipo C, ubicada en Jardines Suiza, Fantino. Ideal para quienes buscan personalizar su próximo hogar con una distribución funcional y buena ubicación.",
+  "detalle_bullets": [
+    "Habitación principal con baño",
+    "Baño común",
+    "Medio baño",
+    "Sala",
+    "Comedor",
+    "Cocina modular",
+    "Terraza",
+    "Marquesina doble",
+    "Patio",
+    "Título deslindado",
+    "Inicial: RD$500,000.00"
+  ],
+  "detalle_cierre": "Una oportunidad para construir a tu medida, ubicada en Jardines Suiza, Fantino.",
+  "destacada": true,
+  "visible": true
+}
