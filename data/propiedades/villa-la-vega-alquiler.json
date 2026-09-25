@@ -10,7 +10,9 @@
     { "label": "Uso actual", "valor": "Residencial" },
     { "label": "Comodidades", "valor": "Piscina privada, cocina de concepto abierto, isla de cocina" }
   ],
-  "detalle_intro": "Villa de construcción moderna con techos de madera vista, ventanales de piso a techo y piscina privada con acabados en piedra natural. La cocina de concepto abierto con isla central se integra directamente con la sala principal, creando un espacio luminoso y funcional.",
+  "detalle_intro": [
+    "Villa de construcción moderna con techos de madera vista, ventanales de piso a techo y piscina privada con acabados en piedra natural. La cocina de concepto abierto con isla central se integra directamente con la sala principal, creando un espacio luminoso y funcional."
+  ],
   "detalle_bullets": [
     "Piscina privada con acabados en piedra",
     "Ventanales de piso a techo en área social",

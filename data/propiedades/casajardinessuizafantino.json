@@ -14,7 +14,9 @@
       "valor": "Fantino"
     }
   ],
-  "detalle_intro": "Descubre esta hermosa y moderna residencia ubicada en Jardines Suiza, Fantino. Cuenta con 3 habitaciones, cada una con su propio baño, y amplios espacios pensados para la comodidad de toda la familia.",
+  "detalle_intro": [
+    "Descubre esta hermosa y moderna residencia ubicada en Jardines Suiza, Fantino. Cuenta con 3 habitaciones, cada una con su propio baño, y amplios espacios pensados para la comodidad de toda la familia."
+  ],
   "detalle_bullets": [
     "Habitación principal con working clóset y balcón privado",
     "Sala, comedor y cocina modular, lista para usar",

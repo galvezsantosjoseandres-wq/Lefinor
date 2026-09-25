@@ -8,6 +8,7 @@
 
     <!-- Galería -->
     <div class="mb-8" id="propiedad-galeria">
+      {{#if propiedad.galeriaMain}}
       <div class="{{propiedad.galeriaContainerClass}}">
         <div class="relative {{propiedad.galeriaMainClass}} cursor-pointer overflow-hidden" data-lightbox-open data-lightbox-index="0">
           {{#if propiedad.galeriaMain.mostrarVideo}}
@@ -87,6 +88,12 @@
         Ver las {{propiedad.galeria.length}} fotos
       </button>
       {{/if}}
+      {{else}}
+      <div
+        class="h-64 md:h-[420px] w-full rounded-xl"
+        style="background-image:repeating-linear-gradient(135deg, var(--azul-2) 0, var(--azul-2) 2px, var(--azul) 2px, var(--azul) 40px);"
+      ></div>
+      {{/if}}
     </div>
 
     <!-- Encabezado -->
@@ -126,7 +133,11 @@
         {{#if propiedad.detalle_intro}}
         <section class="mt-10">
           <h2 class="text-lg font-bold text-lefinor-azul mb-4 pb-4 border-b border-lefinor-azul/10">Detalle</h2>
-          <p class="text-lefinor-azul/90 leading-relaxed mb-4">{{propiedad.detalle_intro}}</p>
+          <div class="text-lefinor-azul/90 leading-relaxed space-y-4 mb-4">
+            {{#each propiedad.detalle_intro}}
+            <p>{{this}}</p>
+            {{/each}}
+          </div>
           {{#if propiedad.detalle_bullets}}
           <ul class="space-y-2 text-sm text-lefinor-azul/90 mb-4">
             {{#each propiedad.detalle_bullets}}

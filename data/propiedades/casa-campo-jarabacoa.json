@@ -11,7 +11,9 @@
     { "label": "Nivel/Piso", "valor": "2 niveles" },
     { "label": "Comodidades", "valor": "Terraza techada, paneles solares, área verde amplia" }
   ],
-  "detalle_intro": "Casa de campo rodeada de naturaleza, con amplia terraza techada ideal para disfrutar del clima fresco de montaña. Cuenta con paneles solares instalados, puertas principales de madera maciza y un terreno extenso con vegetación abundante — perfecta como vivienda permanente o casa de descanso.",
+  "detalle_intro": [
+    "Casa de campo rodeada de naturaleza, con amplia terraza techada ideal para disfrutar del clima fresco de montaña. Cuenta con paneles solares instalados, puertas principales de madera maciza y un terreno extenso con vegetación abundante — perfecta como vivienda permanente o casa de descanso."
+  ],
   "detalle_bullets": [
     "Terraza techada con vista al jardín",
     "Paneles solares instalados",
