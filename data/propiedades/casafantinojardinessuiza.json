@@ -1,0 +1,22 @@
+{
+  "slug": "casafantinojardinessuiza",
+  "titulo": "Hermosa Casa en Jardines Suiza",
+  "tipo_operacion": "venta",
+  "ciudad": "Fantino",
+  "quickspecs": [
+    "Casa ",
+    "3 Habitaciones",
+    "3 baños privados + ½ baño de visitas"
+  ],
+  "caracteristicas": [
+    {
+      "label": "Jardinez Suiza",
+      "valor": "Fantino"
+    }
+  ],
+  "detalle_intro": "Descubre esta hermosa y moderna residencia ubicada en Jardines Suiza, Fantino, diseñada para ofrecer comodidad, privacidad y amplios espacios para disfrutar en familia.\n\nLa propiedad cuenta con 3 habitaciones, cada una con su propio baño, una distribución funcional y excelentes áreas sociales, incluyendo terraza, patio y un práctico espacio en la azotea.",
+  "detalle_bullets": [],
+  "detalle_cierre": "Una residencia moderna, funcional y con espacios pensados para la comodidad de toda la familia, ubicada en Jardines Suiza, Fantino.",
+  "destacada": true,
+  "visible": true
+}
